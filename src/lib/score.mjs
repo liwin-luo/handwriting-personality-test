@@ -26,9 +26,9 @@ function totalsOf(questions, picks) {
  * 领先不足 2 分算没有单一方向。
  * ponytail: 2 分是固定阈值，题量或权重加大后会偏。升级路径是按已答题数归一化再比较。
  */
-export function scoreAnswers(questions, picks) {
+export function scoreAnswers(questions, picks, min = MIN_ANSWERS) {
   const answered = Array.isArray(picks) ? picks.filter((pick) => pick != null).length : 0;
-  if (!Array.isArray(picks) || picks.length !== questions.length || answered < MIN_ANSWERS) {
+  if (!Array.isArray(picks) || picks.length !== questions.length || answered < min) {
     return { ok: false, answered, totals: { ...EMPTY }, profile: null };
   }
   const totals = totalsOf(questions, picks);

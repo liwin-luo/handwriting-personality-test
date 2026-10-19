@@ -16,7 +16,9 @@ const FILTERS = [
 
 export function Chart() {
   const [filter, setFilter] = useState<(typeof FILTERS)[number][0]>("all");
+  const [query, setQuery] = useState("");
   const guideOf = new Map(guides.map((guide) => [guide.questionId, guide.slug]));
+  const needle = query.trim().toLowerCase();
 
   return (
     <div>
@@ -35,12 +37,22 @@ export function Chart() {
         <button type="button" onClick={() => window.print()} className="ml-auto text-sm underline decoration-rule underline-offset-4">
           Print
         </button>
+        <label className="mt-2 block w-full text-sm">
+          <span className="text-muted">Search shapes</span>
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="open 4, ampersand, slant"
+            className="mt-1 w-full border border-rule bg-paper px-3 py-2"
+          />
+        </label>
       </div>
       <ul className="mt-8 grid gap-6 sm:grid-cols-2">
         {questions.flatMap((question) =>
           question.options.map((option) => {
             const guide = guideOf.get(question.id);
-            const hidden = filter !== "all" && filter !== question.group;
+            const haystack = `${option.label} ${option.alt} ${question.title}`.toLowerCase();
+            const hidden = (filter !== "all" && filter !== question.group) || (needle !== "" && !haystack.includes(needle));
             return (
               <li
                 key={option.id}

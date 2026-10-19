@@ -12,7 +12,7 @@ export type GlyphOption = {
 
 export type QuizQuestion = {
   id: string;
-  group: "digit" | "letter" | "symbol" | "spacing" | "slant";
+  group: "digit" | "letter" | "symbol" | "spacing" | "slant" | "han";
   title: string;
   prompt: string;
   options: GlyphOption[];
@@ -26,6 +26,8 @@ export type Profile = {
   guides: [string, string];
   examples: string[];
   paragraphs: string[];
+  aside: string;
+  practice: string;
 };
 
 export type ScoreResult = {

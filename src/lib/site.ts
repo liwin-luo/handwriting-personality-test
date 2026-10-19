@@ -12,20 +12,25 @@ export function pageMeta({
   path,
   index = true,
   absolute = false,
+  pair,
 }: {
   title: string;
   description: string;
   path: string;
   index?: boolean;
   absolute?: boolean;
+  pair?: { en: string; zh: string };
 }): Metadata {
-  const url = `${SITE.url}${path}`;
+  const url = `${SITE.url}${path === "/" ? "/" : path}`;
+  const languages = pair
+    ? { en: pair.en, zh: pair.zh, "x-default": pair.en }
+    : { en: url, "x-default": url };
   return {
     title: absolute ? { absolute: title } : title,
     description,
     alternates: {
       canonical: url,
-      languages: { en: url, "x-default": url },
+      languages,
     },
     robots: index ? { index: true, follow: true } : { index: false, follow: false },
     openGraph: { title, description, url, type: "website", siteName: SITE.name },

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
+import { questions as zhQuestions } from "../content/zh.mjs";
 import { questions } from "../content/quiz.mjs";
 import {
   codeFromInput,
@@ -130,6 +131,21 @@ test("codes round-trip and reject a bad option", () => {
   assert.equal(codeFromInput(`https://handwritingpersonalitytest.online/r/${code}`, questions), code);
   assert.equal(codeFromInput(code, questions), code);
   assert.equal(codeFromInput("https://handwritingpersonalitytest.online/r/1nope", questions), null);
+});
+
+test("a shorter quiz can lower the minimum", () => {
+  const short = fixture([w(4, 0, 0, 0), w(4, 0, 0, 0), w(0, 1, 0, 0), w(0, 1, 0, 0)]);
+  assert.equal(scoreAnswers(short, [0, 0, null, null], 3).ok, false);
+  assert.equal(scoreAnswers(short, [0, 0, 0, null], 3).profile, "quiet-architect");
+});
+
+test("chinese samples exist", () => {
+  assert.equal(zhQuestions.length, 5);
+  for (const question of zhQuestions) {
+    for (const option of question.options) {
+      assert.ok(fs.existsSync(new URL(`../../public/samples/${option.file}`, import.meta.url)), option.file);
+    }
+  }
 });
 
 test("sample picks prefer the winning direction and skip blanks", () => {

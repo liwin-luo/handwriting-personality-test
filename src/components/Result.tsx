@@ -62,7 +62,6 @@ export function ResultView({ code }: { code: string }) {
   const profile = scored.profile ? profileBySlug[scored.profile] : null;
   const samples = profile ? pickSamples(picks, directionFor(profile.slug)) : [];
   const max = Math.max(1, ...DIRECTIONS.map((id) => scored.totals[id]));
-  const link = typeof window === "undefined" ? `/r/${code}` : `${window.location.origin}/r/${encodeAnswers(picks)}`;
 
   function commit(next: (number | null)[]) {
     const nextCode = encodeAnswers(next);
@@ -132,6 +131,9 @@ export function ResultView({ code }: { code: string }) {
           <p className="mt-3 max-w-xl text-sm text-muted">
             A label for the shapes in this link. Not a reading of personality, health, honesty, or ability.
           </p>
+          <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
+          <h2 className="mt-10 font-display text-2xl">One drill</h2>
+          <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
           <div className="notebook mt-8 aspect-[4/5] max-w-sm rounded-md p-6 pl-12">
             <p className="text-xs tracking-[0.14em] text-muted">HANDWRITING PERSONALITY TEST</p>
             <p className="mt-6 font-display text-4xl leading-none">{profile.name}</p>
@@ -220,7 +222,7 @@ export function ResultView({ code }: { code: string }) {
       <button type="button" onClick={retake} className="no-print mt-10 text-sm underline decoration-rule underline-offset-4">
         Retake from a blank page
       </button>
-      <p className="sr-only">{link}</p>
+      <p className="sr-only">{`/r/${encodeAnswers(picks)}`}</p>
     </article>
   );
 }

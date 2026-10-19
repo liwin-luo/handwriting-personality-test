@@ -29,6 +29,7 @@ export const metadata = pageMeta({
   description:
     "What a handwriting personality test can see, and what it cannot say about personality, health, honesty, intelligence, or hiring.",
   path: "/science",
+  pair: { en: `${SITE.url}/science`, zh: `${SITE.url}/zh/science` },
 });
 
 export default function SciencePage() {

@@ -143,6 +143,8 @@ export const profiles = [
     sentence: "You close the shapes that can be closed.",
     direction: "structure",
     guides: ["four", "zero"],
+    aside: "The copybook would nod. That nod is about the counters, not about your character.",
+    practice: "Write one line of open 4s and one line of closed 4s at the same speed. Keep the line you can still read.",
     examples: ["closed-four.svg", "double-storey-a.svg", "slashed-zero.svg"],
     paragraphs: [
       "Closed 4s, double-storey a's, slashed zeros, and upright stems pile up on this result. Quiet Architect is the name for that pile. It means the page prefers shapes with a finished counter and a clear midline.",
@@ -155,6 +157,8 @@ export const profiles = [
     sentence: "You stop the stroke once the letter is readable.",
     direction: "finish",
     guides: ["seven", "g"],
+    aside: "The pen clocked out the moment the letter became a letter.",
+    practice: "Add one crossbar to five plain 7s. If the bar makes them clearer, keep it. If it only decorates, leave it off.",
     examples: ["plain-seven.svg", "open-g.svg", "plain-zero.svg"],
     paragraphs: [
       "Plain 7s, open g tails, and unadorned zeros land here. Everyday Minimalist means the extra mark is missing: no crossbar, no loop, no slash. The letter ends when it can be read.",
@@ -167,6 +171,8 @@ export const profiles = [
     sentence: "Gaps and lean set the pace of the line.",
     direction: "rhythm",
     guides: ["spacing", "slant"],
+    aside: "The gaps are doing as much talking as the letters. The letters did not agree to that.",
+    practice: "On a lined page, leave a gap about one letter wide between words for ten words. Then look at the slant of the stems only.",
     examples: ["spacing-wide.svg", "slant-right.svg", "dotted-i-high.svg"],
     paragraphs: [
       "Word gaps, the lean of the downstroke, a high dot, or a high t-bar carry this result. Margin Storyteller names that pace. The line has a rhythm you can see without reading the words.",
@@ -179,6 +185,8 @@ export const profiles = [
     sentence: "You keep a mark the basic copybook leaves out.",
     direction: "character",
     guides: ["ampersand", "four"],
+    aside: "Something on the page refused the plain version. It can still be read, which is the whole trick.",
+    practice: "Copy one word twice: once with the extra mark, once without. Keep the one a stranger can read at arm's length.",
     examples: ["open-four.svg", "dotted-i-circle.svg", "flourished-ampersand.svg"],
     paragraphs: [
       "An open 4, a circle over the i, or a flourished ampersand is doing the work here. Beautiful Rebel is the name for that extra mark. The page is still readable. It just refuses the plain version.",
@@ -191,6 +199,8 @@ export const profiles = [
     sentence: "Flourish and rhythm show up in the same line.",
     direction: null,
     guides: ["a", "g"],
+    aside: "Two habits showed up and neither would leave the room.",
+    practice: "Write the same sentence on two lines. On the second line, keep the loops but make every word gap the width of one letter.",
     examples: ["looped-g.svg", "looped-y.svg", "high-t.svg"],
     paragraphs: [
       "This result appears when flourish and page rhythm are the two leaders, and neither is ahead by two points. Loops, wide gaps, and a high bar can share the page without one of them winning.",
@@ -203,6 +213,8 @@ export const profiles = [
     sentence: "No single habit runs the page.",
     direction: null,
     guides: ["slant", "spacing"],
+    aside: "The page voted for several models at once. That is a history of hands, not a mood.",
+    practice: "Pick the two shapes that disagreed and write each one, slowly, on its own line. The mix is allowed to stay.",
     examples: ["slant-upright.svg", "plain-seven.svg", "single-storey-a.svg"],
     paragraphs: [
       "No direction leads by two points, and the top pair is not flourish plus rhythm. Instinctive Mixer means the twelve shapes did not vote as a bloc. A closed 4 can sit next to a wide gap and an open g.",

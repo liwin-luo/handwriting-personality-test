@@ -7,6 +7,7 @@ import { packs } from "../content/latin-registry.mjs";
 import { guides as zhGuides } from "../content/zh-guides.mjs";
 import { questions as zhQuestions } from "../content/zh.mjs";
 import { questions } from "../content/quiz.mjs";
+import { languageHref, preferredLanguage } from "./lang-switch.mjs";
 import {
   codeFromInput,
   decodeAnswers,
@@ -228,6 +229,28 @@ test("each latin pack reuses the same shapes", () => {
     assert.match(JSON.stringify(pack.scienceFaqs) + pack.copy.science.study, /Neter/);
     assert.match(pack.copy.science.study, /737/);
   }
+});
+
+test("language switch stays on the translated page", () => {
+  assert.equal(languageHref("fr", "/guides/seven"), "/fr/guides/seven");
+  assert.equal(languageHref("en", "/fr/guides/seven"), "/guides/seven");
+  assert.equal(languageHref("de", "/fr/science"), "/de/science");
+  assert.equal(languageHref("zh", "/guides/seven"), "/zh");
+  assert.equal(languageHref("fr", "/zh/guides/size"), "/fr");
+  assert.equal(languageHref("zh", "/zh/guides/size"), "/zh/guides/size");
+  assert.equal(languageHref("es", "/r/1000000000000"), "/es/r/1000000000000");
+  assert.equal(languageHref("zh", "/fr/r/1000000000000"), "/zh");
+  assert.equal(languageHref("fr", "/tools/slant"), "/fr");
+  assert.equal(languageHref("en", "/tools/slant"), "/tools/slant");
+});
+
+test("browser language suggests a page we have, and stays quiet when it already matches", () => {
+  assert.equal(preferredLanguage(["zh-CN", "en-US"], "en"), "zh");
+  assert.equal(preferredLanguage(["zh-CN", "en-US"], "zh"), null);
+  assert.equal(preferredLanguage(["pt-BR"], "en"), "pt");
+  assert.equal(preferredLanguage(["ja", "fr-FR"], "en"), "fr");
+  assert.equal(preferredLanguage(["ja"], "en"), null);
+  assert.equal(preferredLanguage(["en-US", "zh-CN"], "zh"), "en");
 });
 
 test("sample picks prefer the winning direction and skip blanks", () => {

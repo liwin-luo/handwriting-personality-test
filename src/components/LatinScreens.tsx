@@ -1,4 +1,4 @@
-import { Glyph } from "@/components/Glyph";
+import { Glyph, GuideLink } from "@/components/Glyph";
 import { LatinQuiz } from "@/components/LatinQuiz";
 import { Crumbs, JsonLd } from "@/components/Meta";
 import type { LatinPack } from "@/content/packs";
@@ -38,12 +38,15 @@ export function LatinHome({ pack }: { pack: LatinPack }) {
       </section>
       <section className="mt-16">
         <h2 className="font-display text-3xl">{copy.shapesTitle}</h2>
-        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+        <ul className="mt-4 border-t border-rule">
           {pack.guides.map((guide: Guide) => (
             <li key={guide.slug}>
-              <a href={`/${copy.code}/guides/${guide.slug}`} className="block border border-rule bg-card px-4 py-3">
-                {guide.title}
-              </a>
+              <GuideLink
+                href={`/${copy.code}/guides/${guide.slug}`}
+                title={guide.title}
+                file={guide.figures[0].file}
+                alt={guide.figures[0].caption}
+              />
             </li>
           ))}
         </ul>

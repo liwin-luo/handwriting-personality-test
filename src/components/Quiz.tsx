@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Glyph } from "@/components/Glyph";
 import { MIN_ANSWERS, decodeAnswers, encodeAnswers, questions as englishQuestions } from "@/content";
@@ -38,6 +38,7 @@ export function Quiz({
     keys: (count) => `Keys 1–${count}, or arrows`,
   };
   const router = useRouter();
+  const advance = useRef<number | null>(null);
   const [picks, setPicks] = useState<(number | null)[]>(() => bank.map(() => null));
   const [index, setIndex] = useState(0);
   const [ready, setReady] = useState(false);
@@ -62,14 +63,33 @@ export function Quiz({
     localStorage.setItem(storageKey, encodeAnswers(picks));
   }, [picks, ready, storageKey]);
 
+  function go(next: number) {
+    if (advance.current != null) window.clearTimeout(advance.current);
+    advance.current = null;
+    setIndex(next);
+  }
+
   function choose(optionIndex: number) {
     setPicks((current) => current.map((pick, i) => (i === index ? optionIndex : pick)));
-    if (index < bank.length - 1) setIndex(index + 1);
+    if (advance.current != null) window.clearTimeout(advance.current);
+    if (index < bank.length - 1) {
+      const next = index + 1;
+      advance.current = window.setTimeout(() => {
+        advance.current = null;
+        setIndex(next);
+      }, 160);
+    }
   }
+
+  useEffect(() => {
+    return () => {
+      if (advance.current != null) window.clearTimeout(advance.current);
+    };
+  }, []);
 
   function skip() {
     setPicks((current) => current.map((pick, i) => (i === index ? null : pick)));
-    if (index < bank.length - 1) setIndex(index + 1);
+    if (index < bank.length - 1) go(index + 1);
   }
 
   useEffect(() => {
@@ -78,10 +98,10 @@ export function Quiz({
       if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) return;
       if (event.key === "ArrowRight") {
         event.preventDefault();
-        setIndex((current) => Math.min(bank.length - 1, current + 1));
+        go(Math.min(bank.length - 1, index + 1));
       } else if (event.key === "ArrowLeft") {
         event.preventDefault();
-        setIndex((current) => Math.max(0, current - 1));
+        go(Math.max(0, index - 1));
       } else if (/^[1-9]$/.test(event.key)) {
         const optionIndex = Number(event.key) - 1;
         if (optionIndex < question.options.length) choose(optionIndex);
@@ -93,20 +113,27 @@ export function Quiz({
 
   return (
     <section id="test" className="notebook rise rounded-md px-4 py-5 pl-10 shadow-[0_1px_0_rgba(28,25,21,0.04)] sm:px-6 sm:pl-12">
-      <div className="flex items-baseline justify-between gap-3 text-sm text-muted">
+      <div className="flex flex-col gap-1 text-sm text-muted sm:flex-row sm:items-baseline sm:justify-between">
         <p aria-live="polite">{text.progress(answered, bank.length, Math.max(0, minAnswers - answered))}</p>
-        <p className="font-display text-seal">{String(index + 1).padStart(2, "0")}</p>
+        <p className="font-display text-seal">
+          {String(index + 1).padStart(2, "0")}
+          <span className="ml-2 font-body text-sm text-ink">{question.title}</span>
+        </p>
       </div>
-      <div className="mt-3 flex flex-wrap gap-1.5" aria-label="Questions">
+      <div className="mt-3 flex flex-wrap gap-1" aria-label="Questions">
         {bank.map((item, i) => (
           <button
             key={item.id}
             type="button"
             aria-label={item.title}
             aria-current={i === index ? "step" : undefined}
-            onClick={() => setIndex(i)}
-            className={`h-2.5 w-6 rounded-sm ${i === index ? "bg-seal" : picks[i] == null ? "bg-rule" : "bg-ink"}`}
-          />
+            onClick={() => go(i)}
+            className={`grid h-9 min-w-9 place-items-center rounded-sm px-1 font-display text-sm ${
+              i === index ? "bg-seal text-paper" : picks[i] == null ? "bg-rule text-ink" : "bg-ink text-paper"
+            }`}
+          >
+            {i + 1}
+          </button>
         ))}
       </div>
       <h2 className="mt-6 font-display text-3xl leading-none">{question.prompt}</h2>
@@ -133,7 +160,7 @@ export function Quiz({
       <div className="mt-5 flex flex-wrap items-center gap-3">
         <button
           type="button"
-          onClick={() => setIndex(Math.max(0, index - 1))}
+          onClick={() => go(Math.max(0, index - 1))}
           disabled={index === 0}
           className="text-sm text-muted disabled:opacity-40"
         >

@@ -1,8 +1,8 @@
+import { GuideLink } from "@/components/Glyph";
 import { Quiz } from "@/components/Quiz";
 import { JsonLd } from "@/components/Meta";
 import { profiles } from "@/content";
 import { guides } from "@/content/guides";
-import { localeList } from "@/content/locale-list.mjs";
 import { homeLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
@@ -22,28 +22,6 @@ export default function HomePage() {
       <h1 className="mt-2 max-w-xl font-display text-5xl leading-[0.95] tracking-tight">Handwriting Personality Test</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">
         Pick the shapes you write. Eight answers are enough. The name you get is a filing label for those shapes, not a diagnosis. Keys 1, 2, and 3 choose a shape.
-      </p>
-      <p className="mt-3 text-sm">
-        {localeList.map((locale, index) => (
-          <span key={locale.code}>
-            {index > 0 ? <span className="text-muted"> · </span> : null}
-            <a className="underline decoration-rule underline-offset-4" href={`/${locale.code}`}>
-              {locale.label}
-            </a>
-          </span>
-        ))}
-        <span className="text-muted"> · </span>
-        <a className="underline decoration-rule underline-offset-4" href="/zh">
-          中文硬笔是另一套题
-        </a>
-        <span className="text-muted"> · </span>
-        <a className="underline decoration-rule underline-offset-4" href="/tools/slant">
-          Measure a slant
-        </a>
-        <span className="text-muted"> · </span>
-        <a className="underline decoration-rule underline-offset-4" href="/tools/signature">
-          Measure a signature
-        </a>
       </p>
       <div className="mt-8">
         <Quiz />
@@ -70,12 +48,15 @@ export default function HomePage() {
       </section>
       <section className="mt-16">
         <h2 className="font-display text-3xl">One shape, one page</h2>
-        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+        <ul className="mt-4 border-t border-rule">
           {guides.map((guide) => (
             <li key={guide.slug}>
-              <a href={`/guides/${guide.slug}`} className="block border border-rule bg-card px-4 py-3">
-                {guide.title}
-              </a>
+              <GuideLink
+                href={`/guides/${guide.slug}`}
+                title={guide.title}
+                file={guide.figures[0].file}
+                alt={guide.figures[0].caption}
+              />
             </li>
           ))}
         </ul>

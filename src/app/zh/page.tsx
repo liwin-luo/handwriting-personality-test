@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/Meta";
+import { GuideLink } from "@/components/Glyph";
 import { ZhQuiz } from "@/components/ZhQuiz";
 import { guides as zhGuides } from "@/content/zh-guides.mjs";
 import { homeLangs } from "@/lib/langs";
@@ -25,12 +26,15 @@ export default function ZhHome() {
       </div>
       <section className="mt-16">
         <h2 className="font-display text-3xl">五笔各一页</h2>
-        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+        <ul className="mt-4 border-t border-rule">
           {zhGuides.map((guide) => (
             <li key={guide.slug}>
-              <a href={`/zh/guides/${guide.slug}`} className="block border border-rule bg-card px-4 py-3">
-                {guide.title}
-              </a>
+              <GuideLink
+                href={`/zh/guides/${guide.slug}`}
+                title={guide.title}
+                file={guide.figures[0].file}
+                alt={guide.figures[0].caption}
+              />
             </li>
           ))}
         </ul>

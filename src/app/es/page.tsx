@@ -1,4 +1,5 @@
 import { EsQuiz } from "@/components/EsQuiz";
+import { GuideLink } from "@/components/Glyph";
 import { JsonLd } from "@/components/Meta";
 import { guides, profiles } from "@/content/es.mjs";
 import { SITE, pageMeta } from "@/lib/site";
@@ -45,12 +46,15 @@ export default function EsHome() {
       </section>
       <section className="mt-16">
         <h2 className="font-display text-3xl">Una forma, una página</h2>
-        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+        <ul className="mt-4 border-t border-rule">
           {guides.map((guide) => (
             <li key={guide.slug}>
-              <a href={`/es/guides/${guide.slug}`} className="block border border-rule bg-card px-4 py-3">
-                {guide.title}
-              </a>
+              <GuideLink
+                href={`/es/guides/${guide.slug}`}
+                title={guide.title}
+                file={guide.figures[0].file}
+                alt={guide.figures[0].caption}
+              />
             </li>
           ))}
         </ul>

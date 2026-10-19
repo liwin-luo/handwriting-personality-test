@@ -1,5 +1,6 @@
 import { JsonLd } from "@/components/Meta";
 import { ZhQuiz } from "@/components/ZhQuiz";
+import { guides as zhGuides } from "@/content/zh-guides.mjs";
 import { homeLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
@@ -22,6 +23,18 @@ export default function ZhHome() {
       <div className="mt-8">
         <ZhQuiz />
       </div>
+      <section className="mt-16">
+        <h2 className="font-display text-3xl">五笔各一页</h2>
+        <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+          {zhGuides.map((guide) => (
+            <li key={guide.slug}>
+              <a href={`/zh/guides/${guide.slug}`} className="block border border-rule bg-card px-4 py-3">
+                {guide.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
       <JsonLd
         data={{
           "@context": "https://schema.org",

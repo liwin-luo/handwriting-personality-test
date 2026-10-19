@@ -4,6 +4,7 @@ import test from "node:test";
 import { guides as esGuides, profiles as esProfiles, spanishQuestions } from "../content/es.mjs";
 import { localeList } from "../content/locale-list.mjs";
 import { packs } from "../content/latin-registry.mjs";
+import { guides as zhGuides } from "../content/zh-guides.mjs";
 import { questions as zhQuestions } from "../content/zh.mjs";
 import { questions } from "../content/quiz.mjs";
 import {
@@ -147,6 +148,16 @@ test("chinese samples exist", () => {
   for (const question of zhQuestions) {
     for (const option of question.options) {
       assert.ok(fs.existsSync(new URL(`../../public/samples/${option.file}`, import.meta.url)), option.file);
+    }
+  }
+  assert.deepEqual(
+    zhGuides.map((guide) => guide.slug),
+    zhQuestions.map((question) => question.id),
+  );
+  for (const guide of zhGuides) {
+    assert.equal(guide.questionId, guide.slug);
+    for (const figure of guide.figures) {
+      assert.ok(fs.existsSync(new URL(`../../public/samples/${figure.file}`, import.meta.url)), figure.file);
     }
   }
 });

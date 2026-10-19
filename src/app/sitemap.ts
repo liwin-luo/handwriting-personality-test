@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { profiles } from "@/content";
 import { guides } from "@/content/guides";
 import { localeList } from "@/content/locale-list.mjs";
+import { guides as zhGuides } from "@/content/zh-guides.mjs";
 import { SITE } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -16,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/signature",
     "/zh",
     "/zh/science",
+    ...zhGuides.map((guide: { slug: string }) => `/zh/guides/${guide.slug}`),
     ...localeList.flatMap((locale) => [
       `/${locale.code}`,
       `/${locale.code}/science`,

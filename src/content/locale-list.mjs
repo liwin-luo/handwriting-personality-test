@@ -7,4 +7,5 @@ export const localeList = [
   { code: "id", label: "Indonesia", brand: "Tes tulisan", science: "Sains" },
   { code: "vi", label: "Tiếng Việt", brand: "Trắc nghiệm nét chữ", science: "Khoa học" },
   { code: "it", label: "Italiano", brand: "Test della scrittura", science: "Scienza" },
+  { code: "tr", label: "Türkçe", brand: "El yazısı testi", science: "Bilim" },
 ];

@@ -1,4 +1,5 @@
 import { GuideLink } from "@/components/Glyph";
+import { TraitsBlurb } from "@/components/TraitsScreen";
 import { Quiz } from "@/components/Quiz";
 import { JsonLd } from "@/components/Meta";
 import { profiles } from "@/content";
@@ -48,6 +49,7 @@ export default function HomePage() {
       </section>
       <section className="mt-16">
         <h2 className="font-display text-3xl">One shape, one page</h2>
+        <TraitsBlurb code="en" />
         <ul className="mt-4 border-t border-rule">
           {guides.map((guide) => (
             <li key={guide.slug}>

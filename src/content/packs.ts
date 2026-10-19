@@ -3,6 +3,7 @@ import { packs as raw } from "./latin-registry.mjs";
 export type LatinPack = {
   localizedQuestions: () => {
     id: string;
+    group: string;
     title: string;
     prompt: string;
     options: { id: string; file: string; label: string; alt: string }[];

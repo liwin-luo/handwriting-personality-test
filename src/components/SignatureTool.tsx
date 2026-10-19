@@ -5,7 +5,11 @@ import { useRef, useState, type PointerEvent } from "react";
 type Point = { x: number; y: number };
 type Stroke = Point[];
 
-function measure(strokes: Stroke[]) {
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (_, key) => String(values[key] ?? ""));
+}
+
+function measure(strokes: Stroke[], labels: { left: string; right: string; upright: string }) {
   const points = strokes.flat();
   if (points.length < 2) return null;
   let minX = Infinity;
@@ -34,7 +38,7 @@ function measure(strokes: Stroke[]) {
   const width = Math.max(1, maxX - minX);
   const height = Math.max(1, maxY - minY);
   const lean = downs.length ? downs.reduce((sum, n) => sum + n, 0) / downs.length : 0;
-  const slant = lean <= -8 ? "Left of vertical" : lean >= 8 ? "Right of vertical" : "Near vertical";
+  const slant = lean <= -8 ? labels.left : lean >= 8 ? labels.right : labels.upright;
   return {
     width: Math.round(width),
     height: Math.round(height),
@@ -45,7 +49,19 @@ function measure(strokes: Stroke[]) {
   };
 }
 
-export function SignatureTool() {
+export function SignatureTool({
+  copy,
+}: {
+  copy: {
+    aria: string;
+    clear: string;
+    empty: string;
+    stats: string;
+    left: string;
+    right: string;
+    upright: string;
+  };
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const strokes = useRef<Stroke[]>([]);
   const drawing = useRef<Stroke | null>(null);
@@ -91,7 +107,7 @@ export function SignatureTool() {
 
   function up() {
     drawing.current = null;
-    setStats(measure(strokes.current));
+    setStats(measure(strokes.current, copy));
   }
 
   function clear() {
@@ -112,18 +128,16 @@ export function SignatureTool() {
         onPointerUp={up}
         onPointerCancel={up}
         className="h-auto w-full touch-none border border-rule bg-card"
-        aria-label="Draw a signature here. It stays in this browser."
+        aria-label={copy.aria}
       />
       <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
         <button type="button" onClick={clear} className="underline decoration-rule underline-offset-4">
-          Clear
+          {copy.clear}
         </button>
         {stats ? (
-          <p>
-            {stats.width}×{stats.height} px · ink length {stats.length} · {stats.turns} strokes · {stats.slant} ({stats.degrees}°)
-          </p>
+          <p>{fill(copy.stats, stats)}</p>
         ) : (
-          <p className="text-muted">Draw with a finger or a mouse. Nothing is saved.</p>
+          <p className="text-muted">{copy.empty}</p>
         )}
       </div>
     </div>

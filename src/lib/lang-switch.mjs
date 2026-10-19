@@ -48,12 +48,14 @@ export function languageHref(target, path) {
   const home = prefix || "/";
   if (rest === "/") return home;
   if (rest === "/science") return `${prefix}/science`;
+  if (rest === "/guides") return `${prefix}/guides`;
   if (rest.startsWith("/guides/")) {
     const slug = rest.slice("/guides/".length).split("/")[0];
     if (target === "zh") return HAN_GUIDES.includes(slug) ? `/zh/guides/${slug}` : "/zh";
     if (LATIN_GUIDES.includes(slug)) return `${prefix}/guides/${slug}`;
     return home;
   }
+  if (rest === "/chart" || rest === "/tools/slant" || rest === "/tools/signature") return `${prefix}${rest}`;
   if (rest.startsWith("/r/")) {
     const code = rest.slice("/r/".length).split("/")[0];
     if (code.length === 13 && target !== "zh") return `${prefix}/r/${code}`;

@@ -1,3 +1,4 @@
+import { TraitsBlurb } from "@/components/TraitsScreen";
 import { EsQuiz } from "@/components/EsQuiz";
 import { GuideLink } from "@/components/Glyph";
 import { JsonLd } from "@/components/Meta";
@@ -46,6 +47,7 @@ export default function EsHome() {
       </section>
       <section className="mt-16">
         <h2 className="font-display text-3xl">Una forma, una página</h2>
+        <TraitsBlurb code="es" />
         <ul className="mt-4 border-t border-rule">
           {guides.map((guide) => (
             <li key={guide.slug}>

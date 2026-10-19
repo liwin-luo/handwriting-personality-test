@@ -3,6 +3,8 @@ import fs from "node:fs";
 import test from "node:test";
 import { guides as esGuides, profiles as esProfiles, spanishQuestions } from "../content/es.mjs";
 import { localeList } from "../content/locale-list.mjs";
+import { traits, traitsCodes } from "../content/traits.mjs";
+import { toolCopy } from "../content/tools.mjs";
 import { packs } from "../content/latin-registry.mjs";
 import { guides as zhGuides } from "../content/zh-guides.mjs";
 import { questions as zhQuestions } from "../content/zh.mjs";
@@ -240,8 +242,16 @@ test("language switch stays on the translated page", () => {
   assert.equal(languageHref("zh", "/zh/guides/size"), "/zh/guides/size");
   assert.equal(languageHref("es", "/r/1000000000000"), "/es/r/1000000000000");
   assert.equal(languageHref("zh", "/fr/r/1000000000000"), "/zh");
-  assert.equal(languageHref("fr", "/tools/slant"), "/fr");
+  assert.equal(languageHref("fr", "/tools/slant"), "/fr/tools/slant");
   assert.equal(languageHref("en", "/tools/slant"), "/tools/slant");
+  assert.equal(languageHref("zh", "/chart"), "/zh/chart");
+  assert.equal(languageHref("en", "/zh/tools/signature"), "/tools/signature");
+  assert.equal(languageHref("pt", "/zh/chart"), "/pt/chart");
+  assert.equal(languageHref("zh", "/es/tools/slant"), "/zh/tools/slant");
+  assert.equal(languageHref("zh", "/guides"), "/zh/guides");
+  assert.equal(languageHref("fr", "/guides"), "/fr/guides");
+  assert.equal(languageHref("en", "/zh/guides"), "/guides");
+  assert.equal(languageHref("es", "/pt/guides"), "/es/guides");
 });
 
 test("browser language suggests a page we have, and stays quiet when it already matches", () => {
@@ -251,6 +261,66 @@ test("browser language suggests a page we have, and stays quiet when it already 
   assert.equal(preferredLanguage(["ja", "fr-FR"], "en"), "fr");
   assert.equal(preferredLanguage(["ja"], "en"), null);
   assert.equal(preferredLanguage(["en-US", "zh-CN"], "zh"), "en");
+});
+
+test("chart, slant, and signature exist in every language", () => {
+  const codes = ["en", "zh", ...localeList.map((locale) => locale.code)];
+  const latinFilters = ["all", "digit", "letter", "symbol", "spacing", "slant"];
+  for (const code of codes) {
+    const copy = toolCopy[code];
+    assert.ok(copy.nav.chart && copy.nav.slant && copy.nav.signature);
+    assert.equal(copy.slant.steps.length, 4);
+    assert.equal(copy.slant.faqs.length, 4);
+    assert.equal(copy.signature.steps.length, 3);
+    assert.equal(copy.signature.faqs.length, 4);
+    assert.match(copy.slant.align, /\{angle\}/);
+    assert.match(copy.slant.align, /\{reading\}/);
+    assert.match(copy.slant.note, /8/);
+    for (const token of ["{width}", "{height}", "{length}", "{turns}", "{slant}", "{degrees}"]) {
+      assert.ok(copy.signature.stats.includes(token), `${code} stats missing ${token}`);
+    }
+    assert.equal(copy.chart.filters[0][0], "all");
+    if (code === "zh") {
+      assert.deepEqual(
+        copy.chart.filters.slice(1).map((filter) => filter[0]),
+        zhQuestions.map((question) => question.id),
+      );
+    } else {
+      assert.deepEqual(
+        copy.chart.filters.map((filter) => filter[0]),
+        latinFilters,
+      );
+    }
+  }
+});
+
+test("the marks hub has the same six sections in every language", () => {
+  const ids = ["size", "slant", "spacing", "pressure", "baseline", "margins", "marks"];
+  assert.deepEqual(traitsCodes(), ["en", "zh", "es", "pt", "fr", "de", "id", "vi", "it", "tr"]);
+  for (const code of traitsCodes()) {
+    const copy = traits[code];
+    assert.deepEqual(
+      copy.sections.map((section) => section.id),
+      ids,
+    );
+    assert.ok(copy.faqs.length >= 3, code);
+    assert.ok(copy.sections.every((section) => section.paragraphs.length >= 1), code);
+    const hrefs = copy.sections.flatMap((section) => section.links.map((item) => item.href));
+    assert.ok(hrefs.every((href) => href.startsWith("/")), code);
+    const pressure = copy.sections.find((section) => section.id === "pressure");
+    assert.ok(pressure.links.every((item) => !item.href.includes("#q-")), code);
+    assert.ok(pressure.paragraphs.join(" ").length > 40, code);
+    if (code === "zh") {
+      assert.ok(hrefs.every((href) => href.startsWith("/zh")));
+      assert.ok(!hrefs.some((href) => href.includes("#q-t") || href.includes("#q-i")));
+      for (const href of ["/zh#q-size", "/zh#q-gap", "/zh#q-lines", "/zh#q-bar", "/zh#q-link"]) {
+        assert.ok(hrefs.includes(href), href);
+      }
+    } else {
+      assert.ok(hrefs.includes(code === "en" ? "/guides/slant" : `/${code}/guides/slant`));
+      assert.ok(hrefs.includes(code === "en" ? "/#q-t" : `/${code}#q-t`));
+    }
+  }
 });
 
 test("sample picks prefer the winning direction and skip blanks", () => {

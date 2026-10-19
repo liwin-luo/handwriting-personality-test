@@ -1,4 +1,5 @@
 import { Crumbs, JsonLd } from "@/components/Meta";
+import { TraitsScienceLine } from "@/components/TraitsScreen";
 import { scienceLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
@@ -45,6 +46,7 @@ export default function SciencePage() {
       <p className="mt-4 leading-relaxed">
         Size, slant, spacing, how a letter ends, and whether a counter is closed are visible on paper. Two people can point at the same stroke and agree. The chart and the guides stay inside that agreement.
       </p>
+      <TraitsScienceLine code="en" />
       <h2 className="mt-10 font-display text-2xl">What is not visible</h2>
       <p className="mt-4 leading-relaxed">
         Personality, mood, health, honesty, intelligence, and fitness for a job are not in the stroke. A photograph also drops pen pressure and speed. Dark ink is not a hard pen. A tidy line is not a slow one.

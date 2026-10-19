@@ -1,4 +1,5 @@
 import { Glyph, GuideLink } from "@/components/Glyph";
+import { TraitsBlurb, TraitsScienceLine } from "@/components/TraitsScreen";
 import { LatinQuiz } from "@/components/LatinQuiz";
 import { Crumbs, JsonLd } from "@/components/Meta";
 import type { LatinPack } from "@/content/packs";
@@ -38,6 +39,7 @@ export function LatinHome({ pack }: { pack: LatinPack }) {
       </section>
       <section className="mt-16">
         <h2 className="font-display text-3xl">{copy.shapesTitle}</h2>
+        <TraitsBlurb code={copy.code} />
         <ul className="mt-4 border-t border-rule">
           {pack.guides.map((guide: Guide) => (
             <li key={guide.slug}>
@@ -77,6 +79,7 @@ export function LatinScience({ pack }: { pack: LatinPack }) {
       <p className="mt-4 max-w-xl text-lg leading-snug">{copy.science.lede}</p>
       <h2 className="mt-10 font-display text-2xl">{copy.science.visibleTitle}</h2>
       <p className="mt-4 leading-relaxed">{copy.science.visible}</p>
+      <TraitsScienceLine code={copy.code} />
       <h2 className="mt-10 font-display text-2xl">{copy.science.invisibleTitle}</h2>
       <p className="mt-4 leading-relaxed">{copy.science.invisible}</p>
       <p className="mt-4 leading-relaxed">{copy.science.study}</p>

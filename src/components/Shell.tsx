@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { localeList } from "@/content/locale-list.mjs";
+import { toolCopyFor } from "@/content/tools";
 import { languageHref, preferredLanguage, suggestCopy } from "@/lib/lang-switch.mjs";
 
 const SKIP_KEY = "hpt.lang-skip";
@@ -18,6 +19,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const zh = path === "/zh" || path.startsWith("/zh/");
   const locale = localeList.find((item) => path === `/${item.code}` || path.startsWith(`/${item.code}/`));
   const lang = zh ? "zh" : locale ? locale.code : "en";
+  const prefix = zh ? "/zh" : locale ? `/${locale.code}` : "";
+  const tools = toolCopyFor(lang)!;
+  const scienceHref = `${prefix}/science`;
+  const scienceLabel = zh ? "科学" : locale ? locale.science : "Science";
+  const marksLabel = zh ? "写法" : locale ? locale.marks : "Marks";
   const [suggest, setSuggest] = useState<string | null>(null);
 
   useEffect(() => {
@@ -46,18 +52,10 @@ export function Shell({ children }: { children: React.ReactNode }) {
             {zh ? "笔迹测验" : locale ? locale.brand : "Handwriting Personality Test"}
           </a>
           <nav className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm sm:justify-end sm:pt-1">
-            {zh ? (
-              <a href="/zh/science">科学</a>
-            ) : locale ? (
-              <a href={`/${locale.code}/science`}>{locale.science}</a>
-            ) : (
-              <>
-                <a href="/chart">Chart</a>
-                <a href="/tools/slant">Slant</a>
-                <a href="/tools/signature">Signature</a>
-                <a href="/science">Science</a>
-              </>
-            )}
+            <a href={`${prefix}/chart`}>{tools.nav.chart}</a>
+            <a href={`${prefix}/tools/slant`}>{tools.nav.slant}</a>
+            <a href={`${prefix}/tools/signature`}>{tools.nav.signature}</a>
+            <a href={scienceHref}>{scienceLabel}</a>
             <details className="lang-menu relative ml-auto sm:ml-2">
               <summary className="flex cursor-pointer items-center gap-2 border border-ink bg-card px-3 py-1.5">
                 <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="shrink-0">
@@ -105,32 +103,20 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <main className="mx-auto max-w-3xl px-5 py-10">{children}</main>
       <footer className="border-t border-rule">
         <nav className="mx-auto flex max-w-3xl flex-wrap gap-x-5 gap-y-2 px-5 py-8 text-sm text-muted">
-          {zh ? (
-            <>
-              <a href="/zh/science">科学</a>
-              <a href="/tools/slant">倾斜尺</a>
-              <a href="/privacy">Privacy</a>
-              <a href="/terms">Terms</a>
-            </>
-          ) : locale ? (
-            <>
-              <a href={`/${locale.code}/science`}>{locale.science}</a>
-              <a href="/privacy">Privacy</a>
-              <a href="/terms">Terms</a>
-            </>
-          ) : (
+          <a href={`${prefix}/chart`}>{tools.nav.chart}</a>
+          <a href={`${prefix}/tools/slant`}>{tools.nav.slant}</a>
+          <a href={`${prefix}/tools/signature`}>{tools.nav.signature}</a>
+          <a href={scienceHref}>{scienceLabel}</a>
+          <a href={`${prefix}/guides`}>{marksLabel}</a>
+          {zh || locale ? null : (
             <>
               <a href="/results">Profiles</a>
-              <a href="/chart">Chart</a>
-              <a href="/tools/slant">Slant</a>
-              <a href="/tools/signature">Signature</a>
-              <a href="/science">Science</a>
               <a href="/about">About</a>
-              <a href="/privacy">Privacy</a>
-              <a href="/terms">Terms</a>
               <a href="/contact">Contact</a>
             </>
           )}
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
         </nav>
         <p className="mx-auto max-w-3xl px-5 pb-8 text-xs text-muted">handwritingpersonalitytest.online</p>
       </footer>

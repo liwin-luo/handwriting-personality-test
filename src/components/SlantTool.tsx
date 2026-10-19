@@ -2,7 +2,24 @@
 
 import { useEffect, useState } from "react";
 
-export function SlantTool() {
+function fill(template: string, values: Record<string, string | number>) {
+  return template.replace(/\{(\w+)\}/g, (_, key) => String(values[key] ?? ""));
+}
+
+export function SlantTool({
+  copy,
+}: {
+  copy: {
+    upload: string;
+    alt: string;
+    empty: string;
+    align: string;
+    left: string;
+    right: string;
+    upright: string;
+    note: string;
+  };
+}) {
   const [url, setUrl] = useState<string | null>(null);
   const [angle, setAngle] = useState(8);
 
@@ -12,12 +29,12 @@ export function SlantTool() {
     };
   }, [url]);
 
-  const reading = angle <= -8 ? "Left of vertical" : angle >= 8 ? "Right of vertical" : "Near vertical";
+  const reading = angle <= -8 ? copy.left : angle >= 8 ? copy.right : copy.upright;
 
   return (
     <div className="mt-8">
       <label className="block text-sm">
-        A photo stays in this browser. It is not uploaded.
+        {copy.upload}
         <input
           type="file"
           accept="image/*"
@@ -34,11 +51,9 @@ export function SlantTool() {
         {url ? (
           // Local blob preview. next/image cannot take a user file.
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={url} alt="Your handwriting sample, kept in this browser" className="h-full w-full object-contain" />
+          <img src={url} alt={copy.alt} className="h-full w-full object-contain" />
         ) : (
-          <p className="flex h-full items-center justify-center px-6 text-center text-sm text-muted">
-            Add a photo of a few lines, or use the ruler on the empty page.
-          </p>
+          <p className="flex h-full items-center justify-center px-6 text-center text-sm text-muted">{copy.empty}</p>
         )}
         <div
           className="pointer-events-none absolute top-6 bottom-6 left-1/2 w-1 -translate-x-1/2 bg-seal"
@@ -46,7 +61,7 @@ export function SlantTool() {
         />
       </div>
       <label className="mt-4 block text-sm">
-        Align the red stem with a downstroke. {angle}° from vertical · {reading}
+        {fill(copy.align, { angle, reading })}
         <input
           type="range"
           min={-40}
@@ -57,7 +72,7 @@ export function SlantTool() {
         />
       </label>
       <p className="mt-3 text-sm text-muted">
-        Within 8° of vertical counts as upright. This is the angle you set, not a reading of the person who wrote.
+        {copy.note}
       </p>
     </div>
   );

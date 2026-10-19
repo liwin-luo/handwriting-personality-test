@@ -1,3 +1,4 @@
+import { TraitsScienceLine } from "@/components/TraitsScreen";
 import { Crumbs, JsonLd } from "@/components/Meta";
 import { scienceFaqs } from "@/content/es.mjs";
 import { SITE, pageMeta } from "@/lib/site";
@@ -22,6 +23,7 @@ export default function EsScience() {
       <p className="mt-4 leading-relaxed">
         El tamaño, la inclinación, el espacio, cómo termina una letra y si un ojo está cerrado se ven en el papel. Dos personas pueden señalar el mismo trazo y estar de acuerdo.
       </p>
+      <TraitsScienceLine code="es" />
       <h2 className="mt-10 font-display text-2xl">Lo que no se ve</h2>
       <p className="mt-4 leading-relaxed">
         La personalidad, el ánimo, la salud, la honestidad, la inteligencia y la aptitud para un trabajo no están en el trazo. Una foto también pierde la presión y la velocidad. La tinta oscura no es una pluma dura. Una línea ordenada no es una línea lenta.

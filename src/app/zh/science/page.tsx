@@ -1,3 +1,4 @@
+import { TraitsScienceLine } from "@/components/TraitsScreen";
 import { JsonLd } from "@/components/Meta";
 import { scienceLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
@@ -37,6 +38,7 @@ export default function ZhScience() {
         1989 年一份关于招聘中笔迹学的元分析看了 17 项研究。字的内容中性时，笔迹学家的判断接近零。没受过笔迹学训练的心理学家反而更好，这说明他们看的是页面上的词，不是笔画。见
         Neter 与 Ben-Shakhar，Personality and Individual Differences，1989，第 10 卷，第 737–745 页。不要拿一个写法名称做决定。
       </p>
+      <TraitsScienceLine code="zh" />
       <h2 className="mt-10 font-display text-2xl">问题</h2>
       <dl className="mt-4 space-y-6">
         {faqs.map((faq) => (

@@ -1,3 +1,4 @@
+import { TraitsBlurb } from "@/components/TraitsScreen";
 import { JsonLd } from "@/components/Meta";
 import { GuideLink } from "@/components/Glyph";
 import { ZhQuiz } from "@/components/ZhQuiz";
@@ -26,6 +27,7 @@ export default function ZhHome() {
       </div>
       <section className="mt-16">
         <h2 className="font-display text-3xl">五笔各一页</h2>
+        <TraitsBlurb code="zh" />
         <ul className="mt-4 border-t border-rule">
           {zhGuides.map((guide) => (
             <li key={guide.slug}>

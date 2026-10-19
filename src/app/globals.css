@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3ecdf;
+  --ink: #1c1915;
+  --seal: #b43324;
+  --rule: #e3d5c0;
+  --card: #faf6ee;
+  --muted: #5e564c;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-seal: var(--seal);
+  --color-rule: var(--rule);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --font-display: var(--font-fraunces), "Iowan Old Style", Palatino, serif;
+  --font-body: var(--font-literata), "Iowan Old Style", Palatino, serif;
+}
+
+body {
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(28, 25, 21, 0.035) 0.6px, transparent 0.7px);
+  background-size: 3px 3px;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: #f0c7bf;
+}
+
+:focus-visible {
+  outline: 2px solid var(--seal);
+  outline-offset: 3px;
+}
+
+.notebook {
+  background:
+    linear-gradient(
+      90deg,
+      transparent 1.35rem,
+      rgba(180, 51, 36, 0.55) 1.35rem,
+      rgba(180, 51, 36, 0.55) calc(1.35rem + 1px),
+      transparent calc(1.35rem + 1px)
+    ),
+    var(--card);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.45s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .sample-card {
+    break-inside: avoid;
+    display: block !important;
+  }
+}

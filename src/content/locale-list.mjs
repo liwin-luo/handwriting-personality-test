@@ -5,4 +5,5 @@ export const localeList = [
   { code: "fr", label: "Français", brand: "Test de l'écriture", science: "Science" },
   { code: "de", label: "Deutsch", brand: "Test der Schrift", science: "Wissenschaft" },
   { code: "id", label: "Indonesia", brand: "Tes tulisan", science: "Sains" },
+  { code: "vi", label: "Tiếng Việt", brand: "Trắc nghiệm nét chữ", science: "Khoa học" },
 ];

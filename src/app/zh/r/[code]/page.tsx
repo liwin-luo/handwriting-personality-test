@@ -12,6 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ code: str
     description: "一条中文硬笔测验的分享链接。",
     path: `/zh/r/${code}`,
     index: false,
+    selfLang: "zh",
   });
 }
 

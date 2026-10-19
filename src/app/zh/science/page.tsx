@@ -24,7 +24,7 @@ export const metadata = pageMeta({
   title: "笔迹分析准不准",
   description: "笔迹看得见什么，以及它不能说明性格、健康、诚实、智力或雇佣。",
   path: "/zh/science",
-  pair: { en: `${SITE.url}/science`, zh: `${SITE.url}/zh/science` },
+  langs: { en: `${SITE.url}/science`, zh: `${SITE.url}/zh/science`, es: `${SITE.url}/es/science` },
 });
 
 export default function ZhScience() {

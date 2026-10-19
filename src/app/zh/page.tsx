@@ -7,7 +7,7 @@ export const metadata = pageMeta({
   description: "五道中文硬笔题：大小、字距、行距、连笔、横画。不是拉丁字母测验的翻译。至少四题。不上传。",
   path: "/zh",
   absolute: true,
-  pair: { en: `${SITE.url}/`, zh: `${SITE.url}/zh` },
+  langs: { en: `${SITE.url}/`, zh: `${SITE.url}/zh`, es: `${SITE.url}/es` },
 });
 
 export default function ZhHome() {

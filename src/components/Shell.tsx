@@ -6,22 +6,31 @@ import { useEffect } from "react";
 export function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || "/";
   const zh = path === "/zh" || path.startsWith("/zh/");
+  const es = path === "/es" || path.startsWith("/es/");
+  const lang = zh ? "zh" : es ? "es" : "en";
 
   useEffect(() => {
-    document.documentElement.lang = zh ? "zh" : "en";
-  }, [zh]);
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   return (
     <>
       <header className="border-b border-rule">
         <div className="mx-auto flex max-w-3xl flex-col gap-3 px-5 py-4 sm:flex-row sm:items-start sm:justify-between">
-          <a href={zh ? "/zh" : "/"} className="font-display text-lg leading-tight tracking-tight sm:text-xl">
-            {zh ? "笔迹测验" : "Handwriting Personality Test"}
+          <a href={zh ? "/zh" : es ? "/es" : "/"} className="font-display text-lg leading-tight tracking-tight sm:text-xl">
+            {zh ? "笔迹测验" : es ? "Test de la letra" : "Handwriting Personality Test"}
           </a>
           <nav className="flex flex-wrap gap-x-4 gap-y-1 text-sm sm:justify-end sm:pt-1">
             {zh ? (
               <>
                 <a href="/zh/science">科学</a>
+                <a href="/es">Español</a>
+                <a href="/">English</a>
+              </>
+            ) : es ? (
+              <>
+                <a href="/es/science">Ciencia</a>
+                <a href="/zh">中文</a>
                 <a href="/">English</a>
               </>
             ) : (
@@ -31,6 +40,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                 <a href="/tools/signature">Signature</a>
                 <a href="/science">Science</a>
                 <a href="/zh">中文</a>
+                <a href="/es">Español</a>
               </>
             )}
           </nav>
@@ -43,6 +53,15 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <>
               <a href="/zh/science">科学</a>
               <a href="/tools/slant">倾斜尺</a>
+              <a href="/es">Español</a>
+              <a href="/">English</a>
+              <a href="/privacy">Privacy</a>
+              <a href="/terms">Terms</a>
+            </>
+          ) : es ? (
+            <>
+              <a href="/es/science">Ciencia</a>
+              <a href="/zh">中文</a>
               <a href="/">English</a>
               <a href="/privacy">Privacy</a>
               <a href="/terms">Terms</a>

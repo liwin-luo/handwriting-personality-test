@@ -10,7 +10,7 @@ export const metadata = pageMeta({
     "A free handwriting personality test. Pick the shapes you actually write. Eight answers show a fictional label. Nothing is uploaded.",
   path: "/",
   absolute: true,
-  pair: { en: `${SITE.url}/`, zh: `${SITE.url}/zh` },
+  langs: { en: `${SITE.url}/`, zh: `${SITE.url}/zh`, es: `${SITE.url}/es` },
 });
 
 export default function HomePage() {
@@ -22,6 +22,10 @@ export default function HomePage() {
         Pick the shapes you write. Eight answers are enough. The name you get is a filing label for those shapes, not a diagnosis. Keys 1, 2, and 3 choose a shape.
       </p>
       <p className="mt-3 text-sm">
+        <a className="underline decoration-rule underline-offset-4" href="/es">
+          Español
+        </a>
+        <span className="text-muted"> · </span>
         <a className="underline decoration-rule underline-offset-4" href="/zh">
           中文硬笔是另一套题
         </a>

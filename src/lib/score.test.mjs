@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
+import { guides as esGuides, profiles as esProfiles, spanishQuestions } from "../content/es.mjs";
 import { questions as zhQuestions } from "../content/zh.mjs";
 import { questions } from "../content/quiz.mjs";
 import {
@@ -145,6 +146,36 @@ test("chinese samples exist", () => {
     for (const option of question.options) {
       assert.ok(fs.existsSync(new URL(`../../public/samples/${option.file}`, import.meta.url)), option.file);
     }
+  }
+});
+
+test("spanish copy covers every latin shape", () => {
+  const es = spanishQuestions();
+  assert.equal(es.length, questions.length);
+  for (let i = 0; i < es.length; i++) {
+    assert.equal(es[i].id, questions[i].id);
+    assert.equal(es[i].options.length, questions[i].options.length);
+    for (let j = 0; j < es[i].options.length; j++) {
+      assert.equal(es[i].options[j].id, questions[i].options[j].id);
+      assert.deepEqual(es[i].options[j].weights, questions[i].options[j].weights);
+      assert.notEqual(es[i].options[j].label, questions[i].options[j].label);
+    }
+  }
+  assert.deepEqual(
+    esGuides.map((guide) => guide.slug).sort(),
+    ["a", "ampersand", "four", "g", "seven", "slant", "spacing", "zero"],
+  );
+  for (const slug of [
+    "quiet-architect",
+    "everyday-minimalist",
+    "margin-storyteller",
+    "beautiful-rebel",
+    "daydream-doodler",
+    "instinctive-mixer",
+  ]) {
+    assert.ok(esProfiles[slug].name);
+    assert.ok(esProfiles[slug].sentence);
+    assert.ok(esProfiles[slug].practice);
   }
 });
 

@@ -13,6 +13,8 @@ export function pageMeta({
   index = true,
   absolute = false,
   pair,
+  langs,
+  selfLang,
 }: {
   title: string;
   description: string;
@@ -20,11 +22,15 @@ export function pageMeta({
   index?: boolean;
   absolute?: boolean;
   pair?: { en: string; zh: string };
+  langs?: Record<string, string>;
+  selfLang?: string;
 }): Metadata {
   const url = `${SITE.url}${path === "/" ? "/" : path}`;
-  const languages = pair
-    ? { en: pair.en, zh: pair.zh, "x-default": pair.en }
-    : { en: url, "x-default": url };
+  const languages = langs
+    ? { ...langs, "x-default": langs.en ?? url }
+    : pair
+      ? { en: pair.en, zh: pair.zh, "x-default": pair.en }
+      : { [selfLang ?? "en"]: url, "x-default": url };
   return {
     title: absolute ? { absolute: title } : title,
     description,

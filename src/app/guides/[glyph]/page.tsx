@@ -21,6 +21,10 @@ export async function generateMetadata({
     title: guide.title,
     description: guide.description,
     path: `/guides/${guide.slug}`,
+    langs: {
+      en: `${SITE.url}/guides/${guide.slug}`,
+      es: `${SITE.url}/es/guides/${guide.slug}`,
+    },
   });
 }
 

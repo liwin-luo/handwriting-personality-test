@@ -2,6 +2,8 @@ import { Quiz } from "@/components/Quiz";
 import { JsonLd } from "@/components/Meta";
 import { profiles } from "@/content";
 import { guides } from "@/content/guides";
+import { localeList } from "@/content/locale-list.mjs";
+import { homeLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
 export const metadata = pageMeta({
@@ -10,7 +12,7 @@ export const metadata = pageMeta({
     "A free handwriting personality test. Pick the shapes you actually write. Eight answers show a fictional label. Nothing is uploaded.",
   path: "/",
   absolute: true,
-  langs: { en: `${SITE.url}/`, zh: `${SITE.url}/zh`, es: `${SITE.url}/es` },
+  langs: homeLangs(),
 });
 
 export default function HomePage() {
@@ -22,9 +24,14 @@ export default function HomePage() {
         Pick the shapes you write. Eight answers are enough. The name you get is a filing label for those shapes, not a diagnosis. Keys 1, 2, and 3 choose a shape.
       </p>
       <p className="mt-3 text-sm">
-        <a className="underline decoration-rule underline-offset-4" href="/es">
-          Español
-        </a>
+        {localeList.map((locale, index) => (
+          <span key={locale.code}>
+            {index > 0 ? <span className="text-muted"> · </span> : null}
+            <a className="underline decoration-rule underline-offset-4" href={`/${locale.code}`}>
+              {locale.label}
+            </a>
+          </span>
+        ))}
         <span className="text-muted"> · </span>
         <a className="underline decoration-rule underline-offset-4" href="/zh">
           中文硬笔是另一套题

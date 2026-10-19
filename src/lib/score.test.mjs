@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
 import { guides as esGuides, profiles as esProfiles, spanishQuestions } from "../content/es.mjs";
+import { localeList } from "../content/locale-list.mjs";
+import { packs } from "../content/latin-registry.mjs";
 import { questions as zhQuestions } from "../content/zh.mjs";
 import { questions } from "../content/quiz.mjs";
 import {
@@ -176,6 +178,44 @@ test("spanish copy covers every latin shape", () => {
     assert.ok(esProfiles[slug].name);
     assert.ok(esProfiles[slug].sentence);
     assert.ok(esProfiles[slug].practice);
+  }
+});
+
+const PROFILE_SLUGS = [
+  "quiet-architect",
+  "everyday-minimalist",
+  "margin-storyteller",
+  "beautiful-rebel",
+  "daydream-doodler",
+  "instinctive-mixer",
+];
+
+test("each latin pack reuses the same shapes", () => {
+  const codes = Object.keys(packs);
+  assert.ok(codes.length >= 1);
+  for (const code of codes) {
+    assert.ok(localeList.some((locale) => locale.code === code), code);
+    const pack = packs[code];
+    const localized = pack.localizedQuestions();
+    assert.equal(localized.length, questions.length);
+    for (let i = 0; i < localized.length; i++) {
+      assert.equal(localized[i].id, questions[i].id);
+      for (let j = 0; j < localized[i].options.length; j++) {
+        assert.equal(localized[i].options[j].id, questions[i].options[j].id);
+        assert.deepEqual(localized[i].options[j].weights, questions[i].options[j].weights);
+        assert.notEqual(localized[i].options[j].label, questions[i].options[j].label);
+      }
+    }
+    assert.deepEqual(
+      pack.guides.map((guide) => guide.slug).sort(),
+      ["a", "ampersand", "four", "g", "seven", "slant", "spacing", "zero"],
+    );
+    for (const slug of PROFILE_SLUGS) {
+      assert.ok(pack.profiles[slug].name);
+      assert.ok(pack.profiles[slug].practice);
+    }
+    assert.match(JSON.stringify(pack.scienceFaqs) + pack.copy.science.study, /Neter/);
+    assert.match(pack.copy.science.study, /737/);
   }
 });
 

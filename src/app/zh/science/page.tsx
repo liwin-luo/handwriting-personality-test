@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/Meta";
+import { scienceLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
 const faqs = [
@@ -24,7 +25,7 @@ export const metadata = pageMeta({
   title: "笔迹分析准不准",
   description: "笔迹看得见什么，以及它不能说明性格、健康、诚实、智力或雇佣。",
   path: "/zh/science",
-  langs: { en: `${SITE.url}/science`, zh: `${SITE.url}/zh/science`, es: `${SITE.url}/es/science` },
+  langs: scienceLangs(),
 });
 
 export default function ZhScience() {

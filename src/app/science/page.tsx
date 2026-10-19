@@ -1,4 +1,5 @@
 import { Crumbs, JsonLd } from "@/components/Meta";
+import { scienceLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
 const faqs = [
@@ -29,7 +30,7 @@ export const metadata = pageMeta({
   description:
     "What a handwriting personality test can see, and what it cannot say about personality, health, honesty, intelligence, or hiring.",
   path: "/science",
-  langs: { en: `${SITE.url}/science`, zh: `${SITE.url}/zh/science`, es: `${SITE.url}/es/science` },
+  langs: scienceLangs(),
 });
 
 export default function SciencePage() {

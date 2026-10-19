@@ -1,5 +1,6 @@
 import { JsonLd } from "@/components/Meta";
 import { ZhQuiz } from "@/components/ZhQuiz";
+import { homeLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
 export const metadata = pageMeta({
@@ -7,7 +8,7 @@ export const metadata = pageMeta({
   description: "五道中文硬笔题：大小、字距、行距、连笔、横画。不是拉丁字母测验的翻译。至少四题。不上传。",
   path: "/zh",
   absolute: true,
-  langs: { en: `${SITE.url}/`, zh: `${SITE.url}/zh`, es: `${SITE.url}/es` },
+  langs: homeLangs(),
 });
 
 export default function ZhHome() {

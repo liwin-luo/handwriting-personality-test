@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { profiles } from "@/content";
 import { guides } from "@/content/guides";
+import { localeList } from "@/content/locale-list.mjs";
 import { SITE } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,9 +16,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tools/signature",
     "/zh",
     "/zh/science",
-    "/es",
-    "/es/science",
-    ...guides.map((guide) => `/es/guides/${guide.slug}`),
+    ...localeList.flatMap((locale) => [
+      `/${locale.code}`,
+      `/${locale.code}/science`,
+      ...guides.map((guide) => `/${locale.code}/guides/${guide.slug}`),
+    ]),
     "/about",
     "/privacy",
     "/terms",

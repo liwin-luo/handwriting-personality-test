@@ -4,4 +4,5 @@ export const localeList = [
   { code: "pt", label: "Português", brand: "Teste da letra", science: "Ciência" },
   { code: "fr", label: "Français", brand: "Test de l'écriture", science: "Science" },
   { code: "de", label: "Deutsch", brand: "Test der Schrift", science: "Wissenschaft" },
+  { code: "id", label: "Indonesia", brand: "Tes tulisan", science: "Sains" },
 ];

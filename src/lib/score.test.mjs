@@ -3,6 +3,7 @@ import fs from "node:fs";
 import test from "node:test";
 import { guides as esGuides, profiles as esProfiles, spanishQuestions } from "../content/es.mjs";
 import { localeList } from "../content/locale-list.mjs";
+import { series, seriesCodes } from "../content/series.mjs";
 import { traits, traitsCodes } from "../content/traits.mjs";
 import { toolCopy } from "../content/tools.mjs";
 import { packs } from "../content/latin-registry.mjs";
@@ -179,8 +180,15 @@ test("spanish copy covers every latin shape", () => {
   }
   assert.deepEqual(
     esGuides.map((guide) => guide.slug).sort(),
-    ["a", "ampersand", "four", "g", "seven", "slant", "spacing", "zero"],
+    ["a", "ampersand", "four", "g", "i", "one", "seven", "slant", "spacing", "t", "y", "zero"],
   );
+  for (const guide of esGuides) {
+    assert.equal(guide.faqs.length, 4, guide.slug);
+    assert.equal(guide.origin.length, 2, guide.slug);
+    for (const figure of guide.figures) {
+      assert.ok(fs.existsSync(new URL(`../../public/samples/${figure.file}`, import.meta.url)), figure.file);
+    }
+  }
   for (const slug of [
     "quiet-architect",
     "everyday-minimalist",
@@ -222,8 +230,15 @@ test("each latin pack reuses the same shapes", () => {
     }
     assert.deepEqual(
       pack.guides.map((guide) => guide.slug).sort(),
-      ["a", "ampersand", "four", "g", "seven", "slant", "spacing", "zero"],
+      ["a", "ampersand", "four", "g", "i", "one", "seven", "slant", "spacing", "t", "y", "zero"],
     );
+    for (const guide of pack.guides) {
+      assert.equal(guide.faqs.length, 4, `${code} ${guide.slug}`);
+      assert.equal(guide.origin.length, 2, `${code} ${guide.slug}`);
+      for (const figure of guide.figures) {
+        assert.ok(fs.existsSync(new URL(`../../public/samples/${figure.file}`, import.meta.url)), `${code} ${figure.file}`);
+      }
+    }
     for (const slug of PROFILE_SLUGS) {
       assert.ok(pack.profiles[slug].name);
       assert.ok(pack.profiles[slug].practice);
@@ -235,6 +250,10 @@ test("each latin pack reuses the same shapes", () => {
 
 test("language switch stays on the translated page", () => {
   assert.equal(languageHref("fr", "/guides/seven"), "/fr/guides/seven");
+  assert.equal(languageHref("es", "/guides/t"), "/es/guides/t");
+  assert.equal(languageHref("en", "/pt/guides/y"), "/guides/y");
+  assert.equal(languageHref("zh", "/guides/one"), "/zh");
+  assert.equal(languageHref("de", "/guides/i"), "/de/guides/i");
   assert.equal(languageHref("en", "/fr/guides/seven"), "/guides/seven");
   assert.equal(languageHref("de", "/fr/science"), "/de/science");
   assert.equal(languageHref("zh", "/guides/seven"), "/zh");
@@ -252,6 +271,11 @@ test("language switch stays on the translated page", () => {
   assert.equal(languageHref("fr", "/guides"), "/fr/guides");
   assert.equal(languageHref("en", "/zh/guides"), "/guides");
   assert.equal(languageHref("es", "/pt/guides"), "/es/guides");
+  assert.equal(languageHref("es", "/faq"), "/es/faq");
+  assert.equal(languageHref("zh", "/about"), "/zh/about");
+  assert.equal(languageHref("en", "/de/tools/signature/size"), "/tools/signature/size");
+  assert.equal(languageHref("pt", "/tools/signature/body"), "/pt/tools/signature/body");
+  assert.equal(languageHref("zh", "/fr/faq"), "/zh/faq");
 });
 
 test("browser language suggests a page we have, and stays quiet when it already matches", () => {
@@ -306,6 +330,7 @@ test("the marks hub has the same six sections in every language", () => {
     assert.ok(copy.faqs.length >= 3, code);
     assert.ok(copy.sections.every((section) => section.paragraphs.length >= 1), code);
     const hrefs = copy.sections.flatMap((section) => section.links.map((item) => item.href));
+    assert.ok(copy.sections.every((section) => section.links.every((item) => item.label && item.href)), code);
     assert.ok(hrefs.every((href) => href.startsWith("/")), code);
     const pressure = copy.sections.find((section) => section.id === "pressure");
     assert.ok(pressure.links.every((item) => !item.href.includes("#q-")), code);
@@ -318,8 +343,48 @@ test("the marks hub has the same six sections in every language", () => {
       }
     } else {
       assert.ok(hrefs.includes(code === "en" ? "/guides/slant" : `/${code}/guides/slant`));
+      assert.ok(hrefs.includes(code === "en" ? "/guides/t" : `/${code}/guides/t`));
+      assert.ok(hrefs.includes(code === "en" ? "/guides/i" : `/${code}/guides/i`));
       assert.ok(hrefs.includes(code === "en" ? "/#q-t" : `/${code}#q-t`));
     }
+  }
+});
+
+const EIGHT = {
+  en: "Eight",
+  es: "Ocho",
+  pt: "Oito",
+  fr: "Huit",
+  de: "Acht",
+  id: "Delapan",
+  vi: "Tám",
+  it: "Otto",
+  tr: "Sekiz",
+};
+
+test("faq, scoring, and the two signature notes exist in every language", () => {
+  assert.deepEqual(seriesCodes(), ["en", "zh", "es", "pt", "fr", "de", "id", "vi", "it", "tr"]);
+  const englishQuestion = series.en.faq.faqs[0].q;
+  for (const code of seriesCodes()) {
+    const copy = series[code];
+    assert.equal(copy.faq.faqs.length, 6, code);
+    assert.equal(copy.about.faqs.length, 4, code);
+    assert.equal(copy.size.faqs.length, 4, code);
+    assert.equal(copy.body.faqs.length, 4, code);
+    assert.equal(copy.notes.length, 2, code);
+    if (code !== "en") assert.notEqual(copy.faq.faqs[0].q, englishQuestion, code);
+    for (const key of ["faq", "about", "size", "body"]) {
+      const page = copy[key];
+      assert.ok(page.h1 && page.title, `${code} ${key}`);
+      assert.ok(page.more.every((item) => item.label && item.href.startsWith("/")), `${code} ${key}`);
+    }
+  }
+  const zhAbout = JSON.stringify(series.zh.about);
+  assert.match(zhAbout, /四题/);
+  assert.match(zhAbout, /五题/);
+  assert.doesNotMatch(zhAbout, /twelve|\b12\b/);
+  for (const [code, word] of Object.entries(EIGHT)) {
+    assert.match(JSON.stringify(series[code].about), new RegExp(word));
   }
 });
 

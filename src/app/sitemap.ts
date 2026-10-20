@@ -28,7 +28,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       `/${locale.code}/guides`,
       ...guides.map((guide) => `/${locale.code}/guides/${guide.slug}`),
     ]),
-    "/about",
+    ...["/faq", "/about", "/tools/signature/size", "/tools/signature/body"].flatMap((path) => [
+      path,
+      `/zh${path}`,
+      ...localeList.map((locale) => `/${locale.code}${path}`),
+    ]),
     "/privacy",
     "/terms",
     "/contact",

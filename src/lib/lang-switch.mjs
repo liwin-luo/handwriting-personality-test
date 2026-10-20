@@ -31,7 +31,7 @@ export function preferredLanguage(tags, current) {
   return null;
 }
 
-const LATIN_GUIDES = ["four", "seven", "a", "g", "zero", "ampersand", "slant", "spacing"];
+const LATIN_GUIDES = ["four", "seven", "a", "g", "zero", "ampersand", "slant", "spacing", "one", "t", "i", "y"];
 const HAN_GUIDES = ["size", "gap", "lines", "link", "bar"];
 
 /** Drop /zh or a Latin locale prefix. English paths stay as they are. */
@@ -48,6 +48,9 @@ export function languageHref(target, path) {
   const home = prefix || "/";
   if (rest === "/") return home;
   if (rest === "/science") return `${prefix}/science`;
+  if (rest === "/faq" || rest === "/about" || rest === "/tools/signature/size" || rest === "/tools/signature/body") {
+    return `${prefix}${rest}`;
+  }
   if (rest === "/guides") return `${prefix}/guides`;
   if (rest.startsWith("/guides/")) {
     const slug = rest.slice("/guides/".length).split("/")[0];

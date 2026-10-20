@@ -68,7 +68,12 @@ const en = {
       [
         "The bar of a t can sit low, in the middle, or high, or be missing. The dot of an i can sit close, high, or be a circle. Check several. A hurried note drops dots and bars. Graphology reads a high bar as ambition and a high dot as imagination. Those readings are not supported well enough to use. The test asks you to pick the closest t and the closest i. That pick files a shape.",
       ],
-      [link("/#q-t", "Pick a t"), link("/#q-i", "Pick an i")],
+      [
+        link("/guides/t", "The bar of t"),
+        link("/guides/i", "The dot of i"),
+        link("/#q-t", "Pick a t"),
+        link("/#q-i", "Pick an i"),
+      ],
     ),
   ],
   faqs: [
@@ -219,7 +224,12 @@ function latin(code, t) {
       section("pressure", t.pressureH, t.pressureP, [link(`${p}/science`, t.pressureScience)]),
       section("baseline", t.baselineH, t.baselineP),
       section("margins", t.marginsH, t.marginsP),
-      section("marks", t.marksH, t.marksP, [link(`${p}#q-t`, t.pickT), link(`${p}#q-i`, t.pickI)]),
+      section("marks", t.marksH, t.marksP, [
+        link(`${p}/guides/t`, t.guideT),
+        link(`${p}/guides/i`, t.guideI),
+        link(`${p}#q-t`, t.pickT),
+        link(`${p}#q-i`, t.pickI),
+      ]),
     ],
     faqs: t.faqs,
   };
@@ -286,6 +296,8 @@ export const traits = {
     marksP: [
       "La barra de la t puede ir baja, al medio o alta, o faltar. El punto de la i puede ir cerca, alto o ser un círculo. Mira varias. Una nota con prisa pierde puntos y barras. La grafología lee una barra alta como ambición y un punto alto como imaginación. Esas lecturas no están lo bastante apoyadas para usarlas. El test pide la t más cercana y la i más cercana. Esa elección archiva una forma.",
     ],
+    guideT: "La barra de la t",
+    guideI: "El punto de la i",
     pickT: "Elegir una t",
     pickI: "Elegir una i",
     faqs: [
@@ -354,6 +366,8 @@ export const traits = {
     marksP: [
       "A barra do t pode ficar baixa, no meio ou alta, ou faltar. O pingo do i pode ficar perto, alto ou ser um círculo. Olhe vários. Uma nota com pressa perde pingos e barras. A grafologia lê uma barra alta como ambição e um pingo alto como imaginação. Essas leituras não estão bem apoiadas o bastante para serem usadas. O teste pede o t mais próximo e o i mais próximo. Essa escolha arquiva uma forma.",
     ],
+    guideT: "A barra do t",
+    guideI: "O pingo do i",
     pickT: "Escolher um t",
     pickI: "Escolher um i",
     faqs: [
@@ -413,6 +427,8 @@ export const traits = {
     marksP: [
       "La barre d'un t peut être basse, au milieu ou haute, ou manquer. Le point d'un i peut être proche, haut, ou un cercle. Vérifiez-en plusieurs. Une note pressée perd points et barres. La graphologie lit une barre haute comme de l'ambition et un point haut comme de l'imagination. Ces lectures ne sont pas assez étayées pour servir. Le test demande le t le plus proche et le i le plus proche. Ce choix range une forme.",
     ],
+    guideT: "La barre du t",
+    guideI: "Le point du i",
     pickT: "Choisir un t",
     pickI: "Choisir un i",
     faqs: [
@@ -475,6 +491,8 @@ export const traits = {
     marksP: [
       "Der Querbalken eines t kann tief, in der Mitte oder hoch sitzen, oder fehlen. Der Punkt eines i kann nah sitzen, hoch sitzen oder ein Kreis sein. Prüfen Sie mehrere. Eine eilige Notiz verliert Punkte und Balken. Die Graphologie liest einen hohen Balken als Ehrgeiz und einen hohen Punkt als Fantasie. Diese Lesarten sind nicht gut genug belegt, um sie zu benutzen. Der Test bittet Sie, das nächste t und das nächste i zu wählen. Diese Wahl legt eine Form ab.",
     ],
+    guideT: "Der Balken des t",
+    guideI: "Der Punkt des i",
     pickT: "Ein t wählen",
     pickI: "Ein i wählen",
     faqs: [
@@ -534,6 +552,8 @@ export const traits = {
     marksP: [
       "Palang t bisa rendah, di tengah, atau tinggi, atau hilang. Titik i bisa dekat, tinggi, atau sebuah lingkaran. Periksa beberapa. Catatan yang tergesa kehilangan titik dan palang. Grafologi membaca palang tinggi sebagai ambisi dan titik tinggi sebagai imajinasi. Bacaan itu tidak cukup kuat untuk dipakai. Tes meminta t yang paling dekat dan i yang paling dekat. Pilihan itu menyimpan sebuah bentuk.",
     ],
+    guideT: "Palang t",
+    guideI: "Titik i",
     pickT: "Pilih sebuah t",
     pickI: "Pilih sebuah i",
     faqs: [
@@ -593,6 +613,8 @@ export const traits = {
     marksP: [
       "Nét ngang của t có thể thấp, giữa, hoặc cao, hoặc thiếu. Dấu chấm của i có thể sát, cao, hoặc là một vòng tròn. Xem vài chữ. Một ghi chú vội mất chấm và ngang. Nghiên cứu chữ đọc nét ngang cao là tham vọng và chấm cao là trí tưởng tượng. Những cách đọc đó không đủ vững để dùng. Bài hỏi t gần nhất và i gần nhất. Lựa đó lưu một hình.",
     ],
+    guideT: "Nét ngang của t",
+    guideI: "Dấu chấm của i",
     pickT: "Chọn một t",
     pickI: "Chọn một i",
     faqs: [
@@ -652,6 +674,8 @@ export const traits = {
     marksP: [
       "La barra di una t può stare bassa, al centro o alta, o mancare. Il punto di una i può stare vicino, alto, o essere un cerchio. Controllane diverse. Un appunto di fretta perde punti e barre. La grafologia legge una barra alta come ambizione e un punto alto come immaginazione. Quelle letture non sono abbastanza sostenute per usarle. Il test chiede la t più vicina e la i più vicina. Quella scelta archivia una forma.",
     ],
+    guideT: "La barra della t",
+    guideI: "Il punto della i",
     pickT: "Scegliere una t",
     pickI: "Scegliere una i",
     faqs: [
@@ -711,6 +735,8 @@ export const traits = {
     marksP: [
       "Bir t'nin çizgisi alçak, ortada ya da yüksek durabilir, ya da eksik olabilir. Bir i'nin noktası yakın, yüksek ya da bir daire olabilir. Birkaçına bakın. Acele bir not nokta ve çizgi düşürür. Grafoloji yüksek çizgiyi hırs, yüksek noktayı hayal gücü okur. Bu okumalar kullanılacak kadar destekli değildir. Test en yakın t'yi ve en yakın i'yi seçmenizi ister. Bu seçim bir biçimi dosyalar.",
     ],
+    guideT: "t'nin çizgisi",
+    guideI: "i'nin noktası",
     pickT: "Bir t seç",
     pickI: "Bir i seç",
     faqs: [

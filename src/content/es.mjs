@@ -356,6 +356,104 @@ export const guides = [
       { q: "¿Puedo medir el espacio en una foto?", a: "Puedes comparar huecos dentro de esa foto si la página está plana y la cámara está frente a ella. Aun así no ves la presión ni la velocidad." },
     ],
   },
+  {
+    slug: "one",
+    title: "Cómo escribes el número 1",
+    description: "Un solo trazo, o un 1 con bandera y base: por qué existen esas marcas y qué no dicen de una persona.",
+    questionId: "one",
+    figures: [
+      fig("plain-one.svg", "1 simple: un trazo hacia abajo. Lo distinguen las palabras de alrededor, o una raya en el 7."),
+      fig("serif-one.svg", "1 con bandera y base: el extremo entra en ángulo y un pie corto queda en la línea."),
+    ],
+    origin: [
+      "El 1 simple es un trazo. Muchos cuadernos de Estados Unidos se detienen ahí. El lector lo distingue del 7 y de la letra l por las palabras de alrededor, y a menudo por la raya del 7.",
+      "La bandera y la base son la otra solución del mismo choque. Donde un asta desnuda se puede leer mal, la bandera marca el extremo y la base marca el suelo. Ese par es habitual en gran parte de Europa y en notas que no pueden permitirse un dígito equivocado.",
+    ],
+    limits: [
+      "La bandera no mide el cuidado como rasgo, y el trazo simple no mide la prisa. Los dos son modelos. La misma persona puede usar el 1 con bandera en un formulario y el 1 simple en una nota.",
+      "Un dígito no es una personalidad. Esta página es sobre el número 1. No describe los numerales chinos.",
+    ],
+    faqs: [
+      { q: "¿Por qué algunas personas ponen una raya en el 1?", a: "La bandera de arriba y la base evitan que el 1 parezca la letra l o un 7 simple. Es una distinción, como la raya del 7." },
+      { q: "¿Un 1 simple es incorrecto?", a: "No. Es la forma de muchos cuadernos. Se lee cuando el 7 lleva raya, o cuando la línea es texto y no un código suelto." },
+      { q: "¿Un 1 con base indica una persona precisa?", a: "No. Indica que quien escribe aprendió un 1 que lleva sus propias marcas. La precisión en un dígito no es la precisión como carácter." },
+      { q: "¿Qué 1 elijo en el test?", a: "El de las notas normales. Si usas los dos, cualquiera es justo, y puedes cambiarlo en el resultado." },
+    ],
+  },
+  {
+    slug: "t",
+    title: "La barra de la t manuscrita",
+    description: "Una t sin barra, una barra por el medio y una barra cerca de la punta: cómo ver cada una, y por qué la altura no es ambición.",
+    questionId: "t",
+    figures: [
+      fig("uncrossed-t.svg", "Sin barra: el asta queda sola. Las notas rápidas pierden el cruce."),
+      fig("mid-t.svg", "Por el medio: el cruce habitual del cuaderno, hacia la mitad del asta."),
+      fig("high-t.svg", "Cerca de la punta: la barra queda alta y sigue tocando el asta."),
+    ],
+    origin: [
+      "Los cuadernos cruzan la t. La barra es una horizontal corta a través del asta, a menudo hacia la mitad, para que la t no se confunda con la l. Una barra cerca de la punta es el mismo trazo, más arriba. El modelo no trata esa altura como un ánimo.",
+      "La barra falta cuando la pluma no vuelve. Las notas con prisa, y las palabras en las que la letra siguiente ya deja clara la t, pierden el cruce. El asta sigue siendo una t si la palabra se lee.",
+    ],
+    limits: [
+      "La grafología lee una barra alta como ambición. Esa lectura no está lo bastante apoyada para usarla. La altura es el sitio donde cruzó la pluma.",
+      "Mira varias t. Una barra alta en una palabra rápida no es el hábito. Una foto muestra la tinta. No muestra con qué fuerza se apoyó la barra.",
+    ],
+    faqs: [
+      { q: "¿Qué significa una barra alta en la t?", a: "En este sitio significa que la barra queda cerca de la punta del asta. No significa ambición, confianza ni una meta." },
+      { q: "¿Una t sin barra sigue siendo una t?", a: "Dentro de una palabra, sí. La barra ausente es habitual al escribir rápido. El test la archiva como una forma, no como un fallo." },
+      { q: "¿Dónde debe ir la barra de la t?", a: "Los cuadernos suelen ponerla a través del asta, hacia el medio o un poco más arriba. Alta y ausente son formas que la gente escribe. Ninguna de las tres es un diagnóstico." },
+      { q: "¿La misma persona puede cruzar la t en sitios distintos?", a: "Sí. La prisa, la pluma y la letra anterior mueven la barra. Elige la altura que más ves en las notas normales." },
+    ],
+  },
+  {
+    slug: "i",
+    title: "El punto de la i manuscrita",
+    description: "Un punto cercano, un punto alto y un círculo en lugar del punto: de dónde sale cada uno y qué no puede probar un punto.",
+    questionId: "i",
+    figures: [
+      fig("dotted-i-close.svg", "Punto cercano: una marca pequeña justo encima del asta, el sitio habitual del aula."),
+      fig("dotted-i-high.svg", "Punto alto: la marca queda bien por encima del asta, a menudo cuando la mano ya siguió."),
+      fig("dotted-i-circle.svg", "Un círculo: una marca redonda en lugar del punto."),
+    ],
+    origin: [
+      "El punto es una marca aparte. Los cuadernos lo ponen cerca, encima del asta, después de la letra o después de la palabra. Un punto alto suele ser el mismo hábito hecho tarde: la mano ya avanzó y el punto cae más arriba en la página.",
+      "Un círculo en lugar del punto es rotulación. Se copia de una mano que gustó, o de una época en la que cada i llevaba un anillo. Es un acabado aprendido, como un adorno en el &.",
+    ],
+    limits: [
+      "La grafología lee un punto alto como imaginación y un círculo como ganas de que lo noten. Esas lecturas no están lo bastante apoyadas para usarlas. El sitio del punto es donde bajó la pluma.",
+      "Las notas rápidas pierden el punto del todo. Un punto ausente es prisa, no una cuarta personalidad. Esta página es sobre la i latina. La escritura china no usa esta marca.",
+    ],
+    faqs: [
+      { q: "¿Qué significa un punto alto en la i?", a: "Que el punto queda alto sobre el asta. No significa imaginación, atención ni un ánimo." },
+      { q: "¿Por qué la gente hace un círculo en el punto de la i?", a: "Porque aprendió una marca redonda en lugar del punto. Es un acabado. No es una prueba de creatividad." },
+      { q: "¿El punto cercano es el correcto?", a: "Es el sitio que muestran la mayoría de los cuadernos. El punto alto y el círculo son formas que la gente escribe de verdad. El test pide la más cercana, no la aprobada." },
+      { q: "¿Y si a menudo olvido el punto?", a: "Es habitual con prisa. En el test, elige el punto que haces cuando sí lo haces." },
+    ],
+  },
+  {
+    slug: "y",
+    title: "Cómo escribes la y minúscula",
+    description: "Una cola recta o una cola con lazo en la y, de dónde sale el descendente y qué no puede predecir.",
+    questionId: "y",
+    figures: [
+      fig("straight-y.svg", "Cola recta: el descendente sale de la línea y no vuelve."),
+      fig("looped-y.svg", "Cola con lazo: el descendente vuelve y cierra un lazo bajo la línea."),
+    ],
+    origin: [
+      "Los modelos de molde suelen acabar la y con un descendente recto, cerca de la letra impresa. La cursiva y la itálica cierran un lazo para que la pluma salga hacia la letra siguiente. El lazo es un camino, el mismo trabajo que el lazo de la g.",
+      "Quien aprendió la y con lazo la enlaza aunque el resto de la nota sea de molde. Quien aprendió la cola recta la mantiene, salvo cuando copia una línea enlazada.",
+    ],
+    limits: [
+      "Una y con lazo no muestra emoción ni imaginación, y una y recta no muestra brusquedad. Las dos son terminaciones que se enseñan de niños.",
+      "La velocidad abre los lazos. Un lazo cerrado en el escritorio puede volverse una cola recta en una postal. Es la pluma yendo más rápido, no un cambio de personalidad.",
+    ],
+    faqs: [
+      { q: "¿La y con lazo es la y cursiva?", a: "Es la terminación habitual de la cursiva y de la itálica. La pluma baja de la línea y sube para unirse a la letra siguiente." },
+      { q: "¿Una y recta está mal?", a: "No. Los modelos de molde y muchas manos adultas dejan la cola recta. Sigue siendo una y si están la horquilla y el descendente." },
+      { q: "¿El lazo de la y significa que quien escribe es expresivo?", a: "No. El lazo es un camino motor aprendido. La expresividad no se ve en un descendente." },
+      { q: "¿En qué se diferencia del lazo de la g?", a: "Es el mismo tipo de terminación, en otra letra. El test pregunta la y por separado. Una g con lazo no decide la y." },
+    ],
+  },
 ];
 
 export const guideBySlug = Object.fromEntries(guides.map((guide) => [guide.slug, guide]));

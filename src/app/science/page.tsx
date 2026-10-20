@@ -58,7 +58,7 @@ export default function SciencePage() {
       <p className="mt-4 leading-relaxed">
         The test files the shapes you selected under a fictional name so you can share the filing, not a verdict.{" "}
         <a className="underline decoration-rule underline-offset-4" href="/about">
-          About
+          Scoring
         </a>{" "}
         explains the arithmetic. The guides explain individual shapes, including the part you should not interpret.
       </p>

@@ -307,6 +307,152 @@ export const guides: Guide[] = [
       },
     ],
   },
+  {
+    slug: "one",
+    title: "How do you write the number 1",
+    description: "A plain stroke, or a 1 with a flag and a foot: why the extra marks exist, and what they cannot say about a person.",
+    questionId: "one",
+    figures: [
+      { file: "plain-one.svg", caption: "Plain 1: one downstroke. The words around it, or a bar on 7, keep it distinct." },
+      { file: "serif-one.svg", caption: "1 with a flag and a foot: the top angles in, and a short base sits on the line." },
+    ],
+    origin: [
+      "A plain 1 is one stroke. Many American copybooks stop there. The reader tells it from 7 and from the letter l by the words around it, and often by a bar through 7.",
+      "A flag and a foot are the other fix for the same collision. Where a bare stem can be misread, the flag marks the top and the foot marks the base. That pair is common in much of Europe and in notes that cannot afford a wrong digit.",
+    ],
+    limits: [
+      "The flag does not show carefulness as a trait, and a plain stroke does not show haste as a trait. Both are models. The same person can use a flagged 1 on a form and a plain 1 in a note.",
+      "One digit is not a personality. This page is about the numeral 1. It does not describe Chinese numerals.",
+    ],
+    faqs: [
+      {
+        q: "Why do some people put a line on the number 1?",
+        a: "The top flag and the base keep 1 from looking like the letter l or a plain 7. It is a distinction, like the bar through 7.",
+      },
+      {
+        q: "Is a plain 1 incorrect?",
+        a: "No. It is the form many copybooks teach. It stays readable when 7 is crossed, or when the line is words rather than a bare code.",
+      },
+      {
+        q: "Does a serif on 1 mean a precise person?",
+        a: "No. It means the writer learned a 1 that carries its own marks. Precision in one digit is not precision as a character.",
+      },
+      {
+        q: "Which 1 should I pick in the test?",
+        a: "The one in ordinary notes. If you use both, either choice is fair, and you can change it from the result.",
+      },
+    ],
+  },
+  {
+    slug: "t",
+    title: "The bar on a handwritten t",
+    description: "A missing bar, a bar through the middle, and a bar near the top: how to see each, and why the height is not ambition.",
+    questionId: "t",
+    figures: [
+      { file: "uncrossed-t.svg", caption: "No bar: the stem stands alone. Fast notes drop the cross." },
+      { file: "mid-t.svg", caption: "Through the middle: the usual copybook cross, about halfway up the stem." },
+      { file: "high-t.svg", caption: "Near the top: the bar sits high on the stem and still meets it." },
+    ],
+    origin: [
+      "School models cross the t. The bar is a short horizontal through the stem, often around the middle of the letter, so t stays distinct from l. A bar near the top is the same stroke placed higher. The model does not treat that height as a mood.",
+      "A missing bar is what happens when the pen does not come back. Hurried notes, and words where the next letter already makes t obvious, lose the cross. The stem is still a t if the word can be read.",
+    ],
+    limits: [
+      "Graphology reads a high bar as ambition. That reading is not supported well enough to use. The height is where the pen crossed.",
+      "Check several t's. One high bar in a fast word is not the habit. A photograph shows the ink. It does not show how hard the bar was pressed.",
+    ],
+    faqs: [
+      {
+        q: "What does a high t bar mean?",
+        a: "On this site it means the bar sits near the top of the stem. It does not mean ambition, confidence, or a goal.",
+      },
+      {
+        q: "Is a t without a bar still a t?",
+        a: "In a word, yes. A missing bar is common in fast writing. The test files it as a shape, not as a failure.",
+      },
+      {
+        q: "Where should the bar on t sit?",
+        a: "Copybooks usually put it through the stem, around the middle or a little above. High and missing are both forms people write. None of the three is a diagnosis.",
+      },
+      {
+        q: "Can the same person cross t in different places?",
+        a: "Yes. Speed, the pen, and the letter before it move the bar. Pick the height you see most often in ordinary notes.",
+      },
+    ],
+  },
+  {
+    slug: "i",
+    title: "The dot on a handwritten i",
+    description: "A close dot, a high dot, and a circle in place of the dot: where each comes from, and what a dot cannot prove.",
+    questionId: "i",
+    figures: [
+      { file: "dotted-i-close.svg", caption: "Close dot: a small mark just above the stem, the usual school place." },
+      { file: "dotted-i-high.svg", caption: "High dot: the mark sits well above the stem, often after the hand has already moved on." },
+      { file: "dotted-i-circle.svg", caption: "A circle: a round mark instead of a dot." },
+    ],
+    origin: [
+      "The dot is a separate mark. School models put it close above the stem, after the letter or after the word. A high dot is often the same habit done late: the hand has already traveled, and the dot lands farther up the page.",
+      "A circle instead of a dot is lettering. People pick it up from a hand they liked, or from a stretch of writing in which every i got a ring. It is a learned finish, like a flourish on an ampersand.",
+    ],
+    limits: [
+      "Graphology reads a high dot as imagination and a circle as a wish to be noticed. Those readings are not supported well enough to use. A dot's place is where the pen came down.",
+      "Fast notes drop the dot entirely. A missing dot is speed, not a fourth personality. This page is about the Latin i. Chinese writing does not use this mark.",
+    ],
+    faqs: [
+      {
+        q: "What does a high dot on i mean?",
+        a: "It means the dot sits high above the stem. It does not mean imagination, attention, or a mood.",
+      },
+      {
+        q: "Why do people circle the dot on i?",
+        a: "Because they learned a round mark in place of a dot. It is a finish. It is not evidence of creativity.",
+      },
+      {
+        q: "Is a close dot the correct one?",
+        a: "It is the place most copybooks show. A high dot and a circle are forms people really write. The test asks for the closest, not an approved one.",
+      },
+      {
+        q: "What if I often forget the dot?",
+        a: "That is common in a hurry. For the test, pick the dot you make when you do make one.",
+      },
+    ],
+  },
+  {
+    slug: "y",
+    title: "How do you write a lowercase y",
+    description: "A straight tail or a looped tail on y, where the descender comes from, and what it cannot predict.",
+    questionId: "y",
+    figures: [
+      { file: "straight-y.svg", caption: "Straight tail: the descender leaves the line and does not come back." },
+      { file: "looped-y.svg", caption: "Looped tail: the descender returns and closes a loop below the line." },
+    ],
+    origin: [
+      "Print models often end y with a straight descender, close to the printed letter. Joined scripts such as cursive and italic close a loop so the pen can leave toward the next letter. The loop is a path, the same job as the loop on g.",
+      "A person taught a looped y will loop it even in a note that is otherwise printed. A person taught the straight tail keeps it unless they are copying a joined line.",
+    ],
+    limits: [
+      "A looped y does not show emotion or imagination, and a straight y does not show bluntness. Both are finishes taught to children.",
+      "Speed opens loops. A closed loop at a desk can become a straight tail on a postcard. That is the pen moving faster, not a change of personality.",
+    ],
+    faqs: [
+      {
+        q: "Is a looped y the cursive y?",
+        a: "It is the usual cursive and italic finish. The pen drops below the line and comes back up so it can join the next letter.",
+      },
+      {
+        q: "Is a straight y wrong?",
+        a: "No. Print models and many adult hands leave the tail straight. The letter is still a y if the fork and the descender are there.",
+      },
+      {
+        q: "Does the y loop mean the writer is expressive?",
+        a: "No. The loop is a taught motor path. Expressiveness is not visible in one descender.",
+      },
+      {
+        q: "How is the y loop different from the g loop?",
+        a: "Same kind of finish, different letter. The test asks for y on its own. A looped g does not decide the y.",
+      },
+    ],
+  },
 ];
 
 export const guideBySlug: Record<string, Guide> = Object.fromEntries(guides.map((guide) => [guide.slug, guide]));

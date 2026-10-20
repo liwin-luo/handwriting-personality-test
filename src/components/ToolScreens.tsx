@@ -2,6 +2,7 @@ import { Chart } from "@/components/Chart";
 import { JsonLd } from "@/components/Meta";
 import { SignatureTool } from "@/components/SignatureTool";
 import { SlantTool } from "@/components/SlantTool";
+import { seriesFor } from "@/content/series.mjs";
 import type { ToolLocale } from "@/content/tools";
 import type { ChartItem } from "@/lib/chart-items";
 import { SITE } from "@/lib/site";
@@ -92,6 +93,7 @@ export function SlantScreen({ copy, lang, path }: { copy: ToolLocale["slant"]; l
 }
 
 export function SignatureScreen({ copy, lang, path }: { copy: ToolLocale["signature"]; lang: string; path: string }) {
+  const notes = seriesFor(lang);
   return (
     <div lang={lang}>
       <p className="text-sm uppercase tracking-[0.16em] text-seal">{copy.kicker}</p>
@@ -110,6 +112,16 @@ export function SignatureScreen({ copy, lang, path }: { copy: ToolLocale["signat
           <li key={step}>{step}</li>
         ))}
       </ol>
+      <h2 className="mt-12 font-display text-2xl">{notes.notesTitle}</h2>
+      <ul className="mt-4 space-y-2">
+        {notes.notes.map((item: { href: string; label: string }) => (
+          <li key={item.href}>
+            <a className="underline decoration-rule underline-offset-4" href={item.href}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
       <h2 className="mt-12 font-display text-2xl">{copy.questionsTitle}</h2>
       <dl className="mt-4 space-y-6">
         {copy.faqs.map((faq) => (

@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { localeList } from "@/content/locale-list.mjs";
+import { seriesFor } from "@/content/series.mjs";
 import { toolCopyFor } from "@/content/tools";
 import { languageHref, preferredLanguage, suggestCopy } from "@/lib/lang-switch.mjs";
 
@@ -21,6 +22,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const lang = zh ? "zh" : locale ? locale.code : "en";
   const prefix = zh ? "/zh" : locale ? `/${locale.code}` : "";
   const tools = toolCopyFor(lang)!;
+  const series = seriesFor(lang);
   const scienceHref = `${prefix}/science`;
   const scienceLabel = zh ? "科学" : locale ? locale.science : "Science";
   const marksLabel = zh ? "写法" : locale ? locale.marks : "Marks";
@@ -108,10 +110,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <a href={`${prefix}/tools/signature`}>{tools.nav.signature}</a>
           <a href={scienceHref}>{scienceLabel}</a>
           <a href={`${prefix}/guides`}>{marksLabel}</a>
+          <a href={`${prefix}/faq`}>{series.navFaq}</a>
+          <a href={`${prefix}/about`}>{series.navAbout}</a>
           {zh || locale ? null : (
             <>
               <a href="/results">Profiles</a>
-              <a href="/about">About</a>
               <a href="/contact">Contact</a>
             </>
           )}

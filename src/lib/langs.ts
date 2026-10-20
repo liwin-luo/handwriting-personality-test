@@ -17,6 +17,14 @@ export function toolLangs(path: "/chart" | "/tools/slant" | "/tools/signature"):
   };
 }
 
+export function seriesLangs(path: "/faq" | "/about" | "/tools/signature/size" | "/tools/signature/body"): Record<string, string> {
+  return {
+    en: `${SITE.url}${path}`,
+    zh: `${SITE.url}/zh${path}`,
+    ...Object.fromEntries(localeList.map((locale) => [locale.code, `${SITE.url}/${locale.code}${path}`])),
+  };
+}
+
 export function scienceLangs(): Record<string, string> {
   return {
     en: `${SITE.url}/science`,

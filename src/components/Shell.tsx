@@ -54,10 +54,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
             {zh ? "笔迹测验" : locale ? locale.brand : "Handwriting Personality Test"}
           </a>
           <nav className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm sm:justify-end sm:pt-1">
-            <a href={`${prefix}/chart`}>{tools.nav.chart}</a>
-            <a href={`${prefix}/tools/slant`}>{tools.nav.slant}</a>
-            <a href={`${prefix}/tools/signature`}>{tools.nav.signature}</a>
+            <a href={`${prefix}/guides`}>{marksLabel}</a>
             <a href={scienceHref}>{scienceLabel}</a>
+            <a href={`${prefix}/about`}>{series.navAbout}</a>
             <details className="lang-menu relative ml-auto sm:ml-2">
               <summary className="flex cursor-pointer items-center gap-2 border border-ink bg-card px-3 py-1.5">
                 <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="shrink-0">
@@ -104,22 +103,28 @@ export function Shell({ children }: { children: React.ReactNode }) {
       ) : null}
       <main className="mx-auto max-w-3xl px-5 py-10">{children}</main>
       <footer className="border-t border-rule">
-        <nav className="mx-auto flex max-w-3xl flex-wrap gap-x-5 gap-y-2 px-5 py-8 text-sm text-muted">
-          <a href={`${prefix}/chart`}>{tools.nav.chart}</a>
-          <a href={`${prefix}/tools/slant`}>{tools.nav.slant}</a>
-          <a href={`${prefix}/tools/signature`}>{tools.nav.signature}</a>
-          <a href={scienceHref}>{scienceLabel}</a>
-          <a href={`${prefix}/guides`}>{marksLabel}</a>
-          <a href={`${prefix}/faq`}>{series.navFaq}</a>
-          <a href={`${prefix}/about`}>{series.navAbout}</a>
-          {zh || locale ? null : (
-            <>
-              <a href="/results">Profiles</a>
-              <a href="/contact">Contact</a>
-            </>
-          )}
-          <a href="/privacy">Privacy</a>
-          <a href="/terms">Terms</a>
+        <nav className="mx-auto max-w-3xl space-y-3 px-5 py-8 text-sm text-muted">
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <a href={`${prefix}/guides`}>{marksLabel}</a>
+            <a href={`${prefix}/faq`}>{series.navFaq}</a>
+            <a href={`${prefix}/about`}>{series.navAbout}</a>
+            <a href={scienceHref}>{scienceLabel}</a>
+          </div>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            <a href={`${prefix}/chart`}>{tools.nav.chart}</a>
+            <a href={`${prefix}/tools/slant`}>{tools.nav.slant}</a>
+            <a href={`${prefix}/tools/signature`}>{tools.nav.signature}</a>
+          </div>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {zh || locale ? null : (
+              <>
+                <a href="/results">Six names</a>
+                <a href="/contact">Contact</a>
+              </>
+            )}
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+          </div>
         </nav>
         <p className="mx-auto max-w-3xl px-5 pb-8 text-xs text-muted">handwritingpersonalitytest.online</p>
       </footer>

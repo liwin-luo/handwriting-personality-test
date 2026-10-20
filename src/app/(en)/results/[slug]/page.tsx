@@ -34,7 +34,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
       <Crumbs
         items={[
           { href: "/", label: "Test" },
-          { href: "/results", label: "Profiles" },
+          { href: "/results", label: "Six names" },
           { label: profile.name },
         ]}
       />

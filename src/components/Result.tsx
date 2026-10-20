@@ -2,18 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Glyph } from "@/components/Glyph";
+import { Glyph, GlyphLine } from "@/components/Glyph";
+import { choiceNote, countNote, retakeLabel, shareHint, shareLabel } from "@/content/choice-notes.mjs";
 import {
   DIRECTIONS,
   MIN_ANSWERS,
   decodeAnswers,
-  directionFor,
   encodeAnswers,
-  pickSamples,
   profileBySlug,
   questions,
   scoreAnswers,
 } from "@/content";
+import { chosenLine, downloadShareCard, shareResult } from "@/lib/share-card.mjs";
 
 const LABELS: Record<(typeof DIRECTIONS)[number], string> = {
   structure: "Structure",
@@ -21,29 +21,6 @@ const LABELS: Record<(typeof DIRECTIONS)[number], string> = {
   rhythm: "Page rhythm",
   character: "Flourish",
 };
-
-async function loadImage(src: string) {
-  const image = new Image();
-  image.src = src;
-  await image.decode();
-  return image;
-}
-
-function wrap(ctx: CanvasRenderingContext2D, text: string, max: number) {
-  const lines: string[] = [];
-  let line = "";
-  for (const word of text.split(" ")) {
-    const next = line ? `${line} ${word}` : word;
-    if (line && ctx.measureText(next).width > max) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = next;
-    }
-  }
-  if (line) lines.push(line);
-  return lines;
-}
 
 export function ResultView({ code }: { code: string }) {
   const router = useRouter();
@@ -60,8 +37,7 @@ export function ResultView({ code }: { code: string }) {
 
   const scored = scoreAnswers(picks);
   const profile = scored.profile ? profileBySlug[scored.profile] : null;
-  const samples = profile ? pickSamples(picks, directionFor(profile.slug)) : [];
-  const max = Math.max(1, ...DIRECTIONS.map((id) => scored.totals[id]));
+  const samples = profile ? chosenLine(questions, picks) : [];
 
   function commit(next: (number | null)[]) {
     const nextCode = encodeAnswers(next);
@@ -69,48 +45,27 @@ export function ResultView({ code }: { code: string }) {
     router.replace(`/r/${nextCode}`);
   }
 
-  async function copyLink() {
-    await navigator.clipboard.writeText(`${window.location.origin}/r/${encodeAnswers(picks!)}`);
-    setCopied(true);
+  async function share() {
+    if (!profile) return;
+    const status = await shareResult({
+      title: profile.name,
+      text: profile.sentence,
+      url: `${window.location.origin}/r/${encodeAnswers(picks!)}`,
+    });
+    setCopied(status === "copied");
   }
 
   async function downloadCard() {
     if (!profile) return;
     setCardError("");
     try {
-      await document.fonts.ready;
-      const canvas = document.createElement("canvas");
-      canvas.width = 800;
-      canvas.height = 1000;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) throw new Error("no canvas");
-      const font = getComputedStyle(document.body).fontFamily;
-      ctx.fillStyle = "#f3ecdf";
-      ctx.fillRect(0, 0, 800, 1000);
-      ctx.fillStyle = "#b43324";
-      ctx.fillRect(56, 72, 2, 860);
-      ctx.fillStyle = "#5e564c";
-      ctx.font = `16px ${font}`;
-      ctx.fillText("HANDWRITING PERSONALITY TEST", 84, 110);
-      ctx.fillStyle = "#1c1915";
-      ctx.font = `64px ${font}`;
-      const nameLines = wrap(ctx, profile.name, 620);
-      nameLines.forEach((line, i) => ctx.fillText(line, 84, 210 + i * 72));
-      ctx.font = `28px ${font}`;
-      const sentence = wrap(ctx, profile.sentence, 620);
-      sentence.forEach((line, i) => ctx.fillText(line, 84, 230 + nameLines.length * 72 + i * 40));
-      const images = await Promise.all(samples.map((sample) => loadImage(`/samples/${sample.file}`)));
-      images.forEach((image, i) => {
-        ctx.drawImage(image, 84 + i * 220, 620, 200, 143);
+      await downloadShareCard({
+        kicker: "HANDWRITING PERSONALITY TEST",
+        name: profile.name,
+        sentence: profile.sentence,
+        files: samples.map((sample) => sample.file),
+        filename: `${profile.slug}.png`,
       });
-      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/png"));
-      if (!blob) throw new Error("no png");
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `${profile.slug}.png`;
-      anchor.click();
-      URL.revokeObjectURL(url);
     } catch {
       setCardError("Could not save the card. Copy the link instead.");
     }
@@ -128,49 +83,36 @@ export function ResultView({ code }: { code: string }) {
           <p className="text-sm uppercase tracking-[0.16em] text-seal">Your shapes</p>
           <h1 className="mt-2 font-display text-5xl leading-none">{profile.name}</h1>
           <p className="mt-4 text-xl leading-snug">{profile.sentence}</p>
+          <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
           <p className="mt-3 max-w-xl text-sm text-muted">
             A label for the shapes in this link. Not a reading of personality, health, honesty, or ability.
           </p>
-          <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
-          <h2 className="mt-10 font-display text-2xl">One drill</h2>
-          <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
-          <div className="notebook mt-8 aspect-[4/5] max-w-sm rounded-md p-6 pl-12">
-            <p className="text-xs tracking-[0.14em] text-muted">HANDWRITING PERSONALITY TEST</p>
-            <p className="mt-6 font-display text-4xl leading-none">{profile.name}</p>
+          <div className="notebook mt-8 flex aspect-[4/5] max-w-sm flex-col rounded-md p-6 pl-12">
+            <p className="text-[11px] tracking-[0.16em] text-muted">HANDWRITING PERSONALITY TEST</p>
+            <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
+            <div className="mt-4 h-0.5 w-8 bg-seal" />
             <p className="mt-4 text-lg leading-snug">{profile.sentence}</p>
-            <div className="mt-8 grid grid-cols-3 gap-2">
-              {samples.map((sample) => (
-                <Glyph key={sample.file} file={sample.file} alt={sample.alt} />
-              ))}
-            </div>
+            <GlyphLine samples={samples} />
+            <p className="mt-4 text-[11px] text-muted">handwritingpersonalitytest.online</p>
           </div>
           <div className="no-print mt-4 flex flex-wrap gap-3">
-            <button type="button" onClick={copyLink} className="bg-ink px-4 py-2 text-sm text-paper">
-              {copied ? "Copied" : "Copy link"}
+            <button type="button" onClick={share} className="bg-ink px-4 py-2 text-sm text-paper">
+              {copied ? "Copied" : shareLabel.en}
             </button>
             <button type="button" onClick={downloadCard} className="border border-ink px-4 py-2 text-sm">
               Download card
             </button>
-            <a href={`/compare?a=${encodeAnswers(picks)}`} className="px-2 py-2 text-sm underline decoration-rule underline-offset-4">
-              Compare with another
-            </a>
           </div>
           {cardError ? <p className="mt-2 text-sm text-seal">{cardError}</p> : null}
-          <p className="mt-2 text-sm text-muted">The words on the card are also on this page. The picture is only for sharing.</p>
+          <p className="mt-2 text-sm text-muted">{shareHint.en}</p>
+          <p className="mt-1 text-sm text-muted">The words on the card are also on this page. The picture is only for sharing.</p>
+          <h2 className="mt-10 font-display text-2xl">One drill</h2>
+          <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
           <h2 className="mt-12 font-display text-2xl">Four directions</h2>
-          <ul className="mt-4 space-y-3">
-            {DIRECTIONS.map((id) => (
-              <li key={id}>
-                <div className="flex justify-between text-sm">
-                  <span>{LABELS[id]}</span>
-                  <span className="text-muted">{scored.totals[id]}</span>
-                </div>
-                <div className="mt-1 h-1.5 bg-rule">
-                  <div className="h-full bg-ink" style={{ width: `${(scored.totals[id] / max) * 100}%` }} />
-                </div>
-              </li>
-            ))}
-          </ul>
+          <p className="mt-4 max-w-xl leading-relaxed">
+            {DIRECTIONS.map((id) => `${LABELS[id]} ${scored.totals[id]}`).join(". ")}.
+          </p>
+          <p className="mt-2 text-sm text-muted">{countNote.en}</p>
           <p className="mt-4 text-sm leading-relaxed text-muted">
             One direction names the result when it leads by two points. Flourish and page rhythm as the two leaders
             name Daydream Doodler. Any other close finish is Instinctive Mixer.{" "}
@@ -215,13 +157,26 @@ export function ResultView({ code }: { code: string }) {
                 );
               })}
             </div>
-            {picks[questionIndex] == null ? <p className="mt-1 text-sm text-muted">Skipped</p> : null}
+            {picks[questionIndex] == null ? (
+              <p className="mt-1 text-sm text-muted">Skipped</p>
+            ) : (
+              <p className="mt-2 max-w-xl text-sm leading-relaxed">
+                {choiceNote("en", question.options[picks[questionIndex]!].id)}
+              </p>
+            )}
           </li>
         ))}
       </ol>
       <button type="button" onClick={retake} className="no-print mt-10 text-sm underline decoration-rule underline-offset-4">
-        Retake from a blank page
+        {retakeLabel.en}
       </button>
+      {profile ? (
+        <p className="no-print mt-6">
+          <a href={`/compare?a=${encodeAnswers(picks)}`} className="text-sm underline decoration-rule underline-offset-4">
+            Compare with another link
+          </a>
+        </p>
+      ) : null}
       <p className="sr-only">{`/r/${encodeAnswers(picks)}`}</p>
     </article>
   );

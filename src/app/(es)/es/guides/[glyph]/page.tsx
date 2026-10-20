@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Glyph } from "@/components/Glyph";
 import { Crumbs, JsonLd } from "@/components/Meta";
 import { guideBySlug, guides } from "@/content/es.mjs";
+import { guideLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -17,10 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ glyph: st
     title: guide.title,
     description: guide.description,
     path: `/es/guides/${guide.slug}`,
-    langs: {
-      en: `${SITE.url}/guides/${guide.slug}`,
-      es: `${SITE.url}/es/guides/${guide.slug}`,
-    },
+    langs: guideLangs(guide.slug),
   });
 }
 

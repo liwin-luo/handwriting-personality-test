@@ -11,6 +11,8 @@ import { guides as zhGuides } from "../content/zh-guides.mjs";
 import { questions as zhQuestions } from "../content/zh.mjs";
 import { questions } from "../content/quiz.mjs";
 import { languageHref, preferredLanguage } from "./lang-switch.mjs";
+import { choiceNote } from "../content/choice-notes.mjs";
+import { baselineShift, cardFrame, chosenLine, shareResult, wrap } from "./share-card.mjs";
 import {
   codeFromInput,
   decodeAnswers,
@@ -386,6 +388,55 @@ test("faq, scoring, and the two signature notes exist in every language", () => 
   for (const [code, word] of Object.entries(EIGHT)) {
     assert.match(JSON.stringify(series[code].about), new RegExp(word));
   }
+});
+
+test("share card wraps words, and characters when there are no spaces", () => {
+  const width = (text) => text.length * 10;
+  assert.deepEqual(wrap(width, "aa bb cc", 50), ["aa bb", "cc"]);
+  assert.deepEqual(wrap(width, "笔迹测验", 20), ["笔迹", "测验"]);
+  assert.equal(cardFrame(2, 4).fits, true);
+  assert.equal(cardFrame(4, 6).fits, false);
+});
+
+test("every chosen shape has a sentence that names the limit", () => {
+  const ids = questions.flatMap((question) => question.options.map((option) => option.id));
+  for (const lang of ["en", "es", "pt", "fr", "de", "id", "vi", "it", "tr"]) {
+    for (const id of ids) {
+      const note = choiceNote(lang, id);
+      assert.ok(note.length > 20, `${lang} ${id}`);
+      if (lang !== "en") assert.notEqual(note, choiceNote("en", id));
+    }
+  }
+  const zhBlob = [];
+  for (const question of zhQuestions) {
+    for (const option of question.options) {
+      const note = choiceNote("zh", option.id);
+      assert.ok(note.length > 8, option.id);
+      assert.equal(choiceNote("en", option.id), "");
+      zhBlob.push(note);
+    }
+  }
+  assert.doesNotMatch(zhBlob.join(""), /twelve|\b12\b|dot sits|crossbar/);
+});
+
+test("share copies the link only when the browser allows it", async () => {
+  const status = await shareResult({ title: "n", text: "s", url: "https://example.com/r/1" });
+  assert.equal(status, "failed");
+});
+
+test("glyphs that are drawn higher move down onto the shared line", () => {
+  assert.equal(baselineShift("open-four.svg"), 0);
+  assert.ok(baselineShift("zh-size-small.svg") > 20);
+  assert.ok(baselineShift("spacing-even.svg") > 0);
+});
+
+test("the card line keeps question order and stops at six", () => {
+  const quiz = Array.from({ length: 8 }, (_, index) => ({ options: [{ file: `f${index}`, id: String(index) }] }));
+  const line = chosenLine(quiz, [0, null, 0, 0, 0, 0, 0, 0]);
+  assert.deepEqual(
+    line.map((option) => option.file),
+    ["f0", "f2", "f3", "f4", "f5", "f6"],
+  );
 });
 
 test("sample picks prefer the winning direction and skip blanks", () => {

@@ -34,7 +34,7 @@ export function ChartScreen({ copy, items, lang }: { copy: ToolLocale["chart"]; 
 export function SlantScreen({ copy, lang, path }: { copy: ToolLocale["slant"]; lang: string; path: string }) {
   return (
     <div lang={lang}>
-      <p className="text-sm uppercase tracking-[0.16em] text-seal">{copy.kicker}</p>
+      <p className={`text-sm text-seal ${lang === "zh" ? "" : "uppercase tracking-[0.16em]"}`}>{copy.kicker}</p>
       <h1 className="mt-2 font-display text-5xl leading-[0.95]">{copy.h1}</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">
         {copy.introBefore}
@@ -96,7 +96,7 @@ export function SignatureScreen({ copy, lang, path }: { copy: ToolLocale["signat
   const notes = seriesFor(lang);
   return (
     <div lang={lang}>
-      <p className="text-sm uppercase tracking-[0.16em] text-seal">{copy.kicker}</p>
+      <p className={`text-sm text-seal ${lang === "zh" ? "" : "uppercase tracking-[0.16em]"}`}>{copy.kicker}</p>
       <h1 className="mt-2 font-display text-5xl leading-[0.95]">{copy.h1}</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">
         {copy.introBefore}

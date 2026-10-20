@@ -37,5 +37,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/terms",
     "/contact",
   ];
-  return paths.map((path) => ({ url: `${SITE.url}${path}` }));
+  return paths.map((path) => ({ url: path === "/" ? SITE.url : `${SITE.url}${path}` }));
 }

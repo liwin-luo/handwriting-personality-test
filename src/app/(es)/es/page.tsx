@@ -3,6 +3,7 @@ import { EsQuiz } from "@/components/EsQuiz";
 import { GuideLink } from "@/components/Glyph";
 import { JsonLd } from "@/components/Meta";
 import { guides, profiles } from "@/content/es.mjs";
+import { homeLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
 const names = Object.entries(profiles);
@@ -13,7 +14,7 @@ export const metadata = pageMeta({
     "Un test gratis de la letra. Eliges las formas que escribes de verdad. Ocho respuestas dan un nombre ficticio. No se sube nada.",
   path: "/es",
   absolute: true,
-  langs: { en: `${SITE.url}/`, zh: `${SITE.url}/zh`, es: `${SITE.url}/es` },
+  langs: homeLangs(),
 });
 
 export default function EsHome() {

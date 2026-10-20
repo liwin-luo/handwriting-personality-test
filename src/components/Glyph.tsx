@@ -1,3 +1,30 @@
+import { CARD_LINE, baselineShift } from "@/lib/share-card.mjs";
+
+export function GlyphLine({
+  samples,
+}: {
+  samples: { id: string; file: string; alt: string }[];
+}) {
+  return (
+    <div className="relative mt-auto">
+      <div className="pointer-events-none absolute inset-x-0 border-b border-rule" style={{ top: "28%" }} />
+      <div className="pointer-events-none absolute inset-x-0 border-b border-rule" style={{ top: "56%" }} />
+      <div className="flex">
+        {samples.map((sample) => (
+          <div
+            key={sample.id}
+            className="min-w-0 flex-1"
+            style={{ transform: `translateY(${baselineShift(sample.file)}%)` }}
+          >
+            <Glyph file={sample.file} alt={sample.alt} />
+          </div>
+        ))}
+      </div>
+      <div className="pointer-events-none absolute inset-x-0 border-b border-ink" style={{ top: `${CARD_LINE * 100}%` }} />
+    </div>
+  );
+}
+
 export function Glyph({
   file,
   alt,

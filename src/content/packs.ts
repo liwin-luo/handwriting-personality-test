@@ -50,6 +50,9 @@ export type LatinPack = {
       card: string;
       copy: string;
       copied: string;
+      download: string;
+      cardError: string;
+      cardNote: string;
       drill: string;
       directions: string;
       incompleteTitle: string;

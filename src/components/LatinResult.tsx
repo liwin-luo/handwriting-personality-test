@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Glyph } from "@/components/Glyph";
-import { DIRECTIONS, MIN_ANSWERS, directionFor, type QuizQuestion } from "@/content";
-import { decodeAnswers, encodeAnswers, pickSamples, scoreAnswers } from "@/lib/score.mjs";
+import { Glyph, GlyphLine } from "@/components/Glyph";
+import { DIRECTIONS, MIN_ANSWERS, type QuizQuestion } from "@/content";
+import { choiceNote, countNote, retakeLabel, shareHint, shareLabel } from "@/content/choice-notes.mjs";
+import { decodeAnswers, encodeAnswers, scoreAnswers } from "@/lib/score.mjs";
+import { chosenLine, downloadShareCard, shareResult } from "@/lib/share-card.mjs";
 
 function fill(template: string, vars: Record<string, number>) {
   return template.replace(/\{(\w+)\}/g, (_, key) => String(vars[key] ?? ""));
@@ -29,6 +31,9 @@ export function LatinResult({
     card: string;
     copy: string;
     copied: string;
+    download: string;
+    cardError: string;
+    cardNote: string;
     drill: string;
     directions: string;
     incompleteTitle: string;
@@ -43,12 +48,12 @@ export function LatinResult({
   const initial = decodeAnswers(code, questions);
   const [picks, setPicks] = useState<(number | null)[] | null>(initial);
   const [copied, setCopied] = useState(false);
+  const [cardError, setCardError] = useState("");
   if (!picks) return null;
 
   const scored = scoreAnswers(questions, picks, MIN_ANSWERS);
   const profile = scored.profile ? profiles[scored.profile] : null;
-  const samples = profile ? pickSamples(questions, picks, directionFor(scored.profile), 3) : [];
-  const max = Math.max(1, ...DIRECTIONS.map((id) => scored.totals[id]));
+  const samples = profile ? chosenLine(questions, picks) : [];
 
   function commit(next: (number | null)[]) {
     const nextCode = encodeAnswers(next);
@@ -63,44 +68,62 @@ export function LatinResult({
           <p className="text-sm tracking-[0.16em] text-seal">{copy.eyebrow}</p>
           <h1 className="mt-2 font-display text-5xl leading-none">{profile.name}</h1>
           <p className="mt-4 text-xl leading-snug">{profile.sentence}</p>
-          <p className="mt-3 max-w-xl text-sm text-muted">{copy.disclaimer}</p>
           <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
-          <div className="notebook mt-8 aspect-[4/5] max-w-sm rounded-md p-6 pl-12">
-            <p className="text-xs tracking-[0.14em] text-muted">{copy.card}</p>
-            <p className="mt-6 font-display text-4xl leading-none">{profile.name}</p>
+          <p className="mt-3 max-w-xl text-sm text-muted">{copy.disclaimer}</p>
+          <div className="notebook mt-8 flex aspect-[4/5] max-w-sm flex-col rounded-md p-6 pl-12">
+            <p className="text-[11px] tracking-[0.16em] text-muted">{copy.card}</p>
+            <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
+            <div className="mt-4 h-0.5 w-8 bg-seal" />
             <p className="mt-4 text-lg leading-snug">{profile.sentence}</p>
-            <div className="mt-8 grid grid-cols-3 gap-2">
-              {samples.map((sample) => (
-                <Glyph key={sample.file} file={sample.file} alt={sample.alt} />
-              ))}
-            </div>
+            <GlyphLine samples={samples} />
+            <p className="mt-4 text-[11px] text-muted">handwritingpersonalitytest.online</p>
           </div>
-          <button
-            type="button"
-            className="mt-4 bg-ink px-4 py-2 text-sm text-paper"
-            onClick={async () => {
-              await navigator.clipboard.writeText(`${window.location.origin}/${locale}/r/${encodeAnswers(picks)}`);
-              setCopied(true);
-            }}
-          >
-            {copied ? copy.copied : copy.copy}
-          </button>
+          <div className="no-print mt-4 flex flex-wrap gap-3">
+            <button
+              type="button"
+              className="bg-ink px-4 py-2 text-sm text-paper"
+              onClick={async () => {
+                const status = await shareResult({
+                  title: profile.name,
+                  text: profile.sentence,
+                  url: `${window.location.origin}/${locale}/r/${encodeAnswers(picks)}`,
+                });
+                setCopied(status === "copied");
+              }}
+            >
+              {copied ? copy.copied : shareLabel[locale as keyof typeof shareLabel] || shareLabel.en}
+            </button>
+            <button
+              type="button"
+              className="border border-ink px-4 py-2 text-sm"
+              onClick={async () => {
+                setCardError("");
+                try {
+                  await downloadShareCard({
+                    kicker: copy.card,
+                    name: profile.name,
+                    sentence: profile.sentence,
+                    files: samples.map((sample) => sample.file),
+                    filename: `${scored.profile}.png`,
+                  });
+                } catch {
+                  setCardError(copy.cardError);
+                }
+              }}
+            >
+              {copy.download}
+            </button>
+          </div>
+          {cardError ? <p className="mt-2 text-sm text-seal">{cardError}</p> : null}
+          <p className="mt-2 text-sm text-muted">{shareHint[locale as keyof typeof shareHint] || shareHint.en}</p>
+          <p className="mt-1 text-sm text-muted">{copy.cardNote}</p>
           <h2 className="mt-10 font-display text-2xl">{copy.drill}</h2>
           <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
           <h2 className="mt-12 font-display text-2xl">{copy.directions}</h2>
-          <ul className="mt-4 space-y-3">
-            {DIRECTIONS.map((id) => (
-              <li key={id}>
-                <div className="flex justify-between text-sm">
-                  <span>{copy.labels[id]}</span>
-                  <span className="text-muted">{scored.totals[id]}</span>
-                </div>
-                <div className="mt-1 h-1.5 bg-rule">
-                  <div className="h-full bg-ink" style={{ width: `${(scored.totals[id] / max) * 100}%` }} />
-                </div>
-              </li>
-            ))}
-          </ul>
+          <p className="mt-4 max-w-xl leading-relaxed">
+            {DIRECTIONS.map((id) => `${copy.labels[id]} ${scored.totals[id]}`).join(". ")}.
+          </p>
+          <p className="mt-2 text-sm text-muted">{countNote[locale as keyof typeof countNote] || countNote.en}</p>
         </>
       ) : (
         <>
@@ -134,9 +157,24 @@ export function LatinResult({
                 );
               })}
             </div>
+            {picks[questionIndex] == null ? null : (
+              <p className="mt-2 max-w-xl text-sm leading-relaxed">
+                {choiceNote(locale, question.options[picks[questionIndex]!].id)}
+              </p>
+            )}
           </li>
         ))}
       </ol>
+      <button
+        type="button"
+        onClick={() => {
+          localStorage.removeItem(`hpt.${locale}`);
+          router.push(`/${locale}`);
+        }}
+        className="no-print mt-10 text-sm underline decoration-rule underline-offset-4"
+      >
+        {retakeLabel[locale as keyof typeof retakeLabel] || retakeLabel.en}
+      </button>
     </article>
   );
 }

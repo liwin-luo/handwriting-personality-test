@@ -2,6 +2,7 @@ import { TraitsBlurb } from "@/components/TraitsScreen";
 import { JsonLd } from "@/components/Meta";
 import { GuideLink } from "@/components/Glyph";
 import { ZhQuiz } from "@/components/ZhQuiz";
+import { profiles } from "@/content/zh.mjs";
 import { guides as zhGuides } from "@/content/zh-guides.mjs";
 import { homeLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
@@ -17,7 +18,7 @@ export const metadata = pageMeta({
 export default function ZhHome() {
   return (
     <div lang="zh">
-      <p className="text-sm uppercase tracking-[0.16em] text-seal">免费 · 不上传</p>
+      <p className="text-sm text-seal">免费 · 不上传</p>
       <h1 className="mt-2 max-w-xl font-display text-5xl leading-[0.95] tracking-tight">笔迹测验</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">
         这五题只看硬笔：大小、字距、行距、连笔、横画。没有 i 上的点和 t 的横。答满四题给出一个写法名称，不是性格诊断。
@@ -25,6 +26,17 @@ export default function ZhHome() {
       <div className="mt-8">
         <ZhQuiz />
       </div>
+      <section className="mt-16">
+        <h2 className="font-display text-3xl">六个写法名称</h2>
+        <ul className="mt-6 divide-y divide-rule border-y border-rule">
+          {profiles.map((profile) => (
+            <li key={profile.slug} className="flex items-baseline justify-between gap-4 py-3">
+              <span className="font-display text-xl">{profile.name}</span>
+              <span className="text-right text-sm text-muted">{profile.sentence}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
       <section className="mt-16">
         <h2 className="font-display text-3xl">五笔各一页</h2>
         <TraitsBlurb code="zh" />

@@ -1,6 +1,7 @@
 import { TraitsScienceLine } from "@/components/TraitsScreen";
 import { Crumbs, JsonLd } from "@/components/Meta";
 import { scienceFaqs } from "@/content/es.mjs";
+import { scienceLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
 
 export const metadata = pageMeta({
@@ -8,7 +9,7 @@ export const metadata = pageMeta({
   description:
     "Qué puede ver un test de la letra, y qué no puede decir sobre la personalidad, la salud, la honestidad, la inteligencia o una contratación.",
   path: "/es/science",
-  langs: { en: `${SITE.url}/science`, zh: `${SITE.url}/zh/science`, es: `${SITE.url}/es/science` },
+  langs: scienceLangs(),
 });
 
 export default function EsScience() {

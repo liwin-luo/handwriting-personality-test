@@ -9,7 +9,7 @@ function section(id, h2, paragraphs, links = []) {
 }
 
 const en = {
-  title: "What you can see in handwriting",
+  title: "What Handwriting Shows",
   description:
     "Size, slant, spacing, pressure, baseline, and margins: what is visible on the page, and what a photograph cannot show.",
   h1: "What you can see in handwriting",

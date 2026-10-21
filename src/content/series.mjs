@@ -12,11 +12,14 @@ function pack(code, t) {
   const p = code === "en" ? "" : `/${code}`;
   const home = p || "/";
   const signature = `${p}/tools/signature`;
+  const indexed = code === "en" || code === "zh";
+  const sizeHref = indexed ? `${p}/guides/signature-size` : `${p}/tools/signature/size`;
+  const bodyHref = indexed ? `${p}/guides/signature-writing` : `${p}/tools/signature/body`;
   return {
     navFaq: t.navFaq,
     navAbout: t.navAbout,
     notesTitle: t.notesTitle,
-    notes: [link(`${p}/tools/signature/size`, t.sizeNav), link(`${p}/tools/signature/body`, t.bodyNav)],
+    notes: [link(sizeHref, t.sizeNav), link(bodyHref, t.bodyNav)],
     faq: page(
       home,
       t.crumb,
@@ -25,10 +28,10 @@ function pack(code, t) {
       t.faqDescription,
       t.faqH1,
       t.faqLede,
-      [],
+      t.faqSections || [],
       t.faqsTitle,
       t.faqItems,
-      [link(`${p}/science`, t.science), link(`${p}/about`, t.navAbout), link(signature, t.signature)],
+      [link(`${p}/science`, t.science), link(`${p}/about`, t.navAbout), link(signature, t.signature), ...(t.faqMore || [])],
     ),
     about: page(
       home,
@@ -38,10 +41,10 @@ function pack(code, t) {
       t.aboutDescription,
       t.aboutH1,
       t.aboutLede,
-      [section(t.pickH, t.pickP), section(t.scoreH, t.scoreP)],
+      [section(t.pickH, t.pickP), section(t.scoreH, t.scoreP), ...(t.aboutExtraSections || [])],
       t.faqsTitle,
       t.aboutItems,
-      [link(`${p}/science`, t.science), link(`${p}/faq`, t.navFaq)],
+      [link(`${p}/science`, t.science), link(`${p}/faq`, t.navFaq), ...(t.aboutMore || [])],
     ),
     size: page(
       signature,
@@ -54,7 +57,7 @@ function pack(code, t) {
       [section(t.sizeBoxH, t.sizeBoxP), section(t.sizeLimitH, t.sizeLimitP)],
       t.faqsTitle,
       t.sizeItems,
-      [link(signature, t.backTool), link(`${p}/tools/signature/body`, t.bodyNav)],
+      [link(signature, t.backTool), link(bodyHref, t.bodyNav)],
     ),
     body: page(
       signature,
@@ -67,7 +70,7 @@ function pack(code, t) {
       [section(t.bodyDiffH, t.bodyDiffP), section(t.bodyUseH, t.bodyUseP)],
       t.faqsTitle,
       t.bodyItems,
-      [link(signature, t.backTool), link(`${p}/tools/signature/size`, t.sizeNav), link(home, t.toTest)],
+      [link(signature, t.backTool), link(sizeHref, t.sizeNav), link(home, t.toTest)],
     ),
   };
 }
@@ -85,7 +88,7 @@ const en = pack("en", {
   backTool: "Back to the measuring box",
   toTest: "Pick a shape in the test",
   faqTitle: "Handwriting test questions",
-  faqDescription: "Accuracy, left-handed writing, messy lines, and why a signature is a poor sample. Short answers, with the longer limit on the science page.",
+  faqDescription: "Accuracy, left-handed writing, messy lines, and why a signature is a poor sample. Short answers, with the longer limit and the sources on the science page.",
   faqH1: "Questions about this test",
   faqLede: "Six questions people ask before they trust a handwriting page. The science page is the limit. These answers stay inside it.",
   faqItems: [
@@ -95,8 +98,39 @@ const en = pack("en", {
     faq("Can a signature be the handwriting sample?", "No. A signature is practiced, and it often does not match the notes above it. The test wants a few lines of ordinary writing. The signature box measures a drawing. It does not read the person."),
     faq("Are the answers uploaded?", "No. Quiz answers stay in this browser, and in the result link if you copy one. A slant photo stays in the browser. A signature drawing stays on the canvas until you clear it or leave."),
     faq("What if I write the same letter two ways?", "Pick the form in ordinary notes. You can change one answer from the result. That link updates. The quiz saved on the home page stays as it was."),
+    faq("How many questions do I need to answer?", "Eight. The test asks twelve and you can answer as many as you like. Fewer than eight produces no name, because there is not enough signal to file anything."),
+    faq("Can I take the test in another language?", "English and Chinese are written and indexed. Other languages on this site are older versions that stay online but are no longer indexed, so their pages may not appear in search."),
+    faq("Does the test work on a phone?", "Yes. The shapes are drawn to be picked on a small screen, and the result link works on any device. The slant tool needs a photo, which phones always have."),
+    faq("Is there a right answer for each shape?", "No. There is a closer form and a less close one. If two look equally right, pick the one you would use in a note to a friend rather than the one on a form."),
   ],
-  aboutTitle: "How this handwriting test is scored",
+  faqSections: [
+    section("What this test measures", [
+      "The test measures one thing: the form of a stroke. You choose between two or three drawn versions of each of twelve marks, and the test files the set you chose. Two people looking at the same written 4 can agree on whether the counter is closed, and that agreement is the whole of the claim.",
+      "The twelve marks are the digits 4, 7, 0, and 1, the letters a, g, t, i, and y, the ampersand, the space between words, and the lean of a downstroke. Each one was picked because it has more than one common form, so choosing between them is a real decision rather than a guess.",
+      "What comes back is a name for that set. It is a filing label. It is not a diagnosis, a ranking, a compatibility score, or a forecast of how a conversation will go.",
+    ]),
+    section("What this test does not measure", [
+      "Personality, mood, health, honesty, intelligence, and fitness for a job are not in the stroke, and this site does not claim to read them. A photograph makes the gap wider: it keeps the ink and drops the pressure and the speed.",
+      "The claims that are usually attached to a handwriting result have been tested, and the tests do not support them. The clearest example is the 1989 meta-analysis of 17 hiring studies by Neter and Ben-Shakhar, where graphologists scored near zero against neutral writing content and untrained psychologists did better, which points at the words on the page rather than the shape.",
+      "A tidy line is a tidy line. A dark stroke is ink, not force. A long signature is a large drawing. None of them is a verdict, and the science page is where the boundary is written out in full.",
+    ]),
+    section("Your answers and your privacy", [
+      "Nothing is uploaded. The answers live in the browser you used, and if you copy a result link the answers travel inside that link, because the link is the record. Clearing the site data removes it. Nothing is stored on a server here, so there is no account to delete.",
+      "The slant tool reads a photo you choose from your own device and draws its line in the page. The photo does not leave the browser. The signature canvas holds a drawing until you clear it or close the tab.",
+      "Analytics on this site count page views and button presses in aggregate. They do not see your answers, because the answers never leave the page.",
+    ]),
+    section("Which tool to use for which question", [
+      "If you want a name for the set of shapes you write, use the test on the home page. If you want to know what a particular form is called and where it is taught, use the guides. If you want a number, use a measurement tool: the slant tool gives you degrees for one downstroke, and the signature box gives you width, height, and stroke length for a mark you draw.",
+      "If you want to compare a whole set of forms side by side, the sample chart is the reference page and prints on one sheet. If you want to know whether a handwriting judgement is fair, the science page is where the evidence and the limits are written out.",
+    ]),
+  ],
+  faqMore: [
+    link("/methodology", "How the test is built"),
+    link("/tools", "All four tools"),
+    link("/blog/graphology", "What the evidence says about graphology"),
+    link("/results", "The six labels"),
+  ],
+  aboutTitle: "How the Test Is Scored",
   aboutDescription: "Twelve shapes, eight answers, four tallies, and a two-point lead. The same answers always produce the same fictional name.",
   aboutH1: "How this test is scored",
   aboutLede: "The name is a filing label for the shapes you picked. It is not a diagnosis, and nobody writes a fresh paragraph about who you are.",
@@ -114,6 +148,32 @@ const en = pack("en", {
     faq("Can I skip a shape?", "Yes. A skip is not an answer. It does not add points."),
     faq("Will the same answers always get the same name?", "Yes. The arithmetic does not change between visits."),
     faq("Is the name a personality diagnosis?", "No. It names a group of shapes. The science page is the limit on what that name means."),
+    faq("Which tally wins if two are level?", "Neither. A name needs a two-point lead, so a level finish produces no name at all."),
+    faq("Why is there a special case for flourishes and rhythm?", "Because a page can be busy without being disorderly. When the flourish and the page rhythm are the two leaders together, the name is Daydream Doodler rather than either one alone."),
+    faq("Can I change an answer after the result?", "Yes. The result page has an edit control for each question. Changing one updates the link in the address bar."),
+    faq("Does the score change over time?", "No. The same twelve answers always produce the same totals and the same name. Nothing is recalculated from your browsing or your device."),
+  ],
+  aboutExtraSections: [
+    section("The twelve questions in order", [
+      "The quiz asks about the digit 4, the digit 7, the lowercase a, the lowercase g, the digit 0, the digit 1, the lowercase t, the lowercase i, the lowercase y, the ampersand, the space between words, and the lean of a downstroke. That order does not change, which is why a saved link can be read later by anyone.",
+      "Each question offers two or three drawn forms. The drawings were made for this site, so they show the difference cleanly without the noise of a scanned page. You may skip any question, and a skip leaves the tally untouched.",
+      "The first four questions ask about the structure of a letter, the next four about how a letter ends, and the last four about the page as a whole: spacing, rhythm, and the flourish that the copybook does not ask for. That grouping is what the four tallies read from.",
+    ]),
+    section("How the four totals are counted", [
+      "Every form you pick adds a point, and some forms add to more than one tally. Choosing the open 4 adds to structure, for example, and the plain 7 adds to endings. The totals are not percentages and they are not scored out of a number; they are simple counts of the marks you chose.",
+      "The four tallies are structure, endings, page rhythm, and flourish. Structure counts how a letter is built. Endings counts how a stroke stops. Page rhythm counts the spacing and the flow across the line. Flourish counts the marks that go beyond the copybook.",
+      "A tally can score points from more than one question, and a question can feed more than one tally. That is deliberate. It is why a page that is mostly plain can still score on rhythm, and why the result is not a simple majority of the answers you gave.",
+    ]),
+    section("The threshold and the six names", [
+      "A name appears when one tally leads the others by two points. That lead is the whole test. It exists so that a page which is broadly ordinary does not get a label, and so that a label means the page has a dominant habit rather than a slight preference.",
+      "If no tally leads by two, the result is Instinctive Mixer. If the two leaders are the flourish and the page rhythm together, the result is Daydream Doodler, because a busy page and a decorative one are one finding rather than two.",
+      "The other four names come from a single leading tally: Quiet Architect, Everyday Minimalist, Margin Storyteller, and Beautiful Rebel. The sentence on the result card is fixed for that name. Nothing is written new for you, and nothing is added after the fact.",
+    ]),
+  ],
+  aboutMore: [
+    link("/methodology", "The full method"),
+    link("/results", "The six labels"),
+    link("/science", "What a stroke cannot prove"),
   ],
   sizeTitle: "How big is a signature",
   sizeDescription: "What the width and height in the signature box measure, and why a large drawing is not confidence.",
@@ -176,6 +236,35 @@ const zh = pack("zh", {
     faq("签名能当笔迹样本吗？", "不能。签名是练过的，常常和上面的正文不一样。测验要的是几行平常的字。签名框只量你画的那一笔。它不读人。"),
     faq("答案会上传吗？", "不会。测验答案留在这台浏览器里，你复制结果链接时也在链接里。倾斜工具的照片留在浏览器。签名画在画布上，清掉或离开就没了。"),
     faq("同一个字我有两种写法，选哪个？", "选平常笔记里的那种。结果页可以改一题。那个链接会更新。首页上保存的测验还是原来的。"),
+    faq("要答几题才出结果？", "至少四题。中文测验一共有五题。少于四题不出名字，因为没有足够的形状可以归档。"),
+    faq("手机上能用吗？", "能。五种写法的图是按小屏画的，结果链接在哪种设备上都能打开。倾斜工具要照片，手机本来就有。"),
+    faq("每种写法有标准答案吗？", "没有。有更接近的和没那么接近的。两个看着一样接近，就选你写在给朋友的便条里的那个，不是表格上印的那个。"),
+  ],
+  faqSections: [
+    section("这个测验量什么", [
+      "它只量一件事：一笔的写法。你在十二个标记里各选两三种画法里的一种，测验把你选的那一组归档。两个人看着同一个写出来的 4，可以一起判断封口有没有合上，这个共识就是全部的主张。",
+      "十二个标记是数字 4、7、0、1，字母 a、g、t、i、y，和号，词间距，还有一根竖画的倾斜。每个都挑了有不止一种常见写法的地方，所以每次选择都是在两种真的不同的做法之间做决定。",
+      "最后给你一个名字，给这一组写法归档。它是标签，不是鉴定，不是排名，不是相容度，也不是对一次谈话的预测。",
+    ]),
+    section("这个测验不量什么", [
+      "性格、情绪、健康、诚实、智力，以及适不适合一份工作，都不在笔画里，本站也不声称能读出来。照片让差距更大：照片留下墨，丢掉笔压和速度。",
+      "通常挂在笔迹结果上的那些说法被检验过，检验结果不支持它们。最清楚的例子是 Neter 与 Ben-Shakhar 1989 年对 17 项招聘研究的元分析：字的内容中性时，笔迹学家的判断接近零，没受过笔迹学训练心理学家反而更好，这说明起作用的是页面上的词，不是形状。",
+      "整齐的一行就是整齐的一行。颜色深的笔画是墨，不是力。写得开的大签名是一张大图。这些都不是判决，边界写在科学页上。",
+    ]),
+    section("答案和隐私", [
+      "没有上传。答案留在这台浏览器里；你复制结果链接时，答案就随链接走，因为链接本身就是记录。清掉站点数据就没了。这里没有服务器存着答案，所以也没有账号要注销。",
+      "倾斜工具读的是你自己设备上选的照片，画线也画在页面里。照片不出浏览器。签名画布留着一笔，直到你清掉或关掉标签页。",
+      "本站的统计只数页面访问和点击，汇总着看。它们看不到你的答案，因为答案根本没离开过这一页。",
+    ]),
+    section("不同的问题用哪个工具", [
+      "想给自己的写法组一个名字，用首页的测验。想弄清某个写法叫什么、在哪里教的，用写法指南。想要数字，用测量工具：倾斜工具给出一根竖画的度数，签名框给出你画的一笔的宽、高和笔画长度。",
+      "想把一组写法并排比较，字例图表是那页参考，可以打印在一张纸上。想判断一个笔迹判断是否站得住，科学页把证据和边界都写出来。",
+    ]),
+  ],
+  faqMore: [
+    link("/zh/tools", "四个工具"),
+    link("/zh/tools/sample-chart", "字例图表"),
+    link("/zh/guides/signature-size", "签名有多大"),
   ],
   aboutTitle: "这个笔迹测验怎么计分",
   aboutDescription: "五题，至少四题，四个计数，领先两分才有一个名字。同样的答案永远得到同一个虚构名字。",
@@ -195,6 +284,31 @@ const zh = pack("zh", {
     faq("可以跳过吗？", "可以。跳过不是答案，不加分。"),
     faq("同样的答案每次都是同一个名字吗？", "是。算法不随访问改变。"),
     faq("这个名字是性格鉴定吗？", "不是。它给一组写法起名。科学页写明这个名字不能说明什么。"),
+    faq("两个方向打平时怎么办？", "谁也不赢。要有两分的领先才出名字，所以打平就没有名字。"),
+    faq("为什么多出来的一笔和页面节奏要单独算？", "因为一页可以忙而不乱。这两个方向一起领先时，名字是连笔和行距一起出现，而不是其中任何一个单独出现。"),
+    faq("结果出来以后能改答案吗？", "能。结果页每一题都有改的入口。改完一题，地址栏里的链接会更新。"),
+    faq("分数会随时间变吗？", "不会。同样五题永远得到同样的计数和同样的名字。不会根据你的浏览或设备重新计算。"),
+  ],
+  aboutExtraSections: [
+    section("五道题按什么顺序", [
+      "中文测验问的是字的大小、字距、行距、连笔和横画。这个顺序不变，所以一个存下来的链接以后谁都能看懂。",
+      "每一题给两三种画法。图是为本站画的，所以差别看得清楚，没有扫描页上的那些杂讯。每一题都可以跳过，跳过不加分。",
+      "前两题问字本身怎么搭，后两题问笔画在哪里收住，最后一题问整页：行距和节奏。四个计数就是从这四组里读出来的。",
+    ]),
+    section("四个计数怎么算", [
+      "你每选一种写法就加一分，有些写法会往两个计数里各加一分。比如选开口的 4 会加结构分，选不带横的 7 会加收笔分。计数不是百分比，也不是打分，它就是你选的标记数。",
+      "四个计数是结构、收笔、页面节奏、多出来的一笔。结构数的是字怎么搭起来，收笔数的是笔画在哪里停，页面节奏数的是行距和整行的流动，多出来的一笔数的是字帖没要求的那部分。",
+      "一个计数可以从不止一题得分，一题也可以喂给不止一个计数。这是故意的。所以一页大部分很素，也可能在节奏上得分；结果不是简单地看你答了多数哪一边。",
+    ]),
+    section("两分领先和六个名称", [
+      "某个计数领先两分，就出名字。这个门槛就是整个测验。它让一个整体平常的页面不会被贴标签，也让名字代表页面上有一个主导的习惯，而不是一点点偏好。",
+      "没有计数领先两分，结果是没有固定一种写法。如果领先的两个是多出来的一笔和页面节奏一起，结果是连笔和行距一起出现，因为一页很花和一笔很装饰是一件事，不是两件。",
+      "另外四个名字来自单独领先的计数：格子里的字、写完就停、行距说了算、多写了一笔。结果卡片上那句话是这个名字固定的。不会另为你写一段，也不会事后加东西。",
+    ]),
+  ],
+  aboutMore: [
+    link("/zh/science", "一笔证明不了什么"),
+    link("/zh/guides", "五种写法"),
   ],
   sizeTitle: "签名有多大",
   sizeDescription: "签名框里的宽和高量的是什么，以及为什么画得大不是自信。",
@@ -252,6 +366,8 @@ function latin(code, t) {
     faqH1: t.faqH1,
     faqLede: t.faqLede,
     faqItems: t.faqItems,
+    faqSections: t.faqSections,
+    faqMore: t.faqMore,
     aboutTitle: t.aboutTitle,
     aboutDescription: t.aboutDescription,
     aboutH1: t.aboutH1,
@@ -261,6 +377,8 @@ function latin(code, t) {
     scoreH: t.scoreH,
     scoreP: t.scoreP,
     aboutItems: t.aboutItems,
+    aboutExtraSections: t.aboutExtraSections,
+    aboutMore: t.aboutMore,
     sizeTitle: t.sizeTitle,
     sizeDescription: t.sizeDescription,
     sizeH1: t.sizeH1,

@@ -12,6 +12,7 @@ export function ZhQuiz() {
       minAnswers={MIN_ZH}
       storageKey="hpt.zh"
       resultPath="/zh/r"
+      lang="zh"
       decode={(code) => decodeAnswers(code, questions)}
       copy={{
         progress: (answered, total, more) =>
@@ -19,6 +20,7 @@ export function ZhQuiz() {
         back: "上一题",
         skip: "跳过",
         see: "看结果",
+        seeMore: (more) => `看结果（还差 ${more}）`,
         keys: (count) => `按键 1–${count}，或方向键`,
       }}
     />

@@ -41,13 +41,13 @@ export function EsResult({ code }: { code: string }) {
       {profile ? (
         <>
           <p className="text-sm tracking-[0.16em] text-seal">Estas formas</p>
-          <h1 className="mt-2 font-display text-5xl leading-none">{profile.name}</h1>
+          <h1 className="page-h1 mt-2">{profile.name}</h1>
           <p className="mt-4 text-xl leading-snug">{profile.sentence}</p>
           <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
           <p className="mt-3 max-w-xl text-sm text-muted">
             Un nombre para las formas de este enlace. No es una lectura de personalidad, salud, honestidad o capacidad.
           </p>
-          <div className="notebook mt-8 flex aspect-[4/5] max-w-sm flex-col rounded-md p-6 pl-12">
+          <div className="notebook mt-8 max-w-sm rounded-md p-6 pl-12">
             <p className="text-[11px] tracking-[0.16em] text-muted">Test de la letra</p>
             <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
             <div className="mt-4 h-0.5 w-8 bg-seal" />
@@ -58,7 +58,7 @@ export function EsResult({ code }: { code: string }) {
           <div className="no-print mt-4 flex flex-wrap gap-3">
             <button
               type="button"
-              className="bg-ink px-4 py-2 text-sm text-paper"
+              className="btn"
               onClick={async () => {
                 const status = await shareResult({
                   title: profile.name,
@@ -94,9 +94,9 @@ export function EsResult({ code }: { code: string }) {
           {cardError ? <p className="mt-2 text-sm text-seal">{cardError}</p> : null}
           <p className="mt-2 text-sm text-muted">{shareHint.es}</p>
           <p className="mt-1 text-sm text-muted">Las palabras de la tarjeta también están en esta página. La imagen es solo para compartir.</p>
-          <h2 className="mt-10 font-display text-2xl">Un ejercicio</h2>
+          <h2 className="mt-10 page-h2">Un ejercicio</h2>
           <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
-          <h2 className="mt-12 font-display text-2xl">Cuatro direcciones</h2>
+          <h2 className="mt-12 page-h2">Cuatro direcciones</h2>
           <p className="mt-4 max-w-xl leading-relaxed">
             {DIRECTIONS.map((id) => `${LABELS[id]} ${scored.totals[id]}`).join(". ")}.
           </p>
@@ -104,16 +104,16 @@ export function EsResult({ code }: { code: string }) {
         </>
       ) : (
         <>
-          <h1 className="font-display text-4xl">Aún no hay ocho respuestas</h1>
+          <h1 className="page-h1">Aún no hay ocho respuestas</h1>
           <p className="mt-4">
             Este enlace tiene {scored.answered} respuestas. Con ocho basta para un nombre.
           </p>
-          <a href={`/es?c=${code}`} className="mt-4 inline-block bg-ink px-4 py-2 text-sm text-paper">
+          <a href={`/es?c=${code}`} className="mt-4 inline-block btn">
             Seguir
           </a>
         </>
       )}
-      <h2 className="mt-12 font-display text-2xl">Formas de este enlace</h2>
+      <h2 className="mt-12 page-h2">Formas de este enlace</h2>
       <p className="mt-2 text-sm text-muted">Cambiar una forma actualiza este enlace. El test guardado en la página de inicio se queda como estaba.</p>
       <ol className="mt-6 space-y-8">
         {questions.map((question, questionIndex) => (
@@ -150,7 +150,7 @@ export function EsResult({ code }: { code: string }) {
           localStorage.removeItem("hpt.es");
           router.push("/es");
         }}
-        className="no-print mt-10 text-sm underline decoration-rule underline-offset-4"
+        className="no-print mt-10 text-sm text-link"
       >
         {retakeLabel.es}
       </button>

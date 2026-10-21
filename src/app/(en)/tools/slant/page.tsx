@@ -1,17 +1,30 @@
-import { SlantScreen } from "@/components/ToolScreens";
+import { SlantTool } from "@/components/SlantTool";
+import { ToolPageView } from "@/components/seo/PageParts";
+import { slantTool } from "@/content/seo/en-tools";
 import { toolCopyFor } from "@/content/tools";
 import { toolLangs } from "@/lib/langs";
 import { pageMeta } from "@/lib/site";
 
-const copy = toolCopyFor("en")!;
+const copy = toolCopyFor("en")!.slant;
 
 export const metadata = pageMeta({
-  title: copy.slant.title,
-  description: copy.slant.description,
+  title: slantTool.title,
+  description: slantTool.meta,
   path: "/tools/slant",
   langs: toolLangs("/tools/slant"),
 });
 
 export default function SlantPage() {
-  return <SlantScreen lang="en" path="/tools/slant" copy={copy.slant} />;
+  return (
+    <ToolPageView
+      content={slantTool}
+      breadcrumbs={[
+        { href: "/", label: "Home" },
+        { href: "/tools", label: "Tools" },
+        { label: "Slant" },
+      ]}
+    >
+      <SlantTool copy={copy} />
+    </ToolPageView>
+  );
 }

@@ -30,6 +30,7 @@ export function LatinQuiz({
       minAnswers={MIN_ANSWERS}
       storageKey={`hpt.${code}`}
       resultPath={`/${code}/r`}
+      lang={code}
       decode={(value) => decodeAnswers(value, bank)}
       copy={{
         progress: (answered, total, more) =>

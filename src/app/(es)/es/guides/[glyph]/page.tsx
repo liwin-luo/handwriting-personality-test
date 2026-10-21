@@ -52,7 +52,7 @@ export default async function EsGuidePage({ params }: { params: Promise<{ glyph:
         </p>
       ))}
       <p className="mt-8">
-        <a className="bg-ink px-4 py-2 text-sm text-paper" href={`/es#q-${guide.questionId}`}>
+        <a className="btn" href={`/es#q-${guide.questionId}`}>
           Probar esta forma en el test
         </a>
       </p>

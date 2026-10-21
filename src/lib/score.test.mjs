@@ -10,7 +10,7 @@ import { packs } from "../content/latin-registry.mjs";
 import { guides as zhGuides } from "../content/zh-guides.mjs";
 import { questions as zhQuestions } from "../content/zh.mjs";
 import { questions } from "../content/quiz.mjs";
-import { languageHref, preferredLanguage } from "./lang-switch.mjs";
+import { bannerFor, languageHref, preferredLanguage } from "./lang-switch.mjs";
 import { choiceNote } from "../content/choice-notes.mjs";
 import { baselineShift, cardFrame, chosenLine, shareResult, wrap } from "./share-card.mjs";
 import {
@@ -49,11 +49,43 @@ test("twelve questions, files exist, option ids unique", () => {
 });
 
 test("guide figures point at real samples", () => {
-  const text = fs.readFileSync(new URL("../content/guides.ts", import.meta.url), "utf8");
-  const files = [...text.matchAll(/([a-z0-9-]+\.svg)/g)].map((match) => match[1]);
+  const dir = new URL("../content/guide-pages/", import.meta.url);
+  const files = fs
+    .readdirSync(dir)
+    .filter((name) => name.endsWith(".ts") && name !== "types.ts" && name !== "index.ts")
+    .flatMap((name) => [...fs.readFileSync(new URL(name, dir), "utf8").matchAll(/([a-z0-9-]+\.svg)/g)].map((match) => match[1]));
   assert.ok(files.length >= 16);
   for (const file of files) {
     assert.ok(fs.existsSync(new URL(`../../public/samples/${file}`, import.meta.url)), file);
+  }
+});
+
+test("every english guide is a full article", () => {
+  const dir = new URL("../content/guide-pages/", import.meta.url);
+  const names = fs.readdirSync(dir).filter((name) => name.endsWith(".ts") && name !== "types.ts" && name !== "index.ts");
+  assert.equal(names.length, 12);
+  const block = (src, field) => {
+    const start = src.indexOf(`${field}: [`);
+    assert.ok(start >= 0, `missing ${field}`);
+    let depth = 0;
+    for (let index = start; index < src.length; index += 1) {
+      if (src[index] === "[") depth += 1;
+      if (src[index] === "]") {
+        depth -= 1;
+        if (depth === 0) return src.slice(start, index + 1);
+      }
+    }
+    return "";
+  };
+  for (const name of names) {
+    const src = fs.readFileSync(new URL(name, dir), "utf8");
+    const items = (field, marker) => (block(src, field).match(marker) || []).length;
+    assert.equal(items("origin", /^\s{4}"/gm), 6, `${name} origin`);
+    assert.equal(items("limits", /^\s{4}"/gm), 5, `${name} limits`);
+    assert.equal(items("checkSteps", /^\s{4}"/gm), 4, `${name} checkSteps`);
+    assert.equal(items("useCases", /h3: "/g), 3, `${name} useCases`);
+    assert.equal(items("related", /href: "/g), 5, `${name} related`);
+    assert.equal(items("faqs", /^\s{6}q: "/gm), 8, `${name} faqs`);
   }
 });
 
@@ -150,8 +182,7 @@ test("a shorter quiz can lower the minimum", () => {
 });
 
 test("chinese samples exist", () => {
-  assert.equal(zhQuestions.length, 5);
-  for (const question of zhQuestions) {
+  assert.equal(zhQuestions.length, 5);  for (const question of zhQuestions) {
     for (const option of question.options) {
       assert.ok(fs.existsSync(new URL(`../../public/samples/${option.file}`, import.meta.url)), option.file);
     }
@@ -265,7 +296,7 @@ test("language switch stays on the translated page", () => {
   assert.equal(languageHref("zh", "/fr/r/1000000000000"), "/zh");
   assert.equal(languageHref("fr", "/tools/slant"), "/fr/tools/slant");
   assert.equal(languageHref("en", "/tools/slant"), "/tools/slant");
-  assert.equal(languageHref("zh", "/chart"), "/zh/chart");
+  assert.equal(languageHref("zh", "/chart"), "/zh/tools/sample-chart");
   assert.equal(languageHref("en", "/zh/tools/signature"), "/tools/signature");
   assert.equal(languageHref("pt", "/zh/chart"), "/pt/chart");
   assert.equal(languageHref("zh", "/es/tools/slant"), "/zh/tools/slant");
@@ -275,18 +306,34 @@ test("language switch stays on the translated page", () => {
   assert.equal(languageHref("es", "/pt/guides"), "/es/guides");
   assert.equal(languageHref("es", "/faq"), "/es/faq");
   assert.equal(languageHref("zh", "/about"), "/zh/about");
-  assert.equal(languageHref("en", "/de/tools/signature/size"), "/tools/signature/size");
+  assert.equal(languageHref("en", "/de/tools/signature/size"), "/guides/signature-size");
+  assert.equal(languageHref("zh", "/tools/signature/size"), "/zh/guides/signature-size");
+  assert.equal(languageHref("zh", "/tools/signature/body"), "/zh/guides/signature-writing");
+  assert.equal(languageHref("zh", "/tools/sample-chart"), "/zh/tools/sample-chart");
+  assert.equal(languageHref("fr", "/tools/sample-chart"), "/fr/chart");
   assert.equal(languageHref("pt", "/tools/signature/body"), "/pt/tools/signature/body");
   assert.equal(languageHref("zh", "/fr/faq"), "/zh/faq");
+});
+
+test("language banner speaks the page language and names the one on offer", () => {
+  const zh = bannerFor("zh", "en");
+  assert.match(zh.note, /本页是中文/);
+  assert.match(zh.note, /English/);
+  assert.equal(zh.yes, "切换到 English");
+  assert.equal(zh.no, "留在此页");
+  const en = bannerFor("en", "zh");
+  assert.match(en.note, /This page is in English/);
+  assert.match(en.yes, /中文/);
 });
 
 test("browser language suggests a page we have, and stays quiet when it already matches", () => {
   assert.equal(preferredLanguage(["zh-CN", "en-US"], "en"), "zh");
   assert.equal(preferredLanguage(["zh-CN", "en-US"], "zh"), null);
-  assert.equal(preferredLanguage(["pt-BR"], "en"), "pt");
-  assert.equal(preferredLanguage(["ja", "fr-FR"], "en"), "fr");
+  assert.equal(preferredLanguage(["pt-BR"], "en"), null);
+  assert.equal(preferredLanguage(["ja", "fr-FR"], "en"), null);
   assert.equal(preferredLanguage(["ja"], "en"), null);
   assert.equal(preferredLanguage(["en-US", "zh-CN"], "zh"), "en");
+  assert.equal(preferredLanguage(["fr-FR", "zh-CN"], "en"), "zh");
 });
 
 test("chart, slant, and signature exist in every language", () => {
@@ -369,8 +416,8 @@ test("faq, scoring, and the two signature notes exist in every language", () => 
   const englishQuestion = series.en.faq.faqs[0].q;
   for (const code of seriesCodes()) {
     const copy = series[code];
-    assert.equal(copy.faq.faqs.length, 6, code);
-    assert.equal(copy.about.faqs.length, 4, code);
+    assert.ok(copy.faq.faqs.length >= 6, code);
+    assert.ok(copy.about.faqs.length >= 4, code);
     assert.equal(copy.size.faqs.length, 4, code);
     assert.equal(copy.body.faqs.length, 4, code);
     assert.equal(copy.notes.length, 2, code);
@@ -387,6 +434,21 @@ test("faq, scoring, and the two signature notes exist in every language", () => 
   assert.doesNotMatch(zhAbout, /twelve|\b12\b/);
   for (const [code, word] of Object.entries(EIGHT)) {
     assert.match(JSON.stringify(series[code].about), new RegExp(word));
+  }
+  assert.equal(series.en.faq.faqs.length, 10);
+  assert.equal(series.zh.faq.faqs.length, 9);
+  assert.equal(series.en.faq.sections.length, 4);
+  assert.equal(series.zh.faq.sections.length, 4);
+  assert.equal(series.en.about.sections.length, 5);
+  assert.equal(series.zh.about.sections.length, 5);
+  for (const item of series.en.faq.more) {
+    assert.ok(!item.href.startsWith("/zh"), item.href);
+  }
+  for (const item of series.zh.faq.more) {
+    assert.ok(item.href.startsWith("/zh/"), item.href);
+  }
+  for (const item of series.zh.about.more) {
+    assert.ok(item.href.startsWith("/zh/"), item.href);
   }
 });
 
@@ -445,4 +507,24 @@ test("sample picks prefer the winning direction and skip blanks", () => {
   assert.equal(samples.length, 3);
   assert.ok(samples.every((sample) => sample.weight >= 1));
   assert.equal(samples[0].weight >= samples[1].weight, true);
+});
+
+test("every sample result link in the page copy opens a named result", () => {
+  const seoDir = new URL("../content/seo/", import.meta.url);
+  const files = ["en-home.ts", "en-tools.ts", "zh.ts"];
+  const found = [];
+  for (const name of files) {
+    const src = fs.readFileSync(new URL(name, seoDir), "utf8");
+    for (const match of src.matchAll(/sampleResultHref: "([^"]+)"/g)) found.push(match[1]);
+  }
+  assert.ok(found.length >= 7, `found ${found.length}`);
+  for (const href of found) {
+    const parts = href.split("/").filter(Boolean);
+    const code = parts[parts.length - 1];
+    const chinese = parts[0] === "zh";
+    const picks = decodeAnswers(code, chinese ? zhQuestions : questions);
+    assert.ok(picks, href);
+    const scored = scoreAnswers(chinese ? zhQuestions : questions, picks, chinese ? 4 : 8);
+    assert.ok(scored.profile, href);
+  }
 });

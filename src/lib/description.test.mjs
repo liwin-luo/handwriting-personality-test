@@ -4,53 +4,107 @@ import test from "node:test";
 import { guides as esGuides } from "../content/es.mjs";
 import { packs } from "../content/latin-registry.mjs";
 import { localeList } from "../content/locale-list.mjs";
+import { profiles } from "../content/quiz.mjs";
 import { series } from "../content/series.mjs";
 import { traits } from "../content/traits.mjs";
 import { toolCopy } from "../content/tools.mjs";
 import { guides as zhGuides } from "../content/zh-guides.mjs";
 import { fitDescription } from "./description.mjs";
 
-const guideSrc = fs.readFileSync(new URL("../content/guides.ts", import.meta.url), "utf8");
-const enGuides = [...guideSrc.matchAll(/slug: "([^"]+)",\n\s*title: "[^"]+",\n\s*description: "([^"]+)"/g)].map((match) => ({
-  slug: match[1],
-  description: match[2],
-}));
+const LOCALES = ["zh", "es", "pt", "fr", "de", "id", "vi", "it", "tr"];
+
+function langOf(path) {
+  const code = path.split("/").filter(Boolean)[0] || "en";
+  return LOCALES.includes(code) ? code : "en";
+}
+
+const guideDir = new URL("../content/guide-pages/", import.meta.url);
+const enGuides = fs
+  .readdirSync(guideDir)
+  .filter((name) => name.endsWith(".ts") && name !== "types.ts" && name !== "index.ts")
+  .flatMap((name) => {
+    const src = fs.readFileSync(new URL(name, guideDir), "utf8");
+    const slug = (src.match(/slug: "([^"]+)"/) || [])[1];
+    const description = (src.match(/description: "([^"]+)"/) || [])[1];
+    return slug && description ? [{ slug, description }] : [];
+  });
+
+const SEO_FILES = [
+  "en-home.ts",
+  "en-hub.ts",
+  "en-tools.ts",
+  "en-blog.ts",
+  "en-methodology.ts",
+  "en-signature-guides.ts",
+  "zh.ts",
+  "zh-signature-guides.ts",
+];
+
+function seoDescriptions(file) {
+  const src = fs.readFileSync(new URL(`../content/seo/${file}`, import.meta.url), "utf8");
+  const found = [];
+  for (const match of src.matchAll(/^\s*meta: "([^"]+)",/gm)) {
+    const before = src.slice(0, match.index);
+    const paths = [...before.matchAll(/^\s*path: "([^"]+)",/gm)];
+    const slugs = [...before.matchAll(/^\s*slug: "([^"]+)",/gm)];
+    const key = paths.length ? paths[paths.length - 1][1] : slugs[slugs.length - 1][1];
+    found.push({ path: key.startsWith("/") ? key : `/blog/${key}`, description: match[1] });
+  }
+  return found;
+}
+
+function walk(dir) {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) out.push(...walk(new URL(`${entry.name}/`, dir)));
+    else if (entry.name === "page.tsx") out.push(new URL(entry.name, dir));
+  }
+  return out;
+}
+
+// The descriptions that live in a page file instead of a content file.
+function appDescriptions() {
+  const found = [];
+  for (const file of walk(new URL("../app/", import.meta.url))) {
+    const src = fs.readFileSync(file, "utf8");
+    for (const block of src.matchAll(/pageMeta\(\{([\s\S]*?)\n\}\)/g)) {
+      const body = block[1];
+      const path = (body.match(/path: "([^"]+)"/) || [])[1];
+      const description = (body.match(/description:\s*"([^"]+)"/) || [])[1];
+      if (path && description) found.push({ path, description });
+    }
+  }
+  return found;
+}
 
 function pages() {
   const list = [];
   const add = (path, description) => list.push({ path, description });
-  add("/", "A free handwriting personality test. Pick the shapes you actually write. Eight answers show a fictional label. Nothing is uploaded.");
-  add("/zh", "五道中文硬笔题：大小、字距、行距、连笔、横画。不是拉丁字母测验的翻译。至少四题。不上传。");
-  add("/es", "Un test gratis de la letra. Eliges las formas que escribes de verdad. Ocho respuestas dan un nombre ficticio. No se sube nada.");
-  add("/science", "What a handwriting personality test can see, and what it cannot say about personality, health, honesty, intelligence, or hiring.");
-  add("/zh/science", "笔迹看得见什么，以及它不能说明性格、健康、诚实、智力或雇佣。");
-  add("/es/science", "Qué puede ver un test de la letra, y qué no puede decir sobre la personalidad, la salud, la honestidad, la inteligencia o una contratación.");
-  add("/privacy", "What the handwriting personality test stores, what a result link contains, and what analytics can see.");
-  add("/terms", "The handwriting personality test is a fictional labeling of shapes, not advice.");
-  add("/contact", "Email the handwriting personality test.");
-  add("/results", "Six fictional names for the shapes in the handwriting personality test, plus the case where no shape wins.");
-  const profiles = [
-    ["Quiet Architect", "You close the shapes that can be closed."],
-    ["Everyday Minimalist", "You stop the stroke once the letter is readable."],
-    ["Margin Storyteller", "Gaps and lean set the pace of the line."],
-    ["Beautiful Rebel", "You keep a mark the basic copybook leaves out."],
-    ["Daydream Doodler", "Flourish and rhythm show up in the same line."],
-    ["Instinctive Mixer", "No single habit runs the page."],
-  ];
-  for (const [name, sentence] of profiles) {
-    add(`/results/${name}`, `${name}: ${sentence} A fictional label in the handwriting personality test.`);
+  for (const item of appDescriptions()) add(item.path, item.description);
+  for (const profile of profiles) {
+    add(
+      `/results/${profile.slug}`,
+      `${profile.name}: ${profile.sentence} A fictional label in the handwriting personality test.`,
+    );
   }
   for (const guide of enGuides) add(`/guides/${guide.slug}`, guide.description);
   for (const guide of zhGuides) add(`/zh/guides/${guide.slug}`, guide.description);
   for (const guide of esGuides) add(`/es/guides/${guide.slug}`, guide.description);
-  const rest = { faq: "/faq", about: "/about", size: "/tools/signature/size", body: "/tools/signature/body" };
+  for (const file of SEO_FILES) {
+    for (const item of seoDescriptions(file)) add(item.path, item.description);
+  }
   for (const code of ["en", "zh", "es"]) {
     const prefix = code === "en" ? "" : `/${code}`;
     add(`${prefix}/guides`, traits[code].description);
-    add(`${prefix}/chart`, toolCopy[code].chart.description);
-    add(`${prefix}/tools/slant`, toolCopy[code].slant.description);
-    add(`${prefix}/tools/signature`, toolCopy[code].signature.description);
-    for (const key of Object.keys(rest)) add(`${prefix}${rest[key]}`, series[code][key].description);
+    add(`${prefix}/faq`, series[code].faq.description);
+    add(`${prefix}/about`, series[code].about.description);
+    if (code === "es") {
+      add(`${prefix}/chart`, toolCopy[code].chart.description);
+      add(`${prefix}/tools/slant`, toolCopy[code].slant.description);
+      add(`${prefix}/tools/signature`, toolCopy[code].signature.description);
+      add(`${prefix}/tools/signature/size`, series[code].size.description);
+      add(`${prefix}/tools/signature/body`, series[code].body.description);
+    }
   }
   for (const locale of localeList) {
     if (locale.code === "es") continue;
@@ -63,18 +117,22 @@ function pages() {
     add(`/${code}/chart`, toolCopy[code].chart.description);
     add(`/${code}/tools/slant`, toolCopy[code].slant.description);
     add(`/${code}/tools/signature`, toolCopy[code].signature.description);
-    for (const key of Object.keys(rest)) add(`/${code}${rest[key]}`, series[code][key].description);
+    for (const key of ["faq", "about", "size", "body"]) {
+      add(`/${code}/${key === "size" ? "tools/signature/size" : key === "body" ? "tools/signature/body" : key}`, series[code][key].description);
+    }
   }
   return list;
 }
 
-test("meta descriptions land between 110 and 190 characters", () => {
+test("meta descriptions land inside the length window for their language", () => {
   const list = pages();
-  assert.equal(list.length, 223);
+  assert.equal(list.length, 233);
   for (const page of list) {
+    const lang = langOf(page.path);
+    const [minimum, maximum] = lang === "zh" ? [62, 130] : lang === "en" ? [140, 155] : [110, 190];
     const text = fitDescription(page.description, page.path);
-    assert.ok(text.length >= 110, `${page.path} ${text.length}`);
-    assert.ok(text.length <= 190, `${page.path} ${text.length} ${text}`);
-    if (page.description.length >= 110) assert.equal(text, page.description);
+    assert.ok(text.length >= minimum, `${page.path} ${text.length}`);
+    assert.ok(text.length <= maximum, `${page.path} ${text.length} ${text}`);
+    if (page.description.length >= minimum) assert.equal(text, page.description);
   }
 });

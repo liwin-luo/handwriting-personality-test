@@ -1,4 +1,5 @@
 import { CARD_LINE, baselineShift } from "@/lib/share-card.mjs";
+import { withUtm } from "@/lib/utm.mjs";
 
 export function GlyphLine({
   samples,
@@ -58,7 +59,7 @@ export function GuideLink({
   alt: string;
 }) {
   return (
-    <a href={href} className="grid grid-cols-[7rem_1fr] items-center gap-4 border-b border-rule py-3">
+    <a href={withUtm(href, "guide")} className="grid grid-cols-[7rem_1fr] items-center gap-4 border-b border-rule py-3">
       <Glyph file={file} alt={alt} loading="lazy" />
       <span className="font-display text-xl leading-tight">{title}</span>
     </a>

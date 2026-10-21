@@ -6,11 +6,12 @@ import { seriesFor } from "@/content/series.mjs";
 import type { ToolLocale } from "@/content/tools";
 import type { ChartItem } from "@/lib/chart-items";
 import { SITE } from "@/lib/site";
+import { withUtm } from "@/lib/utm.mjs";
 
 export function ChartScreen({ copy, items, lang }: { copy: ToolLocale["chart"]; items: ChartItem[]; lang: string }) {
   return (
     <div lang={lang}>
-      <h1 className="font-display text-5xl leading-none">{copy.h1}</h1>
+      <h1 className="page-h1">{copy.h1}</h1>
       <p className="mt-4 max-w-xl leading-relaxed">{copy.lede}</p>
       <div className="mt-8">
         <Chart items={items} copy={copy} />
@@ -35,27 +36,27 @@ export function SlantScreen({ copy, lang, path }: { copy: ToolLocale["slant"]; l
   return (
     <div lang={lang}>
       <p className={`text-sm text-seal ${lang === "zh" ? "" : "uppercase tracking-[0.16em]"}`}>{copy.kicker}</p>
-      <h1 className="mt-2 font-display text-5xl leading-[0.95]">{copy.h1}</h1>
+      <h1 className="mt-2 page-h1">{copy.h1}</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">
         {copy.introBefore}
-        <a className="underline decoration-rule underline-offset-4" href={copy.scienceHref}>
+        <a className="text-link" href={copy.scienceHref}>
           {copy.scienceLabel}
         </a>
         {copy.introAfter}
       </p>
       <SlantTool copy={copy} />
-      <h2 className="mt-12 font-display text-2xl">{copy.stepsTitle}</h2>
+      <h2 className="mt-12 page-h2">{copy.stepsTitle}</h2>
       <ol className="mt-4 list-decimal space-y-2 pl-5">
         {copy.steps.map((step) => (
           <li key={step}>{step}</li>
         ))}
       </ol>
       <p className="mt-8">
-        <a className="bg-ink px-4 py-2 text-sm text-paper" href={copy.ctaHref}>
+        <a className="btn" href={withUtm(copy.ctaHref, "cta")}>
           {copy.cta}
         </a>
       </p>
-      <h2 className="mt-12 font-display text-2xl">{copy.questionsTitle}</h2>
+      <h2 className="mt-12 page-h2">{copy.questionsTitle}</h2>
       <dl className="mt-4 space-y-6">
         {copy.faqs.map((faq) => (
           <div key={faq.q}>
@@ -97,32 +98,32 @@ export function SignatureScreen({ copy, lang, path }: { copy: ToolLocale["signat
   return (
     <div lang={lang}>
       <p className={`text-sm text-seal ${lang === "zh" ? "" : "uppercase tracking-[0.16em]"}`}>{copy.kicker}</p>
-      <h1 className="mt-2 font-display text-5xl leading-[0.95]">{copy.h1}</h1>
+      <h1 className="mt-2 page-h1">{copy.h1}</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">
         {copy.introBefore}
-        <a className="underline decoration-rule underline-offset-4" href={copy.scienceHref}>
+        <a className="text-link" href={copy.scienceHref}>
           {copy.scienceLabel}
         </a>
         {copy.introAfter}
       </p>
       <SignatureTool copy={copy} />
-      <h2 className="mt-12 font-display text-2xl">{copy.stepsTitle}</h2>
+      <h2 className="mt-12 page-h2">{copy.stepsTitle}</h2>
       <ol className="mt-4 list-decimal space-y-2 pl-5">
         {copy.steps.map((step) => (
           <li key={step}>{step}</li>
         ))}
       </ol>
-      <h2 className="mt-12 font-display text-2xl">{notes.notesTitle}</h2>
+      <h2 className="mt-12 page-h2">{notes.notesTitle}</h2>
       <ul className="mt-4 space-y-2">
         {notes.notes.map((item: { href: string; label: string }) => (
           <li key={item.href}>
-            <a className="underline decoration-rule underline-offset-4" href={item.href}>
+            <a className="text-link" href={withUtm(item.href, "more")}>
               {item.label}
             </a>
           </li>
         ))}
       </ul>
-      <h2 className="mt-12 font-display text-2xl">{copy.questionsTitle}</h2>
+      <h2 className="mt-12 page-h2">{copy.questionsTitle}</h2>
       <dl className="mt-4 space-y-6">
         {copy.faqs.map((faq) => (
           <div key={faq.q}>

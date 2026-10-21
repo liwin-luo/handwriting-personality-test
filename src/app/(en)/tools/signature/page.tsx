@@ -1,17 +1,30 @@
-import { SignatureScreen } from "@/components/ToolScreens";
+import { SignatureTool } from "@/components/SignatureTool";
+import { ToolPageView } from "@/components/seo/PageParts";
+import { signatureTool } from "@/content/seo/en-tools";
 import { toolCopyFor } from "@/content/tools";
 import { toolLangs } from "@/lib/langs";
 import { pageMeta } from "@/lib/site";
 
-const copy = toolCopyFor("en")!;
+const copy = toolCopyFor("en")!.signature;
 
 export const metadata = pageMeta({
-  title: copy.signature.title,
-  description: copy.signature.description,
+  title: signatureTool.title,
+  description: signatureTool.meta,
   path: "/tools/signature",
   langs: toolLangs("/tools/signature"),
 });
 
 export default function SignaturePage() {
-  return <SignatureScreen lang="en" path="/tools/signature" copy={copy.signature} />;
+  return (
+    <ToolPageView
+      content={signatureTool}
+      breadcrumbs={[
+        { href: "/", label: "Home" },
+        { href: "/tools", label: "Tools" },
+        { label: "Signature" },
+      ]}
+    >
+      <SignatureTool copy={copy} />
+    </ToolPageView>
+  );
 }

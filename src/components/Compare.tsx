@@ -57,7 +57,7 @@ export function Compare() {
         <Field label="First result" value={left} onChange={setLeft} />
         <Field label="Second result" value={right} onChange={setRight} />
       </div>
-      <button type="button" onClick={() => setShown(true)} className="mt-4 bg-ink px-4 py-2 text-sm text-paper">
+      <button type="button" onClick={() => setShown(true)} className="mt-4 btn">
         Compare shapes
       </button>
       {shown && (!leftPicks || !rightPicks) ? (

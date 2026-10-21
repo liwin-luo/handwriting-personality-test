@@ -14,7 +14,7 @@ export function LatinHome({ pack }: { pack: LatinPack }) {
   return (
     <div lang={copy.code}>
       <p className="text-sm uppercase tracking-[0.16em] text-seal">{copy.kicker}</p>
-      <h1 className="mt-2 max-w-xl font-display text-5xl leading-[0.95] tracking-tight">{copy.h1}</h1>
+      <h1 className="mt-2 max-w-xl page-h1">{copy.h1}</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">{copy.lede}</p>
       <div className="mt-8">
         <LatinQuiz code={copy.code} bank={questions} copy={copy.quiz} />
@@ -23,7 +23,7 @@ export function LatinHome({ pack }: { pack: LatinPack }) {
         <h2 className="font-display text-3xl">{copy.namesTitle}</h2>
         <p className="mt-3 max-w-xl leading-relaxed">
           {copy.namesBefore}{" "}
-          <a className="underline decoration-rule underline-offset-4" href={`/${copy.code}/science`}>
+          <a className="text-link" href={`/${copy.code}/science`}>
             {copy.scienceLink}
           </a>{" "}
           {copy.namesAfter}
@@ -75,15 +75,15 @@ export function LatinScience({ pack }: { pack: LatinPack }) {
   return (
     <div lang={copy.code}>
       <Crumbs items={[{ href: `/${copy.code}`, label: copy.science.crumb }, { label: copy.science.h1 }]} />
-      <h1 className="font-display text-5xl leading-[0.95]">{copy.science.h1}</h1>
+      <h1 className="page-h1">{copy.science.h1}</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">{copy.science.lede}</p>
-      <h2 className="mt-10 font-display text-2xl">{copy.science.visibleTitle}</h2>
+      <h2 className="mt-10 page-h2">{copy.science.visibleTitle}</h2>
       <p className="mt-4 leading-relaxed">{copy.science.visible}</p>
       <TraitsScienceLine code={copy.code} />
-      <h2 className="mt-10 font-display text-2xl">{copy.science.invisibleTitle}</h2>
+      <h2 className="mt-10 page-h2">{copy.science.invisibleTitle}</h2>
       <p className="mt-4 leading-relaxed">{copy.science.invisible}</p>
       <p className="mt-4 leading-relaxed">{copy.science.study}</p>
-      <h2 className="mt-10 font-display text-2xl">{copy.science.questions}</h2>
+      <h2 className="mt-10 page-h2">{copy.science.questions}</h2>
       <dl className="mt-4 space-y-6">
         {pack.scienceFaqs.map((faq) => (
           <div key={faq.q}>
@@ -113,7 +113,7 @@ export function LatinGuide({ pack, guide }: { pack: LatinPack; guide: Guide }) {
   return (
     <div lang={copy.code}>
       <Crumbs items={[{ href: `/${copy.code}`, label: copy.science.crumb }, { label: guide.title }]} />
-      <h1 className="font-display text-5xl leading-[0.95]">{guide.title}</h1>
+      <h1 className="page-h1">{guide.title}</h1>
       <p className="mt-4 max-w-xl text-lg leading-snug">{guide.description}</p>
       <ul className="mt-8 grid gap-4 sm:grid-cols-2">
         {guide.figures.map((figure) => (
@@ -123,24 +123,24 @@ export function LatinGuide({ pack, guide }: { pack: LatinPack; guide: Guide }) {
           </li>
         ))}
       </ul>
-      <h2 className="mt-12 font-display text-2xl">{copy.guide.from}</h2>
+      <h2 className="mt-12 page-h2">{copy.guide.from}</h2>
       {guide.origin.map((paragraph) => (
         <p key={paragraph} className="mt-4 leading-relaxed">
           {paragraph}
         </p>
       ))}
-      <h2 className="mt-10 font-display text-2xl">{copy.guide.limits}</h2>
+      <h2 className="mt-10 page-h2">{copy.guide.limits}</h2>
       {guide.limits.map((paragraph) => (
         <p key={paragraph} className="mt-4 leading-relaxed">
           {paragraph}
         </p>
       ))}
       <p className="mt-8">
-        <a className="bg-ink px-4 py-2 text-sm text-paper" href={`/${copy.code}#q-${guide.questionId}`}>
+        <a className="btn" href={`/${copy.code}#q-${guide.questionId}`}>
           {copy.guide.cta}
         </a>
       </p>
-      <h2 className="mt-12 font-display text-2xl">{copy.guide.questions}</h2>
+      <h2 className="mt-12 page-h2">{copy.guide.questions}</h2>
       <dl className="mt-4 space-y-6">
         {guide.faqs.map((faq) => (
           <div key={faq.q}>

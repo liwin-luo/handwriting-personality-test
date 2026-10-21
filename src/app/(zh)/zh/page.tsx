@@ -1,15 +1,15 @@
-import { TraitsBlurb } from "@/components/TraitsScreen";
-import { JsonLd } from "@/components/Meta";
 import { GuideLink } from "@/components/Glyph";
 import { ZhQuiz } from "@/components/ZhQuiz";
+import { ToolPageView } from "@/components/seo/PageParts";
 import { profiles } from "@/content/zh.mjs";
 import { guides as zhGuides } from "@/content/zh-guides.mjs";
+import { zhHome } from "@/content/seo/zh";
 import { homeLangs } from "@/lib/langs";
-import { SITE, pageMeta } from "@/lib/site";
+import { pageMeta } from "@/lib/site";
 
 export const metadata = pageMeta({
-  title: "笔迹测验",
-  description: "五道中文硬笔题：大小、字距、行距、连笔、横画。不是拉丁字母测验的翻译。至少四题。不上传。",
+  title: zhHome.title,
+  description: zhHome.meta,
   path: "/zh",
   absolute: true,
   langs: homeLangs(),
@@ -17,31 +17,26 @@ export const metadata = pageMeta({
 
 export default function ZhHome() {
   return (
-    <div lang="zh">
-      <p className="text-sm text-seal">免费 · 不上传</p>
-      <h1 className="mt-2 max-w-xl font-display text-5xl leading-[0.95] tracking-tight">笔迹测验</h1>
-      <p className="mt-4 max-w-xl text-lg leading-snug">
-        这五题只看硬笔：大小、字距、行距、连笔、横画。没有 i 上的点和 t 的横。答满四题给出一个写法名称，不是性格诊断。
-      </p>
-      <div className="mt-8">
-        <ZhQuiz />
-      </div>
-      <section className="mt-16">
-        <h2 className="font-display text-3xl">六个写法名称</h2>
-        <ul className="mt-6 divide-y divide-rule border-y border-rule">
-          {profiles.map((profile) => (
-            <li key={profile.slug} className="flex items-baseline justify-between gap-4 py-3">
+    <ToolPageView content={zhHome} lang="zh">
+      <ZhQuiz />
+      <section className="mt-12">
+        <h2 className="font-display text-2xl">六个名称，一套归档</h2>
+        <ul className="mt-4 divide-y divide-rule border-y border-rule">
+          {profiles.map((profile: { slug: string; name: string; sentence: string }) => (
+            <li key={profile.slug} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
               <span className="font-display text-xl">{profile.name}</span>
-              <span className="text-right text-sm text-muted">{profile.sentence}</span>
+              <span className="text-sm text-muted sm:text-right">{profile.sentence}</span>
             </li>
           ))}
         </ul>
       </section>
-      <section className="mt-16">
-        <h2 className="font-display text-3xl">五笔各一页</h2>
-        <TraitsBlurb code="zh" />
+      <section className="mt-12">
+        <h2 className="font-display text-2xl">一种写法，一页说明</h2>
+        <p className="mt-3 max-w-xl leading-relaxed">
+          每页说明这种写法从哪里来、常见于什么场景，以及它说明不了什么。先看你在结果里注意到的那一种。
+        </p>
         <ul className="mt-4 border-t border-rule">
-          {zhGuides.map((guide) => (
+          {zhGuides.map((guide: { slug: string; title: string; figures: { file: string; caption: string }[] }) => (
             <li key={guide.slug}>
               <GuideLink
                 href={`/zh/guides/${guide.slug}`}
@@ -53,19 +48,6 @@ export default function ZhHome() {
           ))}
         </ul>
       </section>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@type": "WebApplication",
-          name: "笔迹测验",
-          url: `${SITE.url}/zh`,
-          inLanguage: "zh",
-          applicationCategory: "LifestyleApplication",
-          operatingSystem: "Web",
-          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-          description: "五道中文硬笔题。答案留在浏览器里。",
-        }}
-      />
-    </div>
+    </ToolPageView>
   );
 }

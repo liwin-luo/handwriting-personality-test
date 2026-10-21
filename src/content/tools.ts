@@ -26,6 +26,7 @@ export type ToolLocale = {
     introAfter: string;
     scienceHref: string;
     upload: string;
+    choose: string;
     alt: string;
     empty: string;
     align: string;
@@ -51,6 +52,7 @@ export type ToolLocale = {
     introAfter: string;
     scienceHref: string;
     aria: string;
+    hint: string;
     clear: string;
     empty: string;
     stats: string;

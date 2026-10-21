@@ -32,7 +32,7 @@ export default function EsHome() {
         <h2 className="font-display text-3xl">Seis nombres ficticios</h2>
         <p className="mt-3 max-w-xl leading-relaxed">
           Cada nombre junta una manera de dibujar. Léelo antes de compartirlo. La{" "}
-          <a className="underline decoration-rule underline-offset-4" href="/es/science">
+          <a className="text-link" href="/es/science">
             página de ciencia
           </a>{" "}
           dice qué no puede demostrar un trazo.

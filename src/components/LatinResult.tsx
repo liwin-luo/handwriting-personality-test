@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Glyph, GlyphLine } from "@/components/Glyph";
 import { DIRECTIONS, MIN_ANSWERS, type QuizQuestion } from "@/content";
 import { choiceNote, countNote, retakeLabel, shareHint, shareLabel } from "@/content/choice-notes.mjs";
 import { decodeAnswers, encodeAnswers, scoreAnswers } from "@/lib/score.mjs";
 import { chosenLine, downloadShareCard, shareResult } from "@/lib/share-card.mjs";
+import { trackTool } from "@/lib/analytics.mjs";
 
 function fill(template: string, vars: Record<string, number>) {
   return template.replace(/\{(\w+)\}/g, (_, key) => String(vars[key] ?? ""));
@@ -49,6 +50,9 @@ export function LatinResult({
   const [picks, setPicks] = useState<(number | null)[] | null>(initial);
   const [copied, setCopied] = useState(false);
   const [cardError, setCardError] = useState("");
+  useEffect(() => {
+    trackTool("result_view", { tool: "quiz", lang: locale });
+  }, [locale]);
   if (!picks) return null;
 
   const scored = scoreAnswers(questions, picks, MIN_ANSWERS);
@@ -66,11 +70,11 @@ export function LatinResult({
       {profile ? (
         <>
           <p className="text-sm tracking-[0.16em] text-seal">{copy.eyebrow}</p>
-          <h1 className="mt-2 font-display text-5xl leading-none">{profile.name}</h1>
+          <h1 className="page-h1 mt-2">{profile.name}</h1>
           <p className="mt-4 text-xl leading-snug">{profile.sentence}</p>
           <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
           <p className="mt-3 max-w-xl text-sm text-muted">{copy.disclaimer}</p>
-          <div className="notebook mt-8 flex aspect-[4/5] max-w-sm flex-col rounded-md p-6 pl-12">
+          <div className="notebook mt-8 max-w-sm rounded-md p-6 pl-12">
             <p className="text-[11px] tracking-[0.16em] text-muted">{copy.card}</p>
             <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
             <div className="mt-4 h-0.5 w-8 bg-seal" />
@@ -81,7 +85,7 @@ export function LatinResult({
           <div className="no-print mt-4 flex flex-wrap gap-3">
             <button
               type="button"
-              className="bg-ink px-4 py-2 text-sm text-paper"
+              className="btn"
               onClick={async () => {
                 const status = await shareResult({
                   title: profile.name,
@@ -117,9 +121,9 @@ export function LatinResult({
           {cardError ? <p className="mt-2 text-sm text-seal">{cardError}</p> : null}
           <p className="mt-2 text-sm text-muted">{shareHint[locale as keyof typeof shareHint] || shareHint.en}</p>
           <p className="mt-1 text-sm text-muted">{copy.cardNote}</p>
-          <h2 className="mt-10 font-display text-2xl">{copy.drill}</h2>
+          <h2 className="mt-10 page-h2">{copy.drill}</h2>
           <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
-          <h2 className="mt-12 font-display text-2xl">{copy.directions}</h2>
+          <h2 className="mt-12 page-h2">{copy.directions}</h2>
           <p className="mt-4 max-w-xl leading-relaxed">
             {DIRECTIONS.map((id) => `${copy.labels[id]} ${scored.totals[id]}`).join(". ")}.
           </p>
@@ -127,14 +131,14 @@ export function LatinResult({
         </>
       ) : (
         <>
-          <h1 className="font-display text-4xl">{copy.incompleteTitle}</h1>
+          <h1 className="page-h1">{copy.incompleteTitle}</h1>
           <p className="mt-4">{fill(copy.incompleteBody, { answered: scored.answered })}</p>
-          <a href={`/${locale}?c=${code}`} className="mt-4 inline-block bg-ink px-4 py-2 text-sm text-paper">
+          <a href={`/${locale}?c=${code}`} className="mt-4 inline-block btn">
             {copy.continue}
           </a>
         </>
       )}
-      <h2 className="mt-12 font-display text-2xl">{copy.shapes}</h2>
+      <h2 className="mt-12 page-h2">{copy.shapes}</h2>
       <p className="mt-2 text-sm text-muted">{copy.shapesNote}</p>
       <ol className="mt-6 space-y-8">
         {questions.map((question, questionIndex) => (
@@ -171,7 +175,7 @@ export function LatinResult({
           localStorage.removeItem(`hpt.${locale}`);
           router.push(`/${locale}`);
         }}
-        className="no-print mt-10 text-sm underline decoration-rule underline-offset-4"
+        className="no-print mt-10 text-sm text-link"
       >
         {retakeLabel[locale as keyof typeof retakeLabel] || retakeLabel.en}
       </button>

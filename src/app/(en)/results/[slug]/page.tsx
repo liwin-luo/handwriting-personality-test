@@ -57,14 +57,14 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
       <ul className="mt-3 space-y-2">
         {profile.guides.map((slug) => (
           <li key={slug}>
-            <a className="underline decoration-rule underline-offset-4" href={`/guides/${slug}`}>
+            <a className="text-link" href={`/guides/${slug}`}>
               {guideBySlug[slug].title}
             </a>
           </li>
         ))}
       </ul>
       <p className="mt-8">
-        <a className="bg-ink px-4 py-2 text-sm text-paper" href="/">
+        <a className="btn" href="/">
           Take the test
         </a>
       </p>

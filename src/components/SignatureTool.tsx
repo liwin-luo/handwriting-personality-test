@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, type PointerEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
+import { trackTool } from "@/lib/analytics.mjs";
 
 type Point = { x: number; y: number };
 type Stroke = Point[];
@@ -26,7 +27,7 @@ function measure(strokes: Stroke[], labels: { left: string; right: string; uprig
       const dy = b.y - a.y;
       const dist = Math.hypot(dx, dy);
       length += dist;
-      if (dist > 6 && Math.abs(dy) > Math.abs(dx)) downs.push((Math.atan2(dx, dy) * 180) / Math.PI);
+      if (dist > 4 && Math.abs(dy) > Math.abs(dx)) downs.push((Math.atan2(dx, dy) * 180) / Math.PI);
     }
   }
   for (const point of points) {
@@ -54,6 +55,7 @@ export function SignatureTool({
 }: {
   copy: {
     aria: string;
+    hint: string;
     clear: string;
     empty: string;
     stats: string;
@@ -65,25 +67,20 @@ export function SignatureTool({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const strokes = useRef<Stroke[]>([]);
   const drawing = useRef<Stroke | null>(null);
+  const scale = useRef(1);
   const [stats, setStats] = useState<ReturnType<typeof measure>>(null);
+  const [inked, setInked] = useState(false);
 
-  function point(event: PointerEvent<HTMLCanvasElement>): Point {
-    const canvas = canvasRef.current!;
-    const rect = canvas.getBoundingClientRect();
-    return {
-      x: ((event.clientX - rect.left) / rect.width) * canvas.width,
-      y: ((event.clientY - rect.top) / rect.height) * canvas.height,
-    };
-  }
-
-  function paint() {
+  const paint = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const ratio = scale.current;
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.clearRect(0, 0, canvas.width / ratio, canvas.height / ratio);
     ctx.strokeStyle = "#1c1915";
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 2.5;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
     for (const stroke of strokes.current) {
@@ -91,12 +88,39 @@ export function SignatureTool({
       stroke.forEach((p, i) => (i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)));
       ctx.stroke();
     }
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    function resize() {
+      const rect = canvas!.getBoundingClientRect();
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      const width = Math.max(1, Math.round(rect.width * ratio));
+      const height = Math.max(1, Math.round(rect.height * ratio));
+      if (canvas!.width === width && canvas!.height === height) return;
+      scale.current = ratio;
+      canvas!.width = width;
+      canvas!.height = height;
+      paint();
+    }
+    const observer = new ResizeObserver(resize);
+    observer.observe(canvas);
+    resize();
+    return () => observer.disconnect();
+  }, [paint]);
+
+  function point(event: PointerEvent<HTMLCanvasElement>): Point {
+    const rect = event.currentTarget.getBoundingClientRect();
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
   }
 
   function down(event: PointerEvent<HTMLCanvasElement>) {
     event.currentTarget.setPointerCapture(event.pointerId);
     drawing.current = [point(event)];
     strokes.current = [...strokes.current, drawing.current];
+    setInked(true);
+    trackTool("tool_start", { tool: "signature" });
   }
 
   function move(event: PointerEvent<HTMLCanvasElement>) {
@@ -107,38 +131,52 @@ export function SignatureTool({
 
   function up() {
     drawing.current = null;
-    setStats(measure(strokes.current, copy));
+    const next = measure(strokes.current, copy);
+    setStats(next);
+    if (next) {
+      trackTool("tool_complete", { tool: "signature", turns: String(next.turns), degrees: String(next.degrees) });
+    }
   }
 
   function clear() {
     strokes.current = [];
     drawing.current = null;
     setStats(null);
+    setInked(false);
     paint();
   }
 
   return (
     <div className="mt-8">
-      <canvas
-        ref={canvasRef}
-        width={840}
-        height={360}
-        onPointerDown={down}
-        onPointerMove={move}
-        onPointerUp={up}
-        onPointerCancel={up}
-        className="h-auto w-full touch-none border border-rule bg-card"
-        aria-label={copy.aria}
-      />
+      <div className="relative">
+        <canvas
+          ref={canvasRef}
+          onPointerDown={down}
+          onPointerMove={move}
+          onPointerUp={up}
+          onPointerCancel={up}
+          className="block aspect-[7/3] w-full touch-none border border-rule bg-card"
+          aria-label={copy.aria}
+          tabIndex={0}
+        >
+          {copy.hint}
+        </canvas>
+        {inked ? null : (
+          <p className="pointer-events-none absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-muted">
+            {copy.hint}
+          </p>
+        )}
+      </div>
       <div className="mt-3 flex flex-wrap items-center gap-4 text-sm">
-        <button type="button" onClick={clear} className="underline decoration-rule underline-offset-4">
+        <button
+          type="button"
+          onClick={clear}
+          disabled={!inked}
+          className="text-link enabled:hover:decoration-seal disabled:opacity-40"
+        >
           {copy.clear}
         </button>
-        {stats ? (
-          <p>{fill(copy.stats, stats)}</p>
-        ) : (
-          <p className="text-muted">{copy.empty}</p>
-        )}
+        {stats ? <p>{fill(copy.stats, stats)}</p> : <p className="text-muted">{copy.empty}</p>}
       </div>
     </div>
   );

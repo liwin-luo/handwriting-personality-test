@@ -18,7 +18,7 @@ export default function GlobalNotFound() {
     <RootDocument lang="en">
       <h1 className="font-display text-5xl leading-none">Page not found</h1>
       <p className="mt-4">
-        <a className="underline decoration-rule underline-offset-4" href="/">
+        <a className="text-link" href="/">
           Back to the test
         </a>
       </p>

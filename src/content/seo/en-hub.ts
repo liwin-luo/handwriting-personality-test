@@ -149,7 +149,7 @@ export const toolsHub: HubContent = {
         {
           href: "/blog",
           label: "Handwriting articles and evidence",
-          note: "Five articles on the tests, the evidence, and measurement.",
+          note: "Six articles on the tests, the evidence, measurement, and decorative letters.",
           action: "Read the articles",
         },
       ],

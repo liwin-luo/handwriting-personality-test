@@ -7,7 +7,7 @@ import { withUtm } from "@/lib/utm.mjs";
 const faqs = [
   {
     q: "What do these articles cover?",
-    a: "Five articles, each written for a different question. What a handwriting personality test actually does, how to describe a page without personality claims, what the research on graphology shows, how to choose among free tools, and how to measure slant without fooling yourself.",
+    a: "Six articles, each written for a different question. What a handwriting personality test actually does, how to describe a page without personality claims, what the research on graphology shows, how to choose among free tools, how to measure slant without fooling yourself, and why bubble letters are not handwriting.",
   },
   {
     q: "Do the articles list their sources?",
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: "Do the articles recommend a paid product?",
-    a: "No. The tools article compares free tools by what they measure and what they decline to claim. Nothing on this site is affiliate-linked, and no tool is promoted further than its own page describes it.",
+    a: "No. The tools article compares free tools by what they measure and what they decline to claim. One article links to a free text converter and says what the characters are. Nothing on this site is affiliate-linked.",
   },
   {
     q: "How long are the articles?",
@@ -79,10 +79,11 @@ export default function BlogIndex() {
         one cites its sources and states the limits of the claim.
       </p>
       <p className="mt-4 max-w-xl leading-relaxed">
-        The set covers five different questions. One explains what a handwriting personality test actually does and
+        The set covers six different questions. One explains what a handwriting personality test actually does and
         where the idea came from. One gives a method for describing a page without turning an angle into a character
         reference. One reviews the evidence on graphology. One compares free tools and says what to check before you
-        trust one. One shows how to measure slant without fooling yourself.
+        trust one. One shows how to measure slant without fooling yourself. One explains why cute bubble letters are
+        characters you paste, not a sample of handwriting.
       </p>
       <p className="mt-4 max-w-xl leading-relaxed">
         Every article names its evidence. The measurement articles list the geometry they use, the tolerance they
@@ -165,7 +166,7 @@ export default function BlogIndex() {
           Open the handwriting tools
         </a>
       </p>
-      <AuthorLine lang="en" updated="Last updated 21 October 2026" />
+      <AuthorLine lang="en" updated="Last updated 26 October 2026" />
       <JsonLd
         data={{
           "@context": "https://schema.org",

@@ -693,6 +693,146 @@ export const blogPosts: BlogPost[] = [
     ctaHref: "/tools/slant",
     ctaNote: "The tool is free, keeps the photo in the browser, and reports an angle rather than a personality score.",
   },
+  {
+    slug: "cute-text-is-not-a-font",
+    title: "Cute Text Is Not a Font",
+    seoTitle: "Cute Text Is Not a Font",
+    h1: "Cute text is not a font",
+    meta: "Bubble, kawaii, and coquette letters are Unicode you paste, not a font file. What each row does, where it breaks, and how it differs from handwriting.",
+    kicker: "Explainer",
+    published: "2026-10-26",
+    updated: "2026-10-26",
+    readingTime: "8 min read",
+    intro: [
+      "People who ask for a cute font usually want a short name that looks soft in a bio. The same round letters get called kawaii, coquette, or soft lettering, depending on who is asking. What they paste is a row of characters. It is not a font file, and it is not a sample of anyone's handwriting.",
+      "This article walks through the seven rows a converter actually produces, what each row is made of, where the characters are accepted, and where the resemblance to handwriting stops.",
+    ],
+    sections: [
+      {
+        id: "rows",
+        h2: "The rows on the page",
+        paragraphs: [
+          "Type a short name and the page shows seven results. The limit is 120 characters. The sample the page uses is Momo, and the rows come out in this order.",
+        ],
+        bullets: [
+          "Bubble: 🅜🅞🅜🅞",
+          "Heart bubble: ♡ 🅜🅞🅜🅞 ♡",
+          "Bow bubble: ୨୧ 🅜🅞🅜🅞 ୨୧",
+          "Flower bubble: ✿ 🅜🅞🅜🅞 ✿",
+          "Soft-bracket bubble: ꒰ 🅜🅞🅜🅞 ꒱",
+          "Cursive: ℳℴ𝓂ℴ",
+          "Circled: Ⓜⓞⓜⓞ",
+        ],
+      },
+      {
+        id: "decorations",
+        h2: "Decorations stay on the bubble row",
+        paragraphs: [
+          "Each row can be copied, or saved as a PNG. The heart, the bow, the flower, and the soft brackets are extra characters placed on either side of the word. They attach to the bubble row only, and only one pair at a time, so the name stays readable. The other examples on the page, Soft and Peach, follow the same pattern: a short word, one pair of hearts, nothing else.",
+          "The bow is the pair ୨୧, repeated on both sides. It is not a picture of a ribbon. If a phone draws it as an empty box, the heart row is the one that still reads as a name.",
+        ],
+      },
+      {
+        id: "where-letters-come-from",
+        h2: "Where the three letter shapes come from",
+        paragraphs: [
+          "Bubble letters and circled letters are enclosed alphanumerics. The bubble row uses the heavier negative-circled capitals, the forms that look like white letters sitting in dark rounds. The circled row uses the older, thinner circles, and it mixes a capital with small letters, as in Ⓜⓞⓜⓞ. Both rows convert A to Z, a to z, and digits.",
+          "The cursive row is mathematical script, the Unicode block made for letters that look calligraphic. It converts letters only. A digit in that row stays a plain digit. A few cursive characters come from the older script letters in the Letterlike Symbols block, because the mathematical block does not supply a separate glyph for every case. Accented letters, emoji, and letters from other writing systems pass through unchanged. They are not redrawn as bubbles.",
+          "A name with a number shows the split. Bubble and circled turn the digit into an enclosed digit. The cursive row leaves it as an ordinary number between script letters. If the name is something like Luna2 and every character should match, use a bubble row. An emoji in the middle is left as it is, so the bubble row breaks around it. Four to twelve letters, with digits only when you need them, is the range that stays readable.",
+          "The charts for these blocks are linked at the end. They are the reason two people who type the same name get the same bubbles. The characters are assigned code points. They are not drawn.",
+        ],
+      },
+      {
+        id: "why-it-pastes",
+        h2: "Why the result pastes into a bio",
+        paragraphs: [
+          "A font file has to be installed before any app can use it. These rows do not. They are characters that already exist, which is why an app that only accepts plain text can still show them. The conversion runs in the browser. The name is not uploaded.",
+          "A [cute font generator](https://fancyfont.tools/cute-font-generator/) does that conversion for a short name. You type, the rows update, and you copy one row or download it as a PNG. The page does not ask for an account, and it does not offer a file to install. Display still depends on the phone, the app, and the game. Paste the result where you plan to use it, and look at it there before you keep it.",
+        ],
+      },
+      {
+        id: "three-names",
+        h2: "Three names, one page",
+        paragraphs: [
+          "Coquette, kawaii, and soft lettering are names for the same set of rows. Coquette is the bow. Kawaii and soft lean on the heart or the flower. Searching for a separate generator for each name leads back to this one page. The difference is which pair of symbols you copy, not which tool you open.",
+        ],
+      },
+      {
+        id: "platforms",
+        h2: "Where the characters are accepted",
+        paragraphs: [
+          "Instagram, TikTok, and Discord usually accept these characters in a display name, a bio, or a message. A username that only allows plain letters will reject them. Instagram usernames allow letters, digits, periods, and underscores, so a bubble name belongs in the display name or the bio, not in the handle.",
+          "The useful length is a name, or a name with one heart or one bow. A caption of a few words can work. A full sentence becomes a string of heavy circles and is harder to read, and some of those circles will fail on a device that does not have the glyphs. If the bow or the soft brackets show as empty boxes, copy the heart row. The heart is an older character, and more devices draw it.",
+          "Check the result on the device that will show it. A laptop can draw a character that a phone font, or a game's name field, replaces with an empty box. The converter's own note says the same thing. The preview on that page is not the preview inside the app.",
+        ],
+      },
+      {
+        id: "png",
+        h2: "Copy the characters, or download a PNG",
+        paragraphs: [
+          "Copy when the text has to travel: a bio, a chat message, a display name. The characters stay text, so someone else can select them. A search for the plain spelling usually misses them, because a bubble M is a different character from the letter M.",
+          "Download the PNG when the place you are posting will strip unusual characters, or when you need the look to stay fixed. The PNG is a picture. It cannot be a username, and it is not text a reader can select. Use it as an image, and keep the copied row for anywhere that still wants characters.",
+        ],
+      },
+      {
+        id: "not-handwriting",
+        h2: "This is not handwriting",
+        paragraphs: [
+          "Every person who types Momo into the bubble row gets 🅜🅞🅜🅞. The roundness does not vary. The slant does not vary. The dot on an i, the join between letters, and the space between words are not there, because there was no pen. Two handwriting samples of the same name will differ in all of those, even when both writers were taught the same model.",
+          "That is why these characters cannot stand in for a writing sample. They cannot be measured for slant, size, or spacing, and they cannot support a claim about the person who pasted them. A soft display name is a decoration. A page of handwriting is a set of marks that can be described, and the description still does not license a verdict about character.",
+          "If you want to look at real letterforms, the sample chart on this site shows the shapes the quiz asks about, and the slant tool reads an angle off a photo of ordinary writing. The quiz itself returns a label for the shapes you pick. It does not read a cute name, and it does not treat a pasted row as evidence.",
+        ],
+      },
+    ],
+    faqsTitle: "Questions",
+    faqs: [
+      {
+        q: "Do I download a cute font?",
+        a: "No. The result is Unicode characters, which is why it pastes into apps that only accept plain text. The converter does not offer a font file.",
+      },
+      {
+        q: "Are coquette and kawaii different tools?",
+        a: "No. They are names for the same page. Coquette uses the bow. Kawaii and soft use the heart or the flower.",
+      },
+      {
+        q: "Can I use this as an Instagram username?",
+        a: "No. Instagram usernames allow letters, digits, periods, and underscores. Paste the cute name into the display name or the bio.",
+      },
+      {
+        q: "Does cute text say anything about the person?",
+        a: "No. It is a decorated string of characters. It is not a handwriting sample, and it is not evidence of a personality trait.",
+      },
+    ],
+    sourcesTitle: "Sources and further reading",
+    sources: [
+      {
+        label: "Unicode Consortium. Enclosed Alphanumerics, range 2460–24FF.",
+        href: "https://www.unicode.org/charts/PDF/U2460.pdf",
+      },
+      {
+        label: "Unicode Consortium. Enclosed Alphanumeric Supplement, range 1F100–1F1FF.",
+        href: "https://www.unicode.org/charts/PDF/U1F100.pdf",
+      },
+      {
+        label: "Unicode Consortium. Mathematical Alphanumeric Symbols, range 1D400–1D7FF.",
+        href: "https://www.unicode.org/charts/PDF/U1D400.pdf",
+      },
+    ],
+    relatedTools: [
+      { href: "/tools/sample-chart", label: "See the sample chart", note: "The letterforms this site actually asks about." },
+      { href: "/tools/slant", label: "Measure handwriting slant", note: "An angle from a photo, not from a pasted name." },
+      { href: "/", label: "Take the shape test", note: "Eight answers produce a fictional label." },
+    ],
+    relatedPosts: [
+      { href: "/blog/how-to-analyze-handwriting", label: "How to analyze handwriting" },
+      { href: "/guides/i", label: "The dot on a handwritten i" },
+      { href: "/blog/graphology", label: "Graphology: what the evidence says" },
+      { href: "/science", label: "The science page" },
+    ],
+    ctaLabel: "Try the shape test",
+    ctaHref: "/#test",
+    ctaNote: "The test asks about shapes you write. It does not read a display name, and the label is not a personality score.",
+  },
 ];
 
 export const blogBySlug = Object.fromEntries(blogPosts.map((post) => [post.slug, post])) as Record<string, BlogPost>;

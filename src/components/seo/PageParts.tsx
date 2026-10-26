@@ -1,6 +1,7 @@
 import { Crumbs, JsonLd } from "@/components/Meta";
 import { EDITORIAL } from "@/content/editorial";
 import type { ArticleContent, BlogPost, HubContent, LinkItem, Section, ToolSeoContent } from "@/content/seo/types";
+import { splitRichText } from "@/lib/rich-text.mjs";
 import { SITE } from "@/lib/site";
 import { withUtm } from "@/lib/utm.mjs";
 
@@ -32,6 +33,18 @@ function slugify(text: string) {
     .replace(/(^-|-$)/g, "");
 }
 
+function RichText({ text }: { text: string }) {
+  return splitRichText(text).map((part, index) =>
+    typeof part === "string" ? (
+      part
+    ) : (
+      <a key={`${index}-${part.href}`} className="text-link" href={part.href} rel="noopener" target="_blank">
+        {part.label}
+      </a>
+    ),
+  );
+}
+
 export function AuthorLine({ lang, updated }: { lang: "en" | "zh"; updated?: string }) {
   const editorial = EDITORIAL[lang];
   return (
@@ -56,7 +69,7 @@ export function Prose({ section }: { section: Section }) {
       </h2>
       {section.paragraphs?.map((paragraph, index) => (
         <p key={paragraph} className={index === 0 ? "mt-4 text-lg leading-relaxed" : "mt-4 leading-relaxed"}>
-          {paragraph}
+          <RichText text={paragraph} />
         </p>
       ))}
       {section.steps?.length ? (
@@ -78,7 +91,7 @@ export function Prose({ section }: { section: Section }) {
           <h3 className="font-display text-xl">{sub.h3}</h3>
           {sub.paragraphs?.map((paragraph) => (
             <p key={paragraph} className="mt-3 leading-relaxed">
-              {paragraph}
+              <RichText text={paragraph} />
             </p>
           ))}
           {sub.bullets?.length ? (

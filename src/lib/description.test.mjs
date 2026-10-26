@@ -126,7 +126,7 @@ function pages() {
 
 test("meta descriptions land inside the length window for their language", () => {
   const list = pages();
-  assert.equal(list.length, 233);
+  assert.equal(list.length, 234);
   for (const page of list) {
     const lang = langOf(page.path);
     const [minimum, maximum] = lang === "zh" ? [62, 130] : lang === "en" ? [140, 155] : [110, 190];

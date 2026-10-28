@@ -10,11 +10,11 @@ import { bannerFor, languageHref, preferredLanguage } from "@/lib/lang-switch.mj
 
 const SKIP_KEY = "hpt.lang-skip";
 
-const navLink = "inline-block py-1.5 hover:underline hover:decoration-ink/40 hover:underline-offset-4";
+const navLink = "inline-block py-1.5 font-extrabold hover:text-seal";
 
-const navLinkWide = "hidden py-1.5 hover:underline hover:decoration-ink/40 hover:underline-offset-4 md:inline-block";
+const navLinkWide = "hidden py-1.5 font-extrabold hover:text-seal md:inline-block";
 
-const footLink = "inline-block py-1.5 hover:text-ink hover:underline hover:decoration-ink/40 hover:underline-offset-4";
+const footLink = "inline-block py-1.5 font-extrabold text-white/90 hover:text-pop";
 
 const indexedLanguages = [
   { code: "en", label: "English" },
@@ -67,12 +67,15 @@ export function Shell({ children }: { children: React.ReactNode }) {
       >
         {zh ? "跳到正文" : "Skip to content"}
       </a>
-      <header className="relative z-40 border-b border-rule">
-        <div className="mx-auto flex max-w-3xl flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+      <header className="sticky top-0 z-40 border-b-4 border-ink bg-paper">
+        <div className="mx-auto flex max-w-3xl flex-col gap-2 px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <a
             href={zh ? "/zh" : locale ? `/${locale.code}` : "/"}
-            className="inline-block shrink-0 whitespace-nowrap py-1 font-display text-lg leading-tight tracking-tight"
+            className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap py-1 font-display text-lg leading-tight"
           >
+            <span className="grid h-9 w-9 -rotate-6 place-items-center rounded-[10px] border-[3px] border-ink bg-pop text-base shadow-[4px_4px_0_#141414]">
+              {zh ? "笔" : "H"}
+            </span>
             {zh ? "笔迹测验" : locale ? locale.brand : "Handwriting Personality Test"}
           </a>
           <nav
@@ -86,7 +89,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             {zh || locale ? null : <a className={navLinkWide} href="/methodology">Method</a>}
             <a className={navLinkWide} href={`${prefix}/about`}>{series.navAbout}</a>
             <details className="lang-menu relative ml-auto sm:ml-3">
-              <summary className="flex cursor-pointer items-center gap-2 border border-ink bg-card px-3 py-1.5">
+              <summary className="flex cursor-pointer items-center gap-2 rounded-xl border-[3px] border-ink bg-pop px-3 py-1.5 font-extrabold shadow-[4px_4px_0_#141414]">
                 <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" className="shrink-0">
                   <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" strokeWidth="1.25" />
                   <ellipse cx="8" cy="8" rx="2.5" ry="6.25" fill="none" stroke="currentColor" strokeWidth="1.25" />
@@ -97,7 +100,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                   <path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" strokeWidth="1.25" />
                 </svg>
               </summary>
-              <div className="absolute right-0 z-30 mt-2 min-w-52 border border-ink bg-paper py-1 shadow-[0_12px_28px_-18px_rgba(28,25,21,0.45)]">
+              <div className="absolute right-0 z-30 mt-2 min-w-52 rounded-2xl border-[3px] border-ink bg-card py-1 font-extrabold shadow-[5px_5px_0_#141414]">
                 {menuLanguages.map((item) => (
                   <a
                     key={item.code}
@@ -120,7 +123,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <div className="border-b border-rule bg-card" lang={lang}>
           <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3 text-sm">
             <p className="mr-auto">{banner.note}</p>
-            <a className="bg-ink px-3 py-1.5 text-paper" href={languageHref(suggest, path)}>
+            <a className="btn" href={languageHref(suggest, path)}>
               {banner.yes}
             </a>
             <button type="button" className="py-1.5 text-muted" onClick={dismissSuggest}>
@@ -130,8 +133,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </div>
       ) : null}
       <main id="main" tabIndex={-1} className="mx-auto max-w-3xl px-5 py-10 outline-none">{children}</main>
-      <footer className="border-t border-rule">
-        <nav aria-label="Footer" className="mx-auto max-w-3xl space-y-1 px-5 py-8 text-sm text-muted">
+      <footer className="border-t-4 border-ink bg-ink text-white">
+        <nav aria-label="Footer" className="mx-auto max-w-3xl space-y-1 px-5 py-8 text-sm">
           <div className="flex flex-wrap gap-x-5 gap-y-1">
             {locale ? null : <a className={footLink} href={toolsHref}>{toolsLabel}</a>}
             <a className={footLink} href={`${prefix}/guides`}>{marksLabel}</a>
@@ -157,7 +160,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <a className={footLink} href="/terms">Terms</a>
           </div>
         </nav>
-        <p className="mx-auto max-w-3xl px-5 pb-8 text-xs text-muted">handwritingpersonalitytest.online</p>
+        <p className="mx-auto max-w-3xl px-5 pb-8 text-xs font-extrabold text-pop">handwritingpersonalitytest.online</p>
       </footer>
       <CookieBanner lang={lang} />
     </>

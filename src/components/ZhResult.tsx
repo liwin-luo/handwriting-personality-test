@@ -47,7 +47,7 @@ export function ZhResult({ code }: { code: string }) {
           <p className="mt-4 text-xl leading-snug">{profile.sentence}</p>
           <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
           <p className="mt-3 max-w-xl text-sm text-muted">这是写法的名称，不是性格、健康、诚实或能力。</p>
-          <div className="notebook mt-8 max-w-sm rounded-md p-6 pl-12">
+          <div className="notebook mt-8 max-w-sm p-6">
             <p className="text-xs text-muted">笔迹测验</p>
             <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
             <div className="mt-4 h-0.5 w-8 bg-seal" />

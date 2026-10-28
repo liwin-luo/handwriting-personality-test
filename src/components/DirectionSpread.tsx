@@ -1,10 +1,10 @@
 import { Glyph } from "@/components/Glyph";
 
 const COLOR: Record<string, string> = {
-  structure: "#5c6b73",
-  finish: "#8a6a45",
-  rhythm: "#4f6b5a",
-  character: "#7a4e57",
+  structure: "#4d96ff",
+  finish: "#ff924c",
+  rhythm: "#5fd068",
+  character: "#ff6b9d",
 };
 
 const COPY: Record<string, { ahead: (a: string, b: string, n: number) => string; close: (a: string, b: string, n: number) => string; decided: string }> = {
@@ -87,9 +87,9 @@ export function DirectionSpread({
       <div className="space-y-2">
         {ranked.map((row) => (
           <div key={row.id} className="grid grid-cols-[7.5rem_1fr_2rem] items-center gap-2 text-sm">
-            <span>{labels[row.id]}</span>
-            <span className="block h-2 bg-rule" aria-hidden="true">
-              <span className="block h-2" style={{ width: `${(row.score / max) * 100}%`, background: COLOR[row.id] }} />
+            <span className="font-extrabold">{labels[row.id]}</span>
+            <span className="block h-3.5 overflow-hidden rounded-lg border-2 border-ink bg-[#eee]" aria-hidden="true">
+              <span className="block h-full border-r-2 border-ink" style={{ width: `${(row.score / max) * 100}%`, background: COLOR[row.id] }} />
             </span>
             <span className="text-right tabular-nums">{row.score}</span>
           </div>

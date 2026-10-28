@@ -21,7 +21,7 @@ export function CookieBanner({ lang }: { lang: string }) {
   return (
     <>
       <div className="h-36 sm:h-28" aria-hidden="true" />
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-rule bg-card" lang={lang}>
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t-4 border-ink bg-card" lang={lang}>
         <div className="mx-auto flex max-w-3xl flex-col gap-1.5 px-5 py-2.5 sm:flex-row sm:items-center sm:gap-6 sm:py-4">
           <div className="mr-auto text-sm leading-tight">
             <p>
@@ -32,10 +32,10 @@ export function CookieBanner({ lang }: { lang: string }) {
             </a>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:flex sm:w-44 sm:grid-cols-none sm:flex-col">
-            <button type="button" className="bg-ink px-3 py-2 text-sm text-paper" onClick={() => choose("all")}>
+            <button type="button" className="btn" onClick={() => choose("all")}>
               {text.accept}
             </button>
-            <button type="button" className="bg-rule px-3 py-2 text-sm" onClick={() => choose("essential")}>
+            <button type="button" className="rounded-xl border-[3px] border-ink bg-card px-3 py-2 text-sm font-extrabold shadow-[4px_4px_0_#141414]" onClick={() => choose("essential")}>
               {text.reject}
             </button>
           </div>

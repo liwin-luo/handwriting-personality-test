@@ -75,7 +75,7 @@ export function LatinResult({
           <p className="mt-4 text-xl leading-snug">{profile.sentence}</p>
           <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
           <p className="mt-3 max-w-xl text-sm text-muted">{copy.disclaimer}</p>
-          <div className="notebook mt-8 max-w-sm rounded-md p-6 pl-12">
+          <div className="notebook mt-8 max-w-sm p-6">
             <p className="text-[11px] tracking-[0.16em] text-muted">{copy.card}</p>
             <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
             <div className="mt-4 h-0.5 w-8 bg-seal" />

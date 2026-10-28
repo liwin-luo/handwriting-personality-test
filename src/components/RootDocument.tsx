@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Fraunces, Literata } from "next/font/google";
+import { Nunito } from "next/font/google";
 import { Analytics } from "@/components/Analytics";
 import { JsonLd } from "@/components/Meta";
 import { Shell } from "@/components/Shell";
@@ -16,8 +16,11 @@ export const rootMetadata: Metadata = {
   formatDetection: { telephone: false, email: false, address: false },
 };
 
-const display = Fraunces({ subsets: ["latin"], variable: "--font-fraunces" });
-const body = Literata({ subsets: ["latin"], variable: "--font-literata" });
+const sans = Nunito({
+  subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
+  variable: "--font-nunito",
+});
 
 const organization = {
   "@context": "https://schema.org",
@@ -54,7 +57,7 @@ const website = {
 
 export function RootDocument({ lang, children }: { lang: string; children: ReactNode }) {
   return (
-    <html lang={lang} className={`${display.variable} ${body.variable}`}>
+    <html lang={lang} className={sans.variable}>
       <body className="font-body antialiased">
         <JsonLd data={organization} />
         <JsonLd data={website} />

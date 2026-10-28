@@ -94,7 +94,7 @@ export function ResultView({ code }: { code: string }) {
           <p className="mt-3 max-w-xl text-sm text-muted">
             A label for the shapes in this link. Not a reading of personality, health, honesty, or ability.
           </p>
-          <div className="notebook mt-8 max-w-sm rounded-md p-6 pl-12">
+          <div className="notebook mt-8 max-w-sm p-6">
             <p className="text-[11px] tracking-[0.16em] text-muted">HANDWRITING PERSONALITY TEST</p>
             <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
             <div className="mt-4 h-0.5 w-8 bg-seal" />
@@ -161,7 +161,7 @@ export function ResultView({ code }: { code: string }) {
                     type="button"
                     aria-pressed={selected}
                     onClick={() => commit(picks.map((pick, i) => (i === questionIndex ? optionIndex : pick)))}
-                    className={`rounded-md border bg-card p-2 text-left ${selected ? "border-seal ring-1 ring-seal" : "border-rule"}`}
+                    className={`choice border bg-card p-2 text-left ${selected ? "choice-on" : "border-rule"}`}
                   >
                     <Glyph file={option.file} alt={option.alt} loading="lazy" />
                     <span className="mt-1 block text-sm">{option.label}</span>

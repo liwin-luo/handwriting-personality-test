@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "How do I get a result link?",
-    a: "Answer eight of the twelve questions and the site gives you a link. It shows the label, the four totals, and the shapes you picked. Change an answer and the link changes.",
+    a: "Answer eight of the nineteen questions and the site gives you a link. It shows the label, the ranked points, and the shapes you picked. Change an answer and the link changes.",
   },
 ];
 
@@ -60,9 +60,9 @@ export default function ResultsPage() {
       <section className="mt-10">
         <h2 className="font-display text-2xl">How a label is derived</h2>
         <p className="mt-4 max-w-xl leading-relaxed">
-          The test asks twelve questions, one for each shape it files: the digits 4, 7, 0, and 1, the letters a, g, t,
-          i, and y, the ampersand, word spacing, and the slant of a downstroke. Each question offers two or three
-          forms, and you pick the one closest to your own writing.
+          The test asks nineteen questions: the digits 4, 7, 2, 5, 8, 9, 0, and 1, the letters a, g, capital G, t, i,
+          and y, the ampersand, letter size, word spacing, joins, and slant. Each question offers two or three forms.
+          Pick the one closest to an ordinary note.
         </p>
         <p className="mt-4 max-w-xl leading-relaxed">
           Every option carries points in four directions. Structure counts closed counters and clear midlines. Endings
@@ -71,8 +71,8 @@ export default function ResultsPage() {
           four totals are printed on your result page, so you can check the arithmetic.
         </p>
         <p className="mt-4 max-w-xl leading-relaxed">
-          A direction has to lead the next one by two points to name a result. That is a small margin, and one or two
-          answers can decide a label. The method is written out in full on the methodology page.
+          A direction has to lead the next one by more than one answer to name a result. One answer cannot decide the
+          name. The method is written out in full on the methodology page.
         </p>
         <p className="mt-4 max-w-xl leading-relaxed">
           Two cases have no single leader. When the two highest totals are flourish and page rhythm, the result is
@@ -114,7 +114,7 @@ export default function ResultsPage() {
       <section className="mt-12">
         <h2 className="font-display text-2xl">How to use a result link</h2>
         <p className="mt-4 max-w-xl leading-relaxed">
-          A result link shows which shapes you picked, not a person. The link carries your twelve answers in the
+          A result link shows which shapes you picked, not a person. The link carries the answers you picked in the
           address, so anybody who opens it sees the same result you saw. It is a convenient thing to send when
           somebody asks which form of the 4 you write.
         </p>
@@ -155,7 +155,7 @@ export default function ResultsPage() {
         </ul>
       </section>
 
-      <AuthorLine lang="en" updated="Last updated 21 October 2026" />
+      <AuthorLine lang="en" updated="Last updated 28 October 2026" />
       <JsonLd
         data={{
           "@context": "https://schema.org",

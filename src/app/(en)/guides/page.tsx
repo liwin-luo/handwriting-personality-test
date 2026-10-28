@@ -57,9 +57,9 @@ export default function GuidesIndex() {
       <section className="mt-12">
         <h2 className="font-display text-2xl">How the twelve guides work as a set</h2>
         <p className="mt-4 max-w-xl leading-relaxed">
-          There is one guide for each shape the test asks about: the digits 4, 7, 0, and 1, the letters a, g, t, i, and
-          y, the ampersand, word spacing, and the slant of a downstroke. Each one covers the same ground in the same
-          order, so you can move between them and always know where to look.
+          Twelve guides cover 4, 7, 0, 1, a, g, t, i, y, the ampersand, word spacing, and slant. Each one covers the
+          same ground in the same order, so you can move between them and always know where to look. The test also
+          asks about 2, 5, 8, 9, capital G, letter size, and joins.
         </p>
         <p className="mt-4 max-w-xl leading-relaxed">
           A guide opens with the two or three forms of its shape, with a figure of each so the difference is visible
@@ -75,7 +75,7 @@ export default function GuidesIndex() {
         <p className="mt-4 max-w-xl leading-relaxed">
           After the limits come four short steps for checking your own writing, a set of use cases such as filling a
           printed form or teaching a child, and the guide's own questions with links to the neighbouring shapes. Read
-          together, the twelve cover the whole vocabulary of the test.
+          together, the twelve guides cover those marks. The newer questions are on the test itself.
         </p>
       </section>
       <section className="mt-12">
@@ -112,7 +112,7 @@ export default function GuidesIndex() {
           </li>
           <li>
             <a className="block py-3" href="/">
-              <span className="font-display text-lg">12-shape handwriting test</span>
+              <span className="font-display text-lg">19-shape handwriting test</span>
               <span className="mt-1 block text-sm text-muted">Eight answers, four totals, one fictional label.</span>
             </a>
           </li>

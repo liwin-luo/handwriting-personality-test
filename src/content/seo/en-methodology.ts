@@ -4,23 +4,23 @@ export const methodology: ArticleContent = {
   path: "/methodology",
   title: "Test Methodology",
   h1: "How this test is built",
-  meta: "The scoring rule, the 12 shapes, the two-point threshold, the privacy model, and the limits of a fictional handwriting label. A methods page you can check.",
+  meta: "The scoring rule, the 19 shapes, the one-answer lead, the privacy model, and the limits of a fictional handwriting label. A methods page you can check.",
   kicker: "Methodology",
   lede: "This page explains what the test does, how the result is calculated, why the labels are fictional, and what would have to change before the quiz could be called a validated assessment.",
   published: "2026-10-21",
-  updated: "2026-10-21",
+  updated: "2026-10-28",
   intro: [
-    "A result is only as useful as the method behind it. This site uses a small, deterministic quiz: 12 questions, four visual directions, six labels, and a two-point threshold for naming a single direction. There is no trained model, no handwriting upload, and no hidden adjustment of the result.",
+    "A result is only as useful as the method behind it. This site uses a small, deterministic quiz: 19 questions, four visual directions, six labels, and a lead past one answer before a single direction is named. There is no trained model, no handwriting upload, and no hidden adjustment of the result.",
     "The method is transparent because the claim is modest. The quiz describes a set of shape choices. It does not claim to measure personality. If you want to know why the shapes were chosen, how the totals work, or where the design stops, this page is the reference.",
   ],
   sections: [
     {
       id: "input",
-      h2: "The input: 12 shape questions",
+      h2: "The input: 19 shape questions",
       paragraphs: [
-        "The English test asks about four digits (4, 7, 0, 1), five lowercase letters (a, g, t, i, y), the ampersand, word spacing, and slant. Each question shows two or three forms. You choose the one closest to what you write on an ordinary day, or skip the question if you use both forms equally.",
+        "The English test asks about the digits 4, 7, 2, 5, 8, 9, 0, and 1, the letters a, g, capital G, t, i, and y, the ampersand, letter size, word spacing, letter joins, and slant. Each question shows two or three forms. You choose the one closest to an ordinary note, not a signature.",
         "The forms were selected for three reasons. They vary visibly between school models; people can recognize their own version without special equipment; and each form has a plausible functional explanation that is more interesting than a trait claim. A crossed 7 keeps 7 distinct from 1. A slashed 0 keeps 0 distinct from O. A double-storey a follows a printed model. The quiz asks you to notice those choices.",
-        "The shape set is not a standardized handwriting inventory. It is a curated list for a short quiz. Other features, such as pressure, speed, letter height, and baseline, are not included because they are difficult to judge from a multiple-choice question. The slant tool exists for one of those features, but its measurement is not fed back into the quiz.",
+        "The shape set is not a standardized handwriting inventory. It is a curated list for a short quiz. Pressure, speed, and baseline are not included, because a multiple-choice question cannot show them. Letter size and joins are included, because you can point at them on a note. The slant tool is separate, and its measurement is not fed back into the quiz.",
       ],
     },
     {
@@ -29,23 +29,23 @@ export const methodology: ArticleContent = {
       paragraphs: [
         "Each option carries a small weight on four directions: structure, finish, rhythm, and character. Structure rewards closed, conventional forms. Finish rewards forms that stop once the letter is readable, or that omit a non-essential mark. Rhythm rewards spacing and vertical movement. Character rewards flourishes and unconventional marks.",
         "The names are descriptive, not psychometric. They are not factors derived from a factor analysis, and they are not the Big Five. They are four buckets that make the shape choices legible. A closed 4, a crossed 7, and a slashed 0 all add to structure for the simple reason that they close or mark the form.",
-        "The weights are fixed integers. One answer can add two points to a direction, which is why the threshold for a single-direction result is also two points. The arithmetic is visible on the result page: the four totals are shown beside the label.",
+        "The weights are fixed integers. One answer can add at most two points to one direction, so a single-direction name requires a lead bigger than that. The result page ranks the four totals and names the second place.",
       ],
     },
     {
       id: "scoring",
       h2: "The scoring rule",
       paragraphs: [
-        "The test requires eight answered questions. A skip is recorded as a skip and adds no points. The totals are summed, then ranked. If the leading direction is at least two points ahead of the second, the result is the label for that direction: Quiet Architect for structure, Everyday Minimalist for finish, Margin Storyteller for rhythm, or Beautiful Rebel for character.",
-        "If the lead is less than two points, the top two directions are checked. If they are character and rhythm, the result is Daydream Doodler. Otherwise the result is Instinctive Mixer. The two mixed labels are not a fifth and sixth dimension; they are the two ways the test handles a close vote.",
+        "The test requires eight answered questions. A skip is recorded as a skip and adds no points. The totals are summed, then ranked. If the leading direction is ahead of the second by more than one answer can add, the result is the label for that direction: Quiet Architect for structure, Everyday Minimalist for finish, Margin Storyteller for rhythm, or Beautiful Rebel for character.",
+        "If the lead is no bigger than one answer, the top two directions are checked. If they are character and rhythm, the result is Daydream Doodler. Otherwise the result is Instinctive Mixer. The two mixed labels are not a fifth and sixth dimension; they are the two ways the test handles a close vote.",
         "The result is deterministic. The same answers always produce the same label. There is no random element, no date-based variation, and no post-hoc adjustment. If you change one answer, the totals and possibly the label change, and the new result link reflects the new picks.",
       ],
     },
     {
       id: "why-threshold",
-      h2: "Why a two-point threshold",
+      h2: "Why the lead has to beat one answer",
       paragraphs: [
-        "A one-point lead is small enough to be noise in a 12-question quiz. The threshold prevents a trivial difference from being presented as a clear winner. It also creates a visible mixed category, which is more honest than forcing every set of answers into a single label.",
+        "A one-point lead is small enough to be noise in a 19-question quiz. The threshold prevents a trivial difference from being presented as a clear winner. It also creates a visible mixed category, which is more honest than forcing every set of answers into a single label.",
         "The threshold is a design choice, not a statistically calibrated cutoff. With more questions or different weights, it would need to be revisited. The code comment in the scoring module says as much: the fixed threshold would become biased if the question count or weights increased, and the upgrade path would be to normalize by the number of answered questions.",
         "The consequence is that some results are close calls. The result page shows the totals so you can see whether the lead was one point or six. A close call is not a failure of the quiz; it is information about how mixed the shape choices were.",
       ],
@@ -100,11 +100,11 @@ export const methodology: ArticleContent = {
   faqs: [
     {
       q: "How is the handwriting test scored?",
-      a: "Each answer adds weights to four directions. The leading direction must be at least two points ahead to name a single-direction label. Close votes produce one of two mixed labels.",
+      a: "Each answer adds weights to four directions. The leading direction must lead by more than one answer to name a single-direction label. Close votes produce one of two mixed labels.",
     },
     {
       q: "Why eight answers?",
-      a: "Eight of 12 is enough to produce a result while allowing skips for forms a person genuinely uses equally. Fewer than eight produces no label.",
+      a: "Eight of 19 is enough to produce a result while allowing skips for forms a person genuinely uses equally. Fewer than eight produces no label.",
     },
     {
       q: "Is the test random?",
@@ -120,7 +120,7 @@ export const methodology: ArticleContent = {
     },
     {
       q: "When was the content last updated?",
-      a: "21 October 2026. The date appears in the footer of each page and in the article metadata.",
+      a: "28 October 2026. The date appears in the footer of each page and in the article metadata.",
     },
     {
       q: "Does the test use AI?",
@@ -147,7 +147,7 @@ export const methodology: ArticleContent = {
     },
   ],
   relatedTools: [
-    { href: "/", label: "Take the 12-shape test", note: "The quiz this page describes." },
+    { href: "/", label: "Take the 19-shape test", note: "The quiz this page describes." },
     { href: "/tools/slant", label: "Slant measurement", note: "One photo, one angle, no upload." },
     { href: "/tools/signature", label: "Signature measurement", note: "A local canvas with geometry output." },
   ],

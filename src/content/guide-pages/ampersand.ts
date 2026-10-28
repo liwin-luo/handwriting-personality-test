@@ -48,7 +48,7 @@ export const ampersand: Guide = {
   related: [
     { href: "/#q-ampersand", label: "Try the ampersand in the test", note: "Pick the plus sign, the et form, or the flourished one." },
     { href: "/guides/four", label: "The number four", note: "Another symbol with an open and a closed version on the same page." },
-    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "All twelve shapes together, including the three ampersand forms." },
+    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "The test shapes together, including the three ampersand forms." },
     { href: "/blog/what-is-handwriting-personality-test", label: "What this test does and does not do", note: "The short version of the honest position behind the labels." },
     { href: "/methodology", label: "How the test is put together", note: "The questions, the weighting, and the limits we publish." },
   ],

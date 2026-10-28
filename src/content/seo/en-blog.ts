@@ -11,7 +11,7 @@ export const blogPosts: BlogPost[] = [
     meta: "A handwriting personality test asks you to read meaning into letterforms. Here is what the tests do, what the evidence supports, and how this quiz works.",
     kicker: "Explainer",
     published: "2026-10-21",
-    updated: "2026-10-21",
+    updated: "2026-10-28",
     readingTime: "8 min read",
     intro: [
       "A handwriting personality test is any procedure that asks you to infer personality, character, or ability from the way someone writes. The inference can be made by a trained graphologist, by a software model, or by a quiz that asks you to pick the forms closest to your own. The label changes; the central claim does not. The claim is that a visible feature of writing stands for an invisible feature of the person.",
@@ -58,7 +58,7 @@ export const blogPosts: BlogPost[] = [
         id: "this-test",
         h2: "How this site's test is different",
         paragraphs: [
-          "The test on this site is a shape-picking quiz. It asks 12 questions about digits, letters, the ampersand, word spacing, and slant. You choose the form closest to your own. The answers are weighted across four visual directions: structure, finish, rhythm, and character. Eight answers produce a result from six fictional labels.",
+          "The test on this site is a shape-picking quiz. It asks 19 questions about digits, letters, the ampersand, letter size, joins, word spacing, and slant. You choose the form closest to your own. The answers are weighted across four visual directions: structure, finish, rhythm, and character. Eight answers produce a result from six fictional labels. A single direction is named only when it leads by more than one answer.",
           "The result page shows the four totals and explains the scoring rule. It does not claim that the label is a personality type. It does not ask for a sample, an email address, or a photo. The label is a filing category for the shapes you chose, and the site says so in the result, the FAQ, and the methodology.",
           "This design is not a scientific instrument. It is an attempt to make the vocabulary of handwriting analysis concrete while refusing the inference the vocabulary usually invites. You can use it to notice what you write, compare forms with a friend, or test a claim you read elsewhere. You should not use it to judge a person.",
         ],
@@ -128,8 +128,8 @@ export const blogPosts: BlogPost[] = [
       },
     ],
     relatedTools: [
-      { href: "/", label: "Take the 12-shape test", note: "Eight answers produce a fictional label." },
-      { href: "/tools/sample-chart", label: "See the sample chart", note: "All 12 shapes in one reference." },
+      { href: "/", label: "Take the 19-shape test", note: "Eight answers produce a fictional label." },
+      { href: "/tools/sample-chart", label: "See the sample chart", note: "The test shapes in one reference." },
       { href: "/tools/slant", label: "Measure handwriting slant", note: "A photo-based angle measurement." },
     ],
     relatedPosts: [
@@ -150,7 +150,7 @@ export const blogPosts: BlogPost[] = [
     meta: "A practical guide to describing handwriting: page setup, size, spacing, slant, letterforms, and the difference between observation and inference.",
     kicker: "Practical guide",
     published: "2026-10-21",
-    updated: "2026-10-21",
+    updated: "2026-10-28",
     readingTime: "9 min read",
     intro: [
       "You can learn a great deal about a page of handwriting without claiming to know the person who wrote it. You can describe the size of the letters, the distance between words, the angle of the downstrokes, the baseline, the margins, and the forms that belong to a particular school model. Those observations are useful for comparison, teaching, archival description, and design.",
@@ -269,7 +269,7 @@ export const blogPosts: BlogPost[] = [
     ],
     relatedTools: [
       { href: "/tools/slant", label: "Measure slant from a photo", note: "A local angle tool with an 8-degree upright band." },
-      { href: "/tools/sample-chart", label: "Compare the 12 shapes", note: "A printable reference chart." },
+      { href: "/tools/sample-chart", label: "Compare the test shapes", note: "A printable reference chart." },
       { href: "/tools/signature", label: "Measure a signature", note: "Width, height, length, turns, and approximate slant." },
     ],
     relatedPosts: [
@@ -438,7 +438,7 @@ export const blogPosts: BlogPost[] = [
     meta: "A buyer's guide to free handwriting tools: quiz, measurement, and reference types, what each can honestly output, and how the four tools here compare.",
     kicker: "Buyer's guide",
     published: "2026-10-21",
-    updated: "2026-10-21",
+    updated: "2026-10-28",
     readingTime: "7 min read",
     intro: [
       "Search for a free handwriting analysis tool and you will find three very different products sharing one phrase. Some are personality quizzes. Some measure an image. Some generate a long report from a sample you upload. The word 'analysis' hides the difference, and the difference matters more than the price.",
@@ -468,9 +468,9 @@ export const blogPosts: BlogPost[] = [
         id: "this-site",
         h2: "What this site's tools do",
         paragraphs: [
-          "The 12-shape test is a quiz. It asks about digits, letters, the ampersand, spacing, and slant. Eight answers produce one of six fictional labels. It does not ask for a sample, and it shows the four direction totals so you can see how the label was reached.",
+          "The 19-shape test is a quiz. It asks about digits, letters, the ampersand, spacing, and slant. Eight answers produce one of six fictional labels. It does not ask for a sample, and it shows the four direction totals so you can see how the label was reached.",
           "The slant tool is a measurement tool. You load a photo, align a red stem with a downstroke, and read the angle. The photo stays in the browser. The tool reports left, upright, or right of vertical and states the 8-degree band it uses.",
-          "The signature tool is a measurement tool with a canvas. You draw a signature and read its width, height, path length, turns, and approximate slant. It does not identify a writer or score a personality. The sample chart is a reference tool: it shows the 12 shapes, filters them, and prints them. It is not an analysis at all, which is the point.",
+          "The signature tool is a measurement tool with a canvas. You draw a signature and read its width, height, path length, turns, and approximate slant. It does not identify a writer or score a personality. The sample chart is a reference tool: it shows the test shapes, filters them, and prints them. It is not an analysis at all, which is the point.",
         ],
       },
       {

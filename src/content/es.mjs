@@ -7,6 +7,7 @@ const questionCopy = {
     options: {
       "open-four": ["4 abierto", "Un 4 abierto: barra y asta, sin triángulo cerrado"],
       "closed-four": ["4 cerrado", "Un 4 cerrado con un triángulo arriba"],
+      "curved-four": ["4 curvo","Un 4 abierto cuya asta se curva"]
     },
   },
   seven: {
@@ -31,6 +32,7 @@ const questionCopy = {
     options: {
       "open-g": ["Cola abierta", "Una g minúscula con el gancho abierto"],
       "looped-g": ["Cola con lazo", "Una g minúscula con un lazo cerrado"],
+      "print-g": ["g de imprenta","Una g de dos pisos, con oreja y ojo inferior cerrado"]
     },
   },
   zero: {
@@ -39,6 +41,7 @@ const questionCopy = {
     options: {
       "plain-zero": ["0 simple", "Un cero ovalado, sin barra"],
       "slashed-zero": ["0 con barra", "Un cero cruzado por una diagonal"],
+      "dotted-zero": ["0 con punto","Un cero con un punto en el centro"]
     },
   },
   one: {
@@ -100,6 +103,69 @@ const questionCopy = {
       "slant-left": ["A la izquierda", "Trazos hacia abajo, inclinados a la izquierda"],
       "slant-upright": ["Vertical", "Trazos hacia abajo, casi verticales"],
       "slant-right": ["A la derecha", "Trazos hacia abajo, inclinados a la derecha, como en la itálica"],
+    },
+  },
+  two: {
+    title: "El número 2",
+    prompt: "¿Cuál 2 se parece más al tuyo?",
+    options: {
+      "curved-two": ["2 curvo","Un 2 con la curva habitual"],
+      "zed-two": ["2 en zigzag","Un 2 hecho de esquinas"],
+      "looped-two": ["2 con lazo","Un 2 que cierra un lazo abajo"],
+    },
+  },
+  five: {
+    title: "El número 5",
+    prompt: "¿Cuál 5 se parece más al tuyo?",
+    options: {
+      "plain-five": ["5 simple","Un 5 con el cuenco cerrado"],
+      "hatted-five": ["5 con tapa","Un 5 con una barra arriba"],
+      "open-five": ["5 abierto","Un 5 cuyo cuenco no se cierra"],
+    },
+  },
+  eight: {
+    title: "El número 8",
+    prompt: "¿Cuál 8 se parece más al tuyo?",
+    options: {
+      "plain-eight": ["Un solo trazo","Un 8 hecho de un solo gesto"],
+      "stacked-eight": ["Dos círculos","Un 8 de dos círculos apilados"],
+      "looped-eight": ["8 con cola","Un 8 con un trazo de más abajo"],
+    },
+  },
+  nine: {
+    title: "El número 9",
+    prompt: "¿Cuál 9 se parece más al tuyo?",
+    options: {
+      "hook-nine": ["Gancho abierto","Un 9 cuyo palo queda abierto"],
+      "closed-nine": ["Lazo cerrado","Un 9 con el ojo de arriba cerrado"],
+      "tailed-nine": ["Cola larga","Un 9 cuyo palo sigue"],
+    },
+  },
+  gee: {
+    title: "La G mayúscula",
+    prompt: "¿Cuál G mayúscula se parece más a la tuya?",
+    options: {
+      "spur-gee": ["Con espuela","Una G con una espuela corta hacia dentro"],
+      "print-gee": ["G de imprenta","Una G como la letra impresa"],
+      "loop-gee": ["Con adorno","Una G con un trazo de más"],
+    },
+  },
+  size: {
+    title: "Tamaño de la letra",
+    prompt: "¿Qué tan altas son las letras de una nota corriente?",
+    options: {
+      "size-mid": ["Corriente","Letras del alto de una nota"],
+      "size-small": ["Pequeño","Letras pequeñas sobre la línea"],
+      "size-large": ["Grande","Letras que llenan la línea"],
+    },
+  },
+  link: {
+    title: "Letras unidas",
+    prompt: "¿Se tocan las letras de una palabra?",
+    options: {
+      "link-none": ["Separadas","Letras que no se tocan"],
+      "link-some": ["Algunas unidas","Unas letras se unen y otras no"],
+      "link-all": ["Seguidas","Las letras van unidas toda la palabra"],
     },
   },
 };
@@ -254,7 +320,7 @@ export const guides = [
       { q: "¿La g con lazo es la g cursiva?", a: "Es la terminación habitual de la cursiva y de la itálica. La pluma baja de la línea y sube para unirse a la letra siguiente." },
       { q: "¿Una g abierta está mal?", a: "No. Los modelos de molde y muchas manos adultas dejan la cola abierta. Sigue siendo una g si están el ojo y el descendente." },
       { q: "¿El lazo de la g significa que quien escribe es expresivo?", a: "No. El lazo es un camino motor aprendido. La expresividad no se ve en un descendente." },
-      { q: "¿Y la g impresa de dos pisos?", a: "La g impresa tiene una oreja y un ojo inferior cerrado. Este test usa las dos terminaciones que la gente produce a mano: un gancho abierto y un lazo." },
+      { q: "¿Y la g impresa de dos pisos?", a: "La g impresa tiene una oreja y un ojo inferior cerrado. El test incluye esa forma, además del gancho abierto y el lazo." },
     ],
   },
   {
@@ -477,6 +543,6 @@ export const scienceFaqs = [
   },
   {
     q: "¿Qué hace este test en realidad?",
-    a: "Eliges la forma más cercana en hasta doce signos. Ocho respuestas producen uno de seis nombres ficticios a partir de cuatro recuentos: estructura, terminaciones, ritmo de la página y adorno. Una ventaja de dos puntos pone el nombre. Si el adorno y el ritmo van juntos arriba, el nombre es Lazo y ritmo. Cualquier otro empate cercano es Sin una sola costumbre.",
+    a: "Eliges la forma más cercana en hasta diecinueve signos. Ocho respuestas producen uno de seis nombres ficticios a partir de cuatro recuentos: estructura, terminaciones, ritmo de la página y adorno. Una ventaja mayor que una respuesta pone el nombre. Si el adorno y el ritmo van juntos arriba, el nombre es Lazo y ritmo. Cualquier otro empate cercano es Sin una sola costumbre.",
   },
 ];

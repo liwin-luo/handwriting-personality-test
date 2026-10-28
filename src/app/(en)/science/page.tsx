@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     q: "What does this test actually do?",
-    a: "You pick the closest shape for up to twelve glyphs. Eight answers produce one of six fictional names from four tallies: structure, endings, page rhythm, and flourish. A two-point lead names the result. Flourish and rhythm as the top pair name Daydream Doodler. Anything else close is Instinctive Mixer.",
+    a: "You pick the closest shape for nineteen glyphs. Eight answers produce one of six fictional names from four tallies: structure, endings, page rhythm, and flourish. A lead bigger than one answer names the result. Flourish and rhythm as the top pair name Daydream Doodler. Anything else close is Instinctive Mixer.",
   },
   {
     q: "Can handwriting change over time?",

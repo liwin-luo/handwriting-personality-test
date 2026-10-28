@@ -1,5 +1,5 @@
 import { Crumbs, JsonLd } from "@/components/Meta";
-import { EDITORIAL } from "@/content/editorial";
+import { CONTENT_UPDATED, EDITORIAL } from "@/content/editorial";
 import type { ArticleContent, BlogPost, HubContent, LinkItem, Section, ToolSeoContent } from "@/content/seo/types";
 import { splitRichText } from "@/lib/rich-text.mjs";
 import { SITE } from "@/lib/site";
@@ -275,7 +275,7 @@ export function ToolPageView({
           description: content.schemaDescription,
           featureList: content.featureList,
           author: { "@type": "Organization", name: EDITORIAL[lang].name, url: `${SITE.url}${EDITORIAL[lang].href}` },
-          dateModified: "2026-10-21",
+          dateModified: CONTENT_UPDATED,
         }}
       />
       <JsonLd

@@ -8,7 +8,7 @@ import { SITE } from "@/lib/site";
 
 export const rootMetadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: `${SITE.name}: Free 12-Shape Test`, template: `%s · ${SITE.name}` },
+  title: { default: `${SITE.name}: Free 19-Shape Test`, template: `%s · ${SITE.name}` },
   description:
     "A free handwriting personality test. Pick the shapes you actually write. Eight answers show a fictional label. Nothing is uploaded.",
   applicationName: SITE.name,

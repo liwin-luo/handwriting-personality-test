@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { DirectionSpread } from "@/components/DirectionSpread";
 import { Glyph, GlyphLine } from "@/components/Glyph";
 import { choiceNote, countNote, retakeLabel, shareHint, shareLabel } from "@/content/choice-notes.mjs";
 import {
@@ -9,6 +10,7 @@ import {
   MIN_ANSWERS,
   decodeAnswers,
   encodeAnswers,
+  pickSamples,
   profileBySlug,
   questions,
   scoreAnswers,
@@ -114,13 +116,18 @@ export function ResultView({ code }: { code: string }) {
           <h2 className="mt-10 page-h2">One drill</h2>
           <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
           <h2 className="mt-12 page-h2">Four directions</h2>
-          <p className="mt-4 max-w-xl leading-relaxed">
-            {DIRECTIONS.map((id) => `${LABELS[id]} ${scored.totals[id]}`).join(". ")}.
-          </p>
-          <p className="mt-2 text-sm text-muted">{countNote.en}</p>
+          <DirectionSpread
+            lang="en"
+            ranked={scored.ranked}
+            lead={scored.lead}
+            ceiling={scored.ceiling}
+            labels={LABELS}
+            samples={pickSamples(picks, scored.ranked[0].id)}
+            note={countNote.en}
+          />
           <p className="mt-4 text-sm leading-relaxed text-muted">
-            One direction names the result when it leads by two points. Flourish and page rhythm as the two leaders
-            name Daydream Doodler. Any other close finish is Instinctive Mixer.{" "}
+            A single direction names the result only when it leads by more than one answer. Flourish and page rhythm
+            as the two leaders name Daydream Doodler. Any other close finish is Instinctive Mixer.{" "}
             <a className="text-link" href={`/results/${profile.slug}`}>
               About {profile.name}
             </a>

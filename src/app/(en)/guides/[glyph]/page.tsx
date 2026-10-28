@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Glyph } from "@/components/Glyph";
 import { Crumbs, JsonLd } from "@/components/Meta";
 import { AuthorLine } from "@/components/seo/PageParts";
+import { CONTENT_UPDATED } from "@/content/editorial";
 import { guideBySlug, guides } from "@/content/guides";
 import { guideLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
@@ -120,7 +121,7 @@ export default async function GuidePage({ params }: { params: Promise<{ glyph: s
           description: guide.description,
           url: `${SITE.url}/guides/${guide.slug}`,
           inLanguage: "en",
-          dateModified: "2026-10-21",
+          dateModified: CONTENT_UPDATED,
           author: { "@type": "Organization", name: "Handwriting Personality Test editorial team", url: `${SITE.url}/methodology` },
           publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
         }}

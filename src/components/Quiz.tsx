@@ -9,6 +9,19 @@ import { trackTool } from "@/lib/analytics.mjs";
 
 const STORAGE_KEY = "hpt.answers";
 
+const SCENE: Record<string, string> = {
+  en: "Ordinary note, not a signature.",
+  zh: "普通笔记，不是签名。",
+  es: "Una nota corriente, no una firma.",
+  pt: "Uma nota comum, não uma assinatura.",
+  fr: "Une note ordinaire, pas une signature.",
+  de: "Eine gewöhnliche Notiz, keine Unterschrift.",
+  id: "Catatan biasa, bukan tanda tangan.",
+  vi: "Ghi chú thường, không phải chữ ký.",
+  it: "Un appunto ordinario, non una firma.",
+  tr: "Sıradan bir not, imza değil.",
+};
+
 export function Quiz({
   bank = englishQuestions,
   minAnswers = MIN_ANSWERS,
@@ -150,6 +163,7 @@ export function Quiz({
         ))}
       </div>
       <h2 aria-live="polite" aria-atomic="true" className="mt-6 font-display text-3xl leading-none">{question.prompt}</h2>
+      <p className="mt-2 text-sm text-muted">{SCENE[lang] || SCENE.en}</p>
       <div id={`q-${question.id}`} className={`mt-5 grid gap-3 ${question.options.length > 2 ? "grid-cols-3" : "grid-cols-2"}`}>
         {question.options.map((option, optionIndex) => {
           const selected = picks[index] === optionIndex;

@@ -48,7 +48,7 @@ export const zero: Guide = {
     { href: "/#q-zero", label: "Try the zero in the test", note: "Pick the plain or the slashed version and watch the tally." },
     { href: "/guides/seven", label: "The number seven", note: "Another numeral where people add a bar to keep it distinct." },
     { href: "/guides/one", label: "The number one", note: "The other digit that gets a mark added to stop a mix-up." },
-    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "All twelve shapes on one page, including both versions of the zero." },
+    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "The test shapes on one page, including the zero forms." },
     { href: "/blog/graphology", label: "Graphology and the evidence", note: "What the research supports, and what it does not." },
   ],
   faqs: [

@@ -7,7 +7,7 @@ const w = (structure = 0, finish = 0, rhythm = 0, character = 0) => ({
 
 const opt = (id, label, alt, weights) => ({ id, file: `${id}.svg`, label, alt, weights });
 
-/** 选项 0 的全选向量在 score.test.mjs 里锁定为 Everyday Minimalist。改权重时一起改测试。 */
+/** 选项 0 的全选向量在 score.test.mjs 里锁定为 Everyday Minimalist。新题的第一项只加收笔，单项上限保持 2。 */
 export const questions = [
   {
     id: "four",
@@ -17,6 +17,7 @@ export const questions = [
     options: [
       opt("open-four", "Open 4", "Open 4 with a crossbar and no closed triangle", w(0, 0, 1, 2)),
       opt("closed-four", "Closed 4", "Closed 4 with a triangular top", w(2, 1, 0, 0)),
+      opt("curved-four", "Curved 4", "An open 4 whose stem bends instead of meeting", w(0, 0, 0, 2)),
     ],
   },
   {
@@ -27,6 +28,71 @@ export const questions = [
     options: [
       opt("plain-seven", "Plain 7", "A 7 with no crossbar", w(1, 2, 0, 0)),
       opt("crossed-seven", "Crossed 7", "A 7 with a horizontal crossbar", w(2, 0, 0, 1)),
+    ],
+  },
+  {
+    id: "two",
+    group: "digit",
+    title: "The number 2",
+    prompt: "Which 2 is closest to yours?",
+    options: [
+      opt("curved-two", "Curved 2", "A 2 with the usual curve", w(0, 2, 0, 0)),
+      opt("zed-two", "Angular 2", "A 2 made of straight corners, like a Z", w(2, 0, 0, 0)),
+      opt("looped-two", "Looped 2", "A 2 that closes a loop at the bottom", w(0, 0, 0, 2)),
+    ],
+  },
+  {
+    id: "five",
+    group: "digit",
+    title: "The number 5",
+    prompt: "Which 5 is closest to yours?",
+    options: [
+      opt("plain-five", "Plain 5", "A 5 with a short top and a closed bowl", w(0, 2, 0, 0)),
+      opt("hatted-five", "Hatted 5", "A 5 with a flat bar across the top", w(2, 0, 0, 0)),
+      opt("open-five", "Open 5", "A 5 whose bowl does not close", w(0, 0, 0, 2)),
+    ],
+  },
+  {
+    id: "eight",
+    group: "digit",
+    title: "The number 8",
+    prompt: "Which 8 is closest to yours?",
+    options: [
+      opt("plain-eight", "One stroke", "An 8 drawn as one continuous stroke", w(0, 2, 0, 0)),
+      opt("stacked-eight", "Two circles", "An 8 made of two stacked circles", w(2, 0, 0, 0)),
+      opt("looped-eight", "With a tail", "An 8 with an extra stroke below", w(0, 0, 0, 2)),
+    ],
+  },
+  {
+    id: "nine",
+    group: "digit",
+    title: "The number 9",
+    prompt: "Which 9 is closest to yours?",
+    options: [
+      opt("hook-nine", "Open hook", "A 9 whose stem stays an open hook", w(0, 2, 0, 0)),
+      opt("closed-nine", "Closed loop", "A 9 with a closed upper loop", w(2, 0, 0, 0)),
+      opt("tailed-nine", "Long tail", "A 9 whose stem keeps going", w(0, 0, 0, 2)),
+    ],
+  },
+  {
+    id: "zero",
+    group: "digit",
+    title: "The number 0",
+    prompt: "Which 0 is closest to yours?",
+    options: [
+      opt("plain-zero", "Plain 0", "An oval zero with no slash", w(0, 2, 1, 0)),
+      opt("slashed-zero", "Slashed 0", "A zero with a diagonal slash", w(2, 0, 0, 0)),
+      opt("dotted-zero", "Dotted 0", "A zero with a dot in the middle", w(2, 0, 0, 0)),
+    ],
+  },
+  {
+    id: "one",
+    group: "digit",
+    title: "The number 1",
+    prompt: "Which 1 is closest to yours?",
+    options: [
+      opt("plain-one", "Plain stroke", "A 1 drawn as one straight stroke", w(0, 2, 0, 0)),
+      opt("serif-one", "With a foot", "A 1 with a top flag and a base", w(1, 0, 0, 1)),
     ],
   },
   {
@@ -47,26 +113,18 @@ export const questions = [
     options: [
       opt("open-g", "Open tail", "Lowercase g with an open hook", w(0, 2, 0, 0)),
       opt("looped-g", "Looped tail", "Lowercase g with a closed loop", w(0, 0, 1, 2)),
+      opt("print-g", "Printed g", "Double-storey g with an ear and a closed lower bowl", w(2, 0, 0, 0)),
     ],
   },
   {
-    id: "zero",
-    group: "digit",
-    title: "The number 0",
-    prompt: "Which 0 is closest to yours?",
+    id: "gee",
+    group: "letter",
+    title: "Capital G",
+    prompt: "Which capital G is closest to yours?",
     options: [
-      opt("plain-zero", "Plain 0", "An oval zero with no slash", w(0, 2, 1, 0)),
-      opt("slashed-zero", "Slashed 0", "A zero with a diagonal slash", w(2, 0, 0, 0)),
-    ],
-  },
-  {
-    id: "one",
-    group: "digit",
-    title: "The number 1",
-    prompt: "Which 1 is closest to yours?",
-    options: [
-      opt("plain-one", "Plain stroke", "A 1 drawn as one straight stroke", w(0, 2, 0, 0)),
-      opt("serif-one", "With a foot", "A 1 with a top flag and a base", w(1, 0, 0, 1)),
+      opt("spur-gee", "With a spur", "A capital G with a short inward spur", w(0, 2, 0, 0)),
+      opt("print-gee", "Printed G", "A capital G like the printed letter", w(2, 0, 0, 0)),
+      opt("loop-gee", "With a flourish", "A capital G with an extra sweeping stroke", w(0, 0, 0, 2)),
     ],
   },
   {
@@ -113,6 +171,17 @@ export const questions = [
     ],
   },
   {
+    id: "size",
+    group: "size",
+    title: "Letter size",
+    prompt: "How tall are the letters in an ordinary note?",
+    options: [
+      opt("size-mid", "Ordinary", "Letters about the height of a normal note", w(0, 2, 0, 0)),
+      opt("size-small", "Small", "Small letters sitting on the line", w(2, 0, 0, 0)),
+      opt("size-large", "Large", "Letters that fill the line", w(0, 0, 2, 0)),
+    ],
+  },
+  {
     id: "spacing",
     group: "spacing",
     title: "Word spacing",
@@ -121,6 +190,17 @@ export const questions = [
       opt("spacing-tight", "Tight", "Two words with a tight gap", w(0, 1, 2, 0)),
       opt("spacing-even", "Even", "Two words with an even gap about one letter wide", w(2, 0, 1, 0)),
       opt("spacing-wide", "Wide", "Two words with a wide gap", w(0, 0, 2, 1)),
+    ],
+  },
+  {
+    id: "link",
+    group: "link",
+    title: "Letter joins",
+    prompt: "Do the letters in a word touch?",
+    options: [
+      opt("link-none", "Separate", "Letters that do not touch", w(0, 2, 0, 0)),
+      opt("link-some", "Some joins", "A few letters joined, the rest apart", w(0, 0, 2, 0)),
+      opt("link-all", "Continuous", "Letters joined all the way through the word", w(0, 0, 0, 2)),
     ],
   },
   {
@@ -203,7 +283,7 @@ export const profiles = [
     practice: "Write the same sentence on two lines. On the second line, keep the loops but make every word gap the width of one letter.",
     examples: ["looped-g.svg", "looped-y.svg", "high-t.svg"],
     paragraphs: [
-      "This result appears when flourish and page rhythm are the two leaders, and neither is ahead by two points. Loops, wide gaps, and a high bar can share the page without one of them winning.",
+      "This result appears when flourish and page rhythm are the two leaders, and neither leads by more than one answer. Loops, wide gaps, and a high bar can share the page without one of them winning.",
       "Daydream Doodler is that tie. It is not a measure of attention or imagination. People write this way when more than one habit is active in the same sample.",
     ],
   },
@@ -217,7 +297,7 @@ export const profiles = [
     practice: "Pick the two shapes that disagreed and write each one, slowly, on its own line. The mix is allowed to stay.",
     examples: ["slant-upright.svg", "plain-seven.svg", "single-storey-a.svg"],
     paragraphs: [
-      "No direction leads by two points, and the top pair is not flourish plus rhythm. Instinctive Mixer means the twelve shapes did not vote as a bloc. A closed 4 can sit next to a wide gap and an open g.",
+      "No direction leads by more than one answer, and the top pair is not flourish plus rhythm. Instinctive Mixer means these shapes did not vote as a bloc. A closed 4 can sit next to a wide gap and an open g.",
       "That mix is what happens when someone learned from more than one model. It is not indecision as a trait, and it is not a weaker result than the other five names.",
     ],
   },

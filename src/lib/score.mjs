@@ -3,6 +3,9 @@ export const DIRECTIONS = ["structure", "finish", "rhythm", "character"];
 
 export const MIN_ANSWERS = 8;
 
+/** 旧英文测验的题目顺序。新题库按 id 回填，没答过的题留空。 */
+const V1_IDS = ["four", "seven", "a", "g", "zero", "one", "t", "i", "y", "ampersand", "spacing", "slant"];
+
 const PROFILE_OF = {
   structure: "quiet-architect",
   finish: "everyday-minimalist",
@@ -22,56 +25,107 @@ function totalsOf(questions, picks) {
   return totals;
 }
 
-/**
- * 领先不足 2 分算没有单一方向。
- * ponytail: 2 分是固定阈值，题量或权重加大后会偏。升级路径是按已答题数归一化再比较。
- */
+function rankDirections(totals) {
+  return DIRECTIONS.map((id) => ({ id, score: totals[id] })).sort(
+    (a, b) => b.score - a.score || DIRECTIONS.indexOf(a.id) - DIRECTIONS.indexOf(b.id),
+  );
+}
+
+/** 一个选项能给一个方向加的最高分。领先不超过它，一题就能改名。 */
+export function itemCeiling(questions) {
+  let ceiling = 0;
+  for (const question of questions) {
+    for (const option of question.options) {
+      for (const id of DIRECTIONS) ceiling = Math.max(ceiling, option.weights[id] || 0);
+    }
+  }
+  return ceiling;
+}
+
+function scored(questions, answered, totals) {
+  const ranked = rankDirections(totals);
+  const lead = ranked[0].score - ranked[1].score;
+  const ceiling = itemCeiling(questions);
+  const top = new Set([ranked[0].id, ranked[1].id]);
+  let profile;
+  if (lead > ceiling) profile = PROFILE_OF[ranked[0].id];
+  else if (top.has("character") && top.has("rhythm")) profile = "daydream-doodler";
+  else profile = "instinctive-mixer";
+  return { ok: true, answered, totals, profile, ranked, lead, ceiling };
+}
+
+function missed(questions, answered) {
+  return {
+    ok: false,
+    answered,
+    totals: { ...EMPTY },
+    profile: null,
+    ranked: rankDirections(EMPTY),
+    lead: 0,
+    ceiling: itemCeiling(questions),
+  };
+}
+
 export function scoreAnswers(questions, picks, min = MIN_ANSWERS) {
   const answered = Array.isArray(picks) ? picks.filter((pick) => pick != null).length : 0;
   if (!Array.isArray(picks) || picks.length !== questions.length || answered < min) {
-    return { ok: false, answered, totals: { ...EMPTY }, profile: null };
+    return missed(questions, answered);
   }
-  const totals = totalsOf(questions, picks);
-  const ranked = DIRECTIONS.map((id) => ({ id, score: totals[id] })).sort(
-    (a, b) => b.score - a.score || DIRECTIONS.indexOf(a.id) - DIRECTIONS.indexOf(b.id),
-  );
-  const lead = ranked[0].score - ranked[1].score;
-  const top = new Set([ranked[0].id, ranked[1].id]);
-  let profile;
-  if (lead >= 2) profile = PROFILE_OF[ranked[0].id];
-  else if (top.has("character") && top.has("rhythm")) profile = "daydream-doodler";
-  else profile = "instinctive-mixer";
-  return { ok: true, answered, totals, profile };
+  return scored(questions, answered, totalsOf(questions, picks));
 }
 
 export function encodeAnswers(picks) {
   if (picks.some((pick) => pick != null && (!Number.isInteger(pick) || pick < 0 || pick > 9))) {
     throw new Error("bad pick");
   }
-  return `1${picks.map((pick) => (pick == null ? "-" : String(pick))).join("")}`;
+  return `2${picks.map((pick) => (pick == null ? "-" : String(pick))).join("")}`;
+}
+
+function readPick(question, ch) {
+  if (ch === "-") return null;
+  if (!/^[0-9]$/.test(ch)) return undefined;
+  const n = Number(ch);
+  if (n >= question.options.length) return undefined;
+  return n;
+}
+
+function positional(questions, body) {
+  const picks = [];
+  for (let i = 0; i < questions.length; i++) {
+    const pick = readPick(questions[i], body[i]);
+    if (pick === undefined) return null;
+    picks.push(pick);
+  }
+  return picks;
 }
 
 export function decodeAnswers(code, questions) {
-  if (typeof code !== "string" || code.length !== questions.length + 1 || code[0] !== "1") return null;
-  const picks = [];
-  for (let i = 0; i < questions.length; i++) {
-    const ch = code[i + 1];
-    if (ch === "-") {
-      picks.push(null);
-      continue;
-    }
-    if (!/^[0-9]$/.test(ch)) return null;
-    const n = Number(ch);
-    if (n >= questions[i].options.length) return null;
-    picks.push(n);
+  if (typeof code !== "string" || code.length < 2) return null;
+  const version = code[0];
+  const body = code.slice(1);
+  if (version === "2") {
+    if (body.length !== questions.length) return null;
+    return positional(questions, body);
   }
-  return picks;
+  if (version !== "1") return null;
+  if (body.length === questions.length) return positional(questions, body);
+  if (body.length === V1_IDS.length && V1_IDS.every((id) => questions.some((question) => question.id === id))) {
+    const picks = questions.map(() => null);
+    for (let i = 0; i < V1_IDS.length; i++) {
+      const index = questions.findIndex((question) => question.id === V1_IDS[i]);
+      const pick = readPick(questions[index], body[i]);
+      if (pick === undefined) return null;
+      picks[index] = pick;
+    }
+    return picks;
+  }
+  return null;
 }
 
 export function codeFromInput(raw, questions) {
   if (typeof raw !== "string") return null;
   const text = raw.trim();
-  const found = text.match(/\/r\/(1[0-9-]*)/);
+  const found = text.match(/\/r\/([12][0-9-]*)/);
   const code = found ? found[1] : text;
   return decodeAnswers(code, questions) ? code : null;
 }
@@ -84,6 +138,7 @@ export function pickSamples(questions, picks, direction, n = 3) {
     const option = questions[i].options[pick];
     rows.push({
       questionId: questions[i].id,
+      optionId: option.id,
       file: option.file,
       alt: option.alt,
       label: option.label,

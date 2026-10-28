@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { DirectionSpread } from "@/components/DirectionSpread";
 import { Glyph, GlyphLine } from "@/components/Glyph";
-import { DIRECTIONS, MIN_ANSWERS, type QuizQuestion } from "@/content";
+import { MIN_ANSWERS, type QuizQuestion } from "@/content";
 import { choiceNote, countNote, retakeLabel, shareHint, shareLabel } from "@/content/choice-notes.mjs";
-import { decodeAnswers, encodeAnswers, scoreAnswers } from "@/lib/score.mjs";
+import { decodeAnswers, encodeAnswers, pickSamples, scoreAnswers } from "@/lib/score.mjs";
 import { chosenLine, downloadShareCard, shareResult } from "@/lib/share-card.mjs";
 import { trackTool } from "@/lib/analytics.mjs";
 
@@ -124,10 +125,15 @@ export function LatinResult({
           <h2 className="mt-10 page-h2">{copy.drill}</h2>
           <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
           <h2 className="mt-12 page-h2">{copy.directions}</h2>
-          <p className="mt-4 max-w-xl leading-relaxed">
-            {DIRECTIONS.map((id) => `${copy.labels[id]} ${scored.totals[id]}`).join(". ")}.
-          </p>
-          <p className="mt-2 text-sm text-muted">{countNote[locale as keyof typeof countNote] || countNote.en}</p>
+          <DirectionSpread
+            lang={locale}
+            ranked={scored.ranked}
+            lead={scored.lead}
+            ceiling={scored.ceiling}
+            labels={copy.labels}
+            samples={pickSamples(questions, picks, scored.ranked[0].id, 3)}
+            note={countNote[locale as keyof typeof countNote] || countNote.en}
+          />
         </>
       ) : (
         <>

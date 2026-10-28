@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Glyph } from "@/components/Glyph";
 import { Crumbs, JsonLd } from "@/components/Meta";
 import { AuthorLine } from "@/components/seo/PageParts";
+import { CONTENT_UPDATED } from "@/content/editorial";
 import { guides } from "@/content/zh-guides.mjs";
 import { guideLangs } from "@/lib/langs";
 import { SITE, pageMeta } from "@/lib/site";
@@ -138,7 +139,7 @@ export default async function ZhGuidePage({ params }: { params: Promise<{ glyph:
           description: guide.description,
           url: `${SITE.url}/zh/guides/${guide.slug}`,
           inLanguage: "zh",
-          dateModified: "2026-10-21",
+          dateModified: CONTENT_UPDATED,
           author: { "@type": "Organization", name: "笔迹测验编辑组", url: `${SITE.url}/zh/science` },
           publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
         }}

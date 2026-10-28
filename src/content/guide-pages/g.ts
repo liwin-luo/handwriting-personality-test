@@ -49,7 +49,7 @@ export const g: Guide = {
     { href: "/#q-g", label: "Try the g in the test", note: "Pick the closest of the two finishes and see what the tally does." },
     { href: "/guides/y", label: "The letter y", note: "Another descender with the same open or looped question underneath." },
     { href: "/guides/slant", label: "Handwriting slant", note: "The lean of the same downstrokes that carry the g." },
-    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "All twelve shapes on one page for side by side comparison." },
+    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "The test shapes on one page for side by side comparison." },
     { href: "/blog/graphology", label: "Graphology and the evidence", note: "What the research supports, and what it does not." },
   ],
   faqs: [
@@ -67,7 +67,7 @@ export const g: Guide = {
     },
     {
       q: "What about the two-storey printed g?",
-      a: "The printed g has an ear and a closed lower bowl. This test uses the two handwritten finishes people actually produce: an open hook and a loop.",
+      a: "The printed g has an ear and a closed lower bowl. The test includes that form, plus the open hook and the loop.",
     },
     {
       q: "What is the difference between an open g and a looped g?",

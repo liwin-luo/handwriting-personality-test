@@ -1,4 +1,4 @@
-/** Latin-script locales that reuse the 12-shape quiz. Chinese is not in this list. */
+/** Latin-script locales that reuse the 19-shape quiz. Chinese is not in this list. */
 export const localeList = [
   { code: "es", label: "Español", brand: "Test de la letra", science: "Ciencia", marks: "Trazos" },
   { code: "pt", label: "Português", brand: "Teste da letra", science: "Ciência", marks: "Traços" },

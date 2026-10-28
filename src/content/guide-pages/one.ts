@@ -47,9 +47,9 @@ export const one: Guide = {
   related: [
     { href: "/guides/seven", label: "The number 7", note: "The other digit that collides with 1 and with the letter l." },
     { href: "/guides/zero", label: "The number 0", note: "Plain and slashed zeros, and what the slash is for." },
-    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "All twelve forms, with the plain and flagged 1 side by side." },
+    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "The test shapes, with the plain and flagged 1 side by side." },
     { href: "/guides/ampersand", label: "The ampersand", note: "Plus sign, et form, and the flourish, in one guide." },
-    { href: "/#test", label: "Take the 12-shape test", note: "Eight answered questions, four totals, and one fictional label." },
+    { href: "/#test", label: "Take the 19-shape test", note: "Eight answered questions, four totals, and one fictional label." },
   ],
   faqs: [
     {

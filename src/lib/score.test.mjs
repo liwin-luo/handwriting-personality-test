@@ -32,8 +32,17 @@ function fixture(weights) {
   return weights.map((weights) => ({ options: [{ weights }] }));
 }
 
-test("twelve questions, files exist, option ids unique", () => {
-  assert.equal(questions.length, 12);
+function picksBy(pairs) {
+  const picks = questions.map(() => null);
+  for (const [questionId, optionId] of pairs) {
+    const questionIndex = questions.findIndex((question) => question.id === questionId);
+    picks[questionIndex] = questions[questionIndex].options.findIndex((option) => option.id === optionId);
+  }
+  return picks;
+}
+
+test("nineteen questions, files exist, option ids unique", () => {
+  assert.equal(questions.length, 19);
   const ids = new Set();
   for (const question of questions) {
     assert.ok(question.options.length >= 2);
@@ -42,6 +51,7 @@ test("twelve questions, files exist, option ids unique", () => {
       ids.add(option.id);
       for (const key of ["structure", "finish", "rhythm", "character"]) {
         assert.equal(Number.isInteger(option.weights[key]), true);
+        assert.ok(option.weights[key] <= 2, option.id);
       }
       assert.ok(fs.existsSync(new URL(`../../public/samples/${option.file}`, import.meta.url)));
     }
@@ -94,11 +104,25 @@ test("all first options lock to Everyday Minimalist", () => {
   const scored = scoreAnswers(questions, picks);
   assert.equal(scored.ok, true);
   assert.equal(scored.profile, "everyday-minimalist");
-  assert.deepEqual(scored.totals, { structure: 3, finish: 15, rhythm: 8, character: 7 });
+  assert.deepEqual(scored.totals, { structure: 3, finish: 29, rhythm: 8, character: 7 });
+  assert.ok(scored.lead > scored.ceiling);
 });
 
 test("closed and upright choices lock to Quiet Architect", () => {
-  const picks = [1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1];
+  const picks = picksBy([
+    ["four", "closed-four"],
+    ["seven", "crossed-seven"],
+    ["a", "double-storey-a"],
+    ["g", "open-g"],
+    ["zero", "slashed-zero"],
+    ["one", "serif-one"],
+    ["t", "mid-t"],
+    ["i", "dotted-i-close"],
+    ["y", "straight-y"],
+    ["ampersand", "traditional-ampersand"],
+    ["spacing", "spacing-even"],
+    ["slant", "slant-upright"],
+  ]);
   const scored = scoreAnswers(questions, picks);
   assert.equal(scored.profile, "quiet-architect");
   assert.deepEqual(scored.totals, { structure: 18, finish: 10, rhythm: 1, character: 3 });
@@ -149,8 +173,8 @@ test("flourish and rhythm as the top pair is Daydream Doodler", () => {
   assert.equal(scored.profile, "daydream-doodler");
 });
 
-test("a two-point lead beats the daydream pair", () => {
-  const questions = fixture([
+test("a lead no bigger than one answer stays mixed", () => {
+  const bank = fixture([
     w(0, 0, 0, 2),
     w(0, 0, 0, 2),
     w(0, 0, 1, 0),
@@ -160,17 +184,41 @@ test("a two-point lead beats the daydream pair", () => {
     w(0, 0, 0, 0),
     w(0, 0, 0, 0),
   ]);
-  assert.equal(scoreAnswers(questions, questions.map(() => 0)).profile, "beautiful-rebel");
+  assert.equal(scoreAnswers(bank, bank.map(() => 0)).profile, "daydream-doodler");
 });
 
-test("codes round-trip and reject a bad option", () => {
-  const picks = [1, 0, null, 1, 1, 0, 2, 0, 1, 2, null, 0];
+test("a lead past one answer names the direction", () => {
+  const bank = fixture([
+    w(0, 0, 0, 3),
+    w(0, 0, 0, 3),
+    w(0, 0, 1, 0),
+    w(0, 0, 1, 0),
+    w(0, 0, 0, 0),
+    w(0, 0, 0, 0),
+    w(0, 0, 0, 0),
+    w(0, 0, 0, 0),
+  ]);
+  const scored = scoreAnswers(bank, bank.map(() => 0));
+  assert.equal(scored.profile, "beautiful-rebel");
+  assert.ok(scored.lead > scored.ceiling);
+});
+
+test("codes round-trip and old english links still open", () => {
+  const picks = questions.map(() => 0);
+  picks[2] = null;
   const code = encodeAnswers(picks);
-  assert.equal(code, "110-1102012-0");
+  assert.equal(code[0], "2");
+  assert.equal(code.length, questions.length + 1);
   assert.deepEqual(decodeAnswers(code, questions), picks);
-  assert.equal(decodeAnswers("12" + "0".repeat(11), questions), null);
+  assert.equal(decodeAnswers("19" + "0".repeat(11), questions), null);
   assert.equal(decodeAnswers("nope", questions), null);
+  const v1 = "110-1102012-0";
+  const old = decodeAnswers(v1, questions);
+  assert.equal(old[questions.findIndex((question) => question.id === "four")], 1);
+  assert.equal(old[questions.findIndex((question) => question.id === "two")], null);
+  assert.equal(old.filter((pick) => pick != null).length, 10);
   assert.equal(codeFromInput(`https://handwritingpersonalitytest.online/r/${code}`, questions), code);
+  assert.equal(codeFromInput(`https://handwritingpersonalitytest.online/r/${v1}`, questions), v1);
   assert.equal(codeFromInput(code, questions), code);
   assert.equal(codeFromInput("https://handwritingpersonalitytest.online/r/1nope", questions), null);
 });
@@ -502,7 +550,11 @@ test("the card line keeps question order and stops at six", () => {
 });
 
 test("sample picks prefer the winning direction and skip blanks", () => {
-  const picks = [1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1];
+  const picks = picksBy([
+    ["four", "closed-four"],
+    ["seven", "crossed-seven"],
+    ["zero", "slashed-zero"],
+  ]);
   const samples = pickSamples(questions, picks, "structure", 3);
   assert.equal(samples.length, 3);
   assert.ok(samples.every((sample) => sample.weight >= 1));

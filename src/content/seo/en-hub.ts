@@ -4,12 +4,12 @@ export const toolsHub: HubContent = {
   path: "/tools",
   title: "Handwriting Tools",
   h1: "Handwriting tools",
-  meta: "Four free handwriting tools: a 12-shape personality test, a photo slant measure, a signature measurement canvas, and a printable sample chart. No upload.",
+  meta: "Four free handwriting tools: a 19-shape personality test, a photo slant measure, a signature measurement canvas, and a printable sample chart. No upload.",
   kicker: "Free · browser-based · no upload",
   lede: "A small set of tools for looking closely at handwriting. One turns shapes into a fictional label. The others measure a line, a signature, or a chart without making a claim about character.",
   intro: [
     "Most handwriting sites start with a personality verdict and work backwards. This set starts with what can actually be seen on a page: which form of a letter is used, how far a downstroke leans, how wide a signature is, and which shapes are being compared. The tools make those observations repeatable. They do not turn them into a diagnosis.",
-    "The main test is a 12-question shape quiz with six fictional labels. The slant and signature tools measure geometry. The sample chart is a printable reference for the shapes used in the test. They share a design rule: the output should be something you can check, and the page should say what the output does not mean.",
+    "The main test is a 19-question shape quiz with six fictional labels. The slant and signature tools measure geometry. The sample chart is a printable reference for the shapes used in the test. They share a design rule: the output should be something you can check, and the page should say what the output does not mean.",
     "Each tool is built so that you can check it. A result page prints the four totals behind the label. The slant tool shows the reference line you aligned to and the angle it read. The signature canvas draws the path it measured and lists the numbers it counted.",
     "The reference material sits next to the tools on purpose. Twelve guides explain one shape each, and the articles set out what the research supports and what it does not. A measurement is more useful when you know where the form came from, and every guide says plainly what the shape cannot tell you.",
     "If you are new, take the test first. If you came for a specific measurement, use the slant or signature tool directly. If you want to see every shape before choosing, open the chart.",
@@ -23,7 +23,7 @@ export const toolsHub: HubContent = {
         {
           href: "/",
           label: "Handwriting personality test",
-          note: "12 questions on digits, letters, the ampersand, spacing, and slant. Six fictional labels. No handwriting sample needed.",
+          note: "19 questions on digits, letters, the ampersand, size, spacing, joins, and slant. Six fictional labels. No handwriting sample needed.",
           action: "Take the test",
         },
       ],
@@ -143,7 +143,7 @@ export const toolsHub: HubContent = {
         {
           href: "/methodology",
           label: "How this test is built",
-          note: "The scoring rule, the twelve questions, and the weights.",
+          note: "The scoring rule, the nineteen questions, and the weights.",
           action: "Read the method",
         },
         {
@@ -157,8 +157,8 @@ export const toolsHub: HubContent = {
   ],
   chooseTitle: "Which tool should I use?",
   chooseSteps: [
-    "Start from what you want to end up with. A label you can share comes from the 12-shape test. A number you can check comes from the slant or signature tool.",
-    "If you want a result from the shapes you write, take the 12-shape test. Eight answers produce a result, and the four totals behind the label are printed on the page.",
+    "Start from what you want to end up with. A label you can share comes from the 19-shape test. A number you can check comes from the slant or signature tool.",
+    "If you want a result from the shapes you write, take the 19-shape test. Eight answers produce a result, and the four totals behind the label are printed on the page.",
     "If you want to know how far a real downstroke leans, use the slant tool with a photo of ordinary writing. Align a stem against the reference line and read the angle in degrees.",
     "If you want to describe the shape of a signature, use the signature canvas. It reports width, height, path length, turns, and an approximate slant for a drawing you make on it.",
     "If you want the vocabulary before you answer anything, open the sample chart. It shows every form the quiz uses, with filters, search, and a print layout.",
@@ -172,7 +172,7 @@ export const toolsHub: HubContent = {
     { label: "Method", value: "The scoring rule, the 8-degree upright band, and the signature readout are explained on the page and on the methodology page." },
     { label: "Checkable output", value: "A result prints the four totals behind it, the slant tool shows the reference line, and the canvas lists every number it counted." },
     { label: "Open source of the rules", value: "The questions, the weights, and the scoring rule are written out in plain language, so a result can be checked by hand." },
-    { label: "Last updated", value: "21 October 2026" },
+    { label: "Last updated", value: "28 October 2026" },
     { label: "Author", value: "Handwriting Personality Test editorial team" },
   ],
   faqsTitle: "Questions",
@@ -187,7 +187,7 @@ export const toolsHub: HubContent = {
     },
     {
       q: "Which tool is the handwriting personality test?",
-      a: "The 12-shape test on the home page. It asks about digits, letters, the ampersand, spacing, and slant, then returns one of six fictional labels after eight answers, along with the four totals behind it.",
+      a: "The 19-shape test on the home page. It asks about digits, letters, the ampersand, spacing, and slant, then returns one of six fictional labels after eight answers, along with the four totals behind it.",
     },
     {
       q: "Do the tools diagnose personality?",
@@ -218,8 +218,8 @@ export const toolsHub: HubContent = {
       a: "Read the methodology page for the scoring and the shape choices, the science page for the evidence on graphology, the guides for individual letterforms, and the articles for the longer argument.",
     },
   ],
-  ctaLabel: "Take the 12-shape test",
+  ctaLabel: "Take the 19-shape test",
   ctaHref: "/#test",
   ctaNote: "Eight answers are enough for a result. The test is free, needs no account, and never asks for a handwriting sample.",
-  updatedLabel: "Last updated 21 October 2026",
+  updatedLabel: "Last updated 28 October 2026",
 };

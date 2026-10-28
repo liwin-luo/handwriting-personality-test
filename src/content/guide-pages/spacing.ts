@@ -47,7 +47,7 @@ export const spacing: Guide = {
   ],
   related: [
     { href: "/guides/slant", label: "Handwriting slant", note: "The lean of the stems, and why the angle belongs to the page." },
-    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "See all twelve forms, including the three spacing examples." },
+    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "The test shapes, including the three spacing examples." },
     { href: "/guides/one", label: "How to write the number 1", note: "A digit with a flag and a foot, and what the extra marks do." },
     { href: "/guides/signature-size", label: "Signature size guide", note: "How large a signature usually is, and what size can show." },
     { href: "/methodology", label: "How this site is built", note: "The rules behind the questions, the scoring, and the labels." },

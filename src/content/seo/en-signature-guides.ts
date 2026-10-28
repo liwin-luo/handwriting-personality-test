@@ -8,7 +8,7 @@ export const signatureSizeGuide: ArticleContent = {
   kicker: "Signature guide",
   lede: "A signature can be measured, but its size is not a personality score. The useful questions are what was measured, on what surface, and under what constraint.",
   published: "2026-10-21",
-  updated: "2026-10-21",
+  updated: "2026-10-28",
   intro: [
     "Signature size is one of the most repeated claims in popular handwriting analysis. A large signature is said to show confidence; a small one, modesty; an expanding one, ambition. The claims are memorable, and they are rarely tested against the conditions that produce the size in the first place.",
     "This guide separates three things: the physical size of ink on paper, the size of a drawing in a browser box, and the social meaning people attach to a signature. The first can be measured. The second can be measured relative to the box. The third is an interpretation, and it needs evidence beyond a single mark.",
@@ -129,7 +129,7 @@ export const signatureSizeGuide: ArticleContent = {
   relatedTools: [
     { href: "/tools/signature", label: "Measure a signature", note: "Width, height, length, turns, and approximate slant." },
     { href: "/tools/slant", label: "Measure slant from a photo", note: "A separate angle tool for ink on paper." },
-    { href: "/tools/sample-chart", label: "See the shape chart", note: "The forms used in the 12-shape test." },
+    { href: "/tools/sample-chart", label: "See the shape chart", note: "The forms used in the 19-shape test." },
   ],
   relatedGuides: [
     { href: "/guides/signature-writing", label: "Signature and the writing around it" },
@@ -150,7 +150,7 @@ export const signatureWritingGuide: ArticleContent = {
   kicker: "Signature guide",
   lede: "A signature is a practiced mark. The lines above it are the writing. They are allowed to disagree, and the disagreement is usually about practice, not personality.",
   published: "2026-10-21",
-  updated: "2026-10-21",
+  updated: "2026-10-28",
   intro: [
     "People often assume that a signature is the purest sample of handwriting. It is the opposite. A signature is the most practiced mark most people make. It is repeated hundreds of times, compressed into a gesture, and often designed to be recognizable rather than legible. The notes above it are closer to everyday writing.",
     "That difference matters for any test that asks you to pick letterforms. If you use a signature as your sample, you are sampling a performance. This guide explains why signatures differ from ordinary writing, what the difference does and does not mean, and how to choose a better sample.",
@@ -264,7 +264,7 @@ export const signatureWritingGuide: ArticleContent = {
   relatedTools: [
     { href: "/tools/signature", label: "Measure a signature", note: "Width, height, length, turns, and approximate slant." },
     { href: "/tools/slant", label: "Measure slant from a photo", note: "A separate tool for ink on paper." },
-    { href: "/", label: "Take the 12-shape test", note: "Use ordinary writing, not a signature." },
+    { href: "/", label: "Take the 19-shape test", note: "Use ordinary writing, not a signature." },
   ],
   relatedGuides: [
     { href: "/guides/signature-size", label: "How big a signature is" },

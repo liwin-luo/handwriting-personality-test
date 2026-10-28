@@ -3,9 +3,9 @@ import type { ToolSeoContent } from "@/content/seo/types";
 export const homeTool: ToolSeoContent = {
   slug: "home",
   path: "/",
-  title: "Handwriting Personality Test: Free 12-Shape Quiz",
+  title: "Handwriting Personality Test: Free 19-Shape Quiz",
   h1: "Handwriting Personality Test",
-  meta: "A free handwriting personality test built from 12 shapes. Pick what you actually write, answer eight questions, and get a fictional label. No upload.",
+  meta: "A free handwriting personality test built from 19 shapes. Pick what you actually write, answer eight questions, and get a fictional label. No upload.",
   kicker: "Free · no upload · 8 answers",
   lede: "Pick the shapes closest to your own handwriting. Eight answers are enough. The name you get is a filing label for those shapes, not a diagnosis, a score, or a prediction about your life.",
   outputsTitle: "What you get",
@@ -38,9 +38,9 @@ export const homeTool: ToolSeoContent = {
     },
     {
       id: "the-12-questions",
-      h2: "The 12 questions",
+      h2: "The 19 questions",
       paragraphs: [
-        "The test covers digits, lowercase letters, the ampersand, word spacing, and slant. The digit questions ask about 4, 7, 0, and 1. The letter questions ask about a, g, t, i, and y. The symbol question asks about the ampersand. The final two ask about the gap between words and the lean of a downstroke.",
+        "The test covers digits, letters, the ampersand, letter size, word spacing, joins, and slant. The digits are 4, 7, 2, 5, 8, 9, 0, and 1. The letters are a, g, capital G, t, i, and y. The scene is an ordinary note, not a signature.",
         "The forms were chosen because they vary visibly between school systems and because people can usually recognize their own version without special equipment. A closed 4 and an open 4 are easy to tell apart. A looped g and an open g are easy to tell apart. The point is recognition, not hidden meaning.",
         "Each option carries weights for four directions. A closed, compact form tends to add to structure. A form that stops early or omits a mark tends to add to finish. A wide gap or a high, airy mark tends to add to rhythm. A flourish or an unconventional mark tends to add to character. Those weights are a design choice, not a measured psychological scale.",
       ],
@@ -49,8 +49,8 @@ export const homeTool: ToolSeoContent = {
       id: "how-scoring-works",
       h2: "How scoring works",
       paragraphs: [
-        "The test adds the weights of the options you chose. It then ranks the four direction totals. A direction must lead the second-place direction by at least two points to name a single-direction result. If no direction has that lead, the test checks whether character and rhythm are the top pair. If they are, the result is Daydream Doodler; otherwise it is Instinctive Mixer.",
-        "The two-point threshold is a fixed rule, not a statistically calibrated cutoff. It exists to stop a one-point difference from looking like a clear winner. With 12 questions and a small set of weights, a single answer can move a total by two points, so the threshold is modest. The result page shows the totals so you can judge how close the call was.",
+        "The test adds the weights of the options you chose. It then ranks the four direction totals and shows second place. A direction must lead by more than one answer to name a single-direction result. If no direction has that lead, the test checks whether character and rhythm are the top pair. If they are, the result is Daydream Doodler; otherwise it is Instinctive Mixer.",
+        "The threshold is the most one option can add to one direction, not a statistically calibrated cutoff. It exists so one tap cannot name the result. The result page shows the ranked points, the margin, and the three strokes that built the lead.",
         "The four directions are descriptive buckets: structure, finish, rhythm, and character. They are not validated factors of personality. Two people with the same label may share a few shape choices and differ in almost everything else. That is expected, because the input is a set of letterforms, not a life.",
       ],
     },
@@ -59,7 +59,7 @@ export const homeTool: ToolSeoContent = {
       h2: "The six labels",
       paragraphs: [
         "Quiet Architect is the structure-led label: you close the shapes that can be closed. Everyday Minimalist is finish-led: you stop the stroke once the letter is readable. Margin Storyteller is rhythm-led: gaps and lean set the pace of the line. Beautiful Rebel is character-led: you keep a mark the basic copybook leaves out.",
-        "Daydream Doodler is the pair result when flourish and rhythm are the top two directions. Instinctive Mixer is the result when no single direction leads by two points and the top pair is something else. The names are deliberately playful. They are labels for a set of shapes, not categories of people.",
+        "Daydream Doodler is the pair result when flourish and rhythm are the top two directions. Instinctive Mixer is the result when no single direction leads by more than one answer and the top pair is something else. The names are deliberately playful. They are labels for a set of shapes, not categories of people.",
         "Each label has a result page with a short description, a set of example shapes, and links to the relevant guides. You can open a label page without taking the test. The page does not claim that the label describes you; it explains the filing category.",
       ],
     },
@@ -93,15 +93,15 @@ export const homeTool: ToolSeoContent = {
   ],
   sampleTitle: "A real sample result",
   sampleIntro:
-    "This is a real result link generated by the same code as the quiz, not a mock-up. The sample used 11 answers and landed on Quiet Architect, the structure-led label. Open it to see the four direction totals and the shapes behind the result.",
+    "This is a real result link generated by the same code as the quiz, not a mock-up. The sample answers the original twelve shapes. Structure is first and Endings is second, two apart, so the name stays Instinctive Mixer.",
   sampleBullets: [
-    "11 of 12 questions answered.",
-    "Structure led the other directions by at least two points.",
+    "12 of 19 questions answered.",
+    "Structure is first and Endings is second, 2 apart.",
     "The result names a set of shapes, not a person.",
     "The link contains the answers and can be opened without an account.",
   ],
   sampleResultHref: "/r/1000010111111",
-  sampleResultLabel: "Open the Quiet Architect sample result",
+  sampleResultLabel: "Open the Instinctive Mixer sample result",
   useCasesTitle: "What the test is good for",
   useCases: [
     {
@@ -125,7 +125,7 @@ export const homeTool: ToolSeoContent = {
   faqs: [
     {
       q: "What is the handwriting personality test?",
-      a: "It is a free 12-question quiz that asks you to choose the handwritten forms closest to your own. It counts four visual directions and returns one of six fictional labels.",
+      a: "It is a free 19-question quiz that asks you to choose the handwritten forms closest to your own. It counts four visual directions and returns one of six fictional labels.",
     },
     {
       q: "How many questions do I need to answer?",
@@ -141,7 +141,7 @@ export const homeTool: ToolSeoContent = {
     },
     {
       q: "How is the result calculated?",
-      a: "Each answer adds points to four directions: structure, finish, rhythm, and character. A direction must lead by at least two points to name a single-direction label. If no direction leads, the top pair determines one of two mixed labels.",
+      a: "Each answer adds points to four directions: structure, finish, rhythm, and character. A direction must lead by more than one answer to name a single-direction label. If no direction leads, the top pair determines one of two mixed labels.",
     },
     {
       q: "Can I retake the test?",
@@ -149,7 +149,7 @@ export const homeTool: ToolSeoContent = {
     },
     {
       q: "Why did I get a different label the second time?",
-      a: "A single answer can move a direction total by two points, and the threshold is two points. Small changes can change the label. The totals show how close the call was.",
+      a: "A single answer can add two points, and the name needs a bigger lead than that. Small changes can change the label. The totals show how close the call was.",
     },
     {
       q: "Does the test work on a phone?",
@@ -157,7 +157,7 @@ export const homeTool: ToolSeoContent = {
     },
     {
       q: "Is there a Chinese version?",
-      a: "Yes. The Chinese test at /zh uses five questions about hard-pen writing: size, character spacing, line spacing, connections, and the horizontal stroke. It is not a translation of the 12 Latin-shape questions.",
+      a: "Yes. The Chinese test at /zh uses five questions about hard-pen writing: size, character spacing, line spacing, connections, and the horizontal stroke. It is not a translation of the 19 Latin-shape questions.",
     },
     {
       q: "Can I use the result in a research paper?",
@@ -165,14 +165,14 @@ export const homeTool: ToolSeoContent = {
     },
     {
       q: "Who made the test?",
-      a: "It is maintained by the site's editorial team. The methodology page explains the scoring rule, the shape selection, and the limits. The content was last updated on 21 October 2026.",
+      a: "It is maintained by the site's editorial team. The methodology page explains the scoring rule, the shape selection, and the limits. The content was last updated on 28 October 2026.",
     },
   ],
   relatedTitle: "Related tools and guides",
   relatedTools: [
     { href: "/tools/slant", label: "Slant measurement tool", note: "Measure one downstroke from a local photo." },
     { href: "/tools/signature", label: "Signature measurement tool", note: "Measure the geometry of a drawn signature." },
-    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "See and print all 12 shapes in one place." },
+    { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "See and print all 19 shapes in one place." },
   ],
   relatedGuides: [
     { href: "/guides", label: "All handwriting guides" },
@@ -186,10 +186,10 @@ export const homeTool: ToolSeoContent = {
   ctaNote: "Eight answers produce a result. The test is free, needs no account, and does not ask for a handwriting sample.",
   schemaName: "Handwriting Personality Test",
   schemaDescription:
-    "A free 12-question handwriting shape quiz that returns one of six fictional labels, with no upload and no account.",
+    "A free 19-question handwriting shape quiz that returns one of six fictional labels, with no upload and no account.",
   applicationCategory: "LifestyleApplication",
   featureList: [
-    "12 handwriting shape questions",
+    "19 handwriting shape questions",
     "Result after 8 answers",
     "Four direction totals",
     "Six fictional labels",

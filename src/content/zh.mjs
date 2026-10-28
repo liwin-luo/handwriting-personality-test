@@ -116,7 +116,7 @@ export const profiles = [
   {
     slug: "daydream-doodler",
     name: "连笔和行距一起出现",
-    sentence: "连笔和页面节奏都靠前，谁也没拉开两分。",
+    sentence: "连笔和页面节奏都靠前，谁也没超过一题的领先。",
     direction: null,
     guides: ["a", "g"],
     examples: ["zh-link-many.svg", "zh-line-wide.svg", "zh-bar-wavy.svg"],

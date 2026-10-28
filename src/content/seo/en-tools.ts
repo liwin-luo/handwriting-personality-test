@@ -15,7 +15,7 @@ export const slantTool: ToolSeoContent = {
     "The 8-degree band this site treats as upright, stated on the page rather than hidden.",
     "A local photo preview that stays in your browser and disappears when the tab closes.",
     "A short method you can repeat on another page or with another pen.",
-    "A link into the 12-shape test if you want the site's fictional label as well.",
+    "A link into the 19-shape test if you want the site's fictional label as well.",
   ],
   howToTitle: "How to measure slant",
   howToSteps: [
@@ -176,7 +176,7 @@ export const slantTool: ToolSeoContent = {
   ],
   relatedTitle: "Related tools and guides",
   relatedTools: [
-    { href: "/", label: "Handwriting personality test", note: "The 12-shape quiz and its fictional labels." },
+    { href: "/", label: "Handwriting personality test", note: "The 19-shape quiz and its fictional labels." },
     { href: "/tools/signature", label: "Signature measurement tool", note: "Width, height, length, turns, and slant from a drawn signature." },
     { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "See and print every shape used in the test." },
   ],
@@ -187,9 +187,9 @@ export const slantTool: ToolSeoContent = {
     { href: "/blog/how-to-measure-handwriting-slant", label: "How to measure handwriting slant" },
     { href: "/science", label: "What handwriting analysis can prove" },
   ],
-  ctaLabel: "Take the 12-shape test",
+  ctaLabel: "Take the 19-shape test",
   ctaHref: "/#test",
-  ctaNote: "The test uses a left, upright, or right sample as one of its 12 questions. It returns a fictional label, not a personality diagnosis.",
+  ctaNote: "The test uses a left, upright, or right sample as one of its 19 questions. It returns a fictional label, not a personality diagnosis.",
   schemaName: "Handwriting Slant Measurement Tool",
   schemaDescription:
     "A free browser tool that measures the angle of one handwriting downstroke from a local photo and reports left, upright, or right of vertical.",
@@ -368,7 +368,7 @@ export const signatureTool: ToolSeoContent = {
   ],
   relatedTitle: "Related tools and guides",
   relatedTools: [
-    { href: "/", label: "Handwriting personality test", note: "The 12-shape quiz and its fictional labels." },
+    { href: "/", label: "Handwriting personality test", note: "The 19-shape quiz and its fictional labels." },
     { href: "/tools/slant", label: "Slant measurement tool", note: "Measure one downstroke from a local photo." },
     { href: "/tools/sample-chart", label: "Handwriting sample chart", note: "See and print every shape used in the test." },
   ],
@@ -381,7 +381,7 @@ export const signatureTool: ToolSeoContent = {
   ],
   ctaLabel: "Try the handwriting test",
   ctaHref: "/#test",
-  ctaNote: "The test is a separate tool. It asks about 12 shapes and returns a fictional label; it does not use your signature measurement.",
+  ctaNote: "The test is a separate tool. It asks about 19 shapes and returns a fictional label; it does not use your signature measurement.",
   schemaName: "Signature Measurement Tool",
   schemaDescription:
     "A free browser canvas that measures the width, height, length, turns, and approximate slant of a drawn signature without uploading it.",
@@ -403,7 +403,7 @@ export const sampleChartTool: ToolSeoContent = {
   h1: "Handwriting sample chart",
   meta: "See every shape in the handwriting personality test: open and closed 4, crossed 7, single- and double-storey a, looped g, and slashed 0. Print the chart.",
   kicker: "Free tool · printable",
-  lede: "A chart of the shapes used in the 12-question test. Compare your own writing, filter by digits, letters, symbols, spacing, or slant, and print a clean copy. No upload and no account.",
+  lede: "A chart of the shapes used in the 19-question test. Compare your own writing, filter by digits, letters, symbols, spacing, or slant, and print a clean copy. No upload and no account.",
   outputsTitle: "What you get",
   outputs: [
     "Every shape used in the test, shown as a clean line drawing rather than a stock photo.",
@@ -429,7 +429,7 @@ export const sampleChartTool: ToolSeoContent = {
       paragraphs: [
         "This is a reference sheet for the shapes the test asks about. It is not a ranked list of good and bad handwriting, and it is not a personality chart. Each row shows a form you might write and gives it a name so you can compare it with your own page.",
         "The drawings are deliberately simple. A real handwritten 4 may have a curved stem, a short crossbar, or a diagonal that stops halfway. The chart shows one clean version of the open and closed forms so the difference is visible. Your writing does not have to match the drawing exactly; the question is which form is closer.",
-        "The chart covers digits (4, 7, 0, 1), letters (a, g, t, i, y), a symbol (the ampersand), word spacing, and slant. Those are the 12 questions in the English test. The Chinese test uses a different set of five questions and has its own chart.",
+        "The chart covers the forms in the English test: digits, letters, the ampersand, letter size, word spacing, joins, and slant. The Chinese test uses a different set of five questions and has its own chart.",
       ],
     },
     {
@@ -488,8 +488,8 @@ export const sampleChartTool: ToolSeoContent = {
   sampleIntro:
     "The chart is a reference, but the quiz produces a result. This sample used 8 answers and landed on Everyday Minimalist, the label for a finish-led set of shapes. It is a real result link generated by the same code as the quiz, not a mock-up.",
   sampleBullets: [
-    "8 of 12 questions answered.",
-    "The finish direction led the other three directions by at least two points.",
+    "8 of 19 questions answered.",
+    "The finish direction leads by more than one answer.",
     "The result names a set of shapes; it does not describe a real person.",
     "Open the link to see the full result page and the four direction totals.",
   ],
@@ -526,7 +526,7 @@ export const sampleChartTool: ToolSeoContent = {
     },
     {
       q: "How many shapes are in the chart?",
-      a: "The English test uses 12 questions covering digits, letters, a symbol, word spacing, and slant. The chart shows the forms used in those questions.",
+      a: "The English test uses 19 questions covering digits, letters, a symbol, size, joins, word spacing, and slant. The chart shows the forms used in those questions.",
     },
     {
       q: "Can I print the chart?",
@@ -559,7 +559,7 @@ export const sampleChartTool: ToolSeoContent = {
   ],
   relatedTitle: "Related tools and guides",
   relatedTools: [
-    { href: "/", label: "Handwriting personality test", note: "The 12-shape quiz that uses this chart." },
+    { href: "/", label: "Handwriting personality test", note: "The 19-shape quiz that uses this chart." },
     { href: "/tools/slant", label: "Slant measurement tool", note: "Measure one downstroke from a photo." },
     { href: "/tools/signature", label: "Signature measurement tool", note: "Measure a drawn signature's geometry." },
   ],
@@ -570,15 +570,15 @@ export const sampleChartTool: ToolSeoContent = {
     { href: "/guides/slant", label: "Handwriting slant" },
     { href: "/blog/what-is-handwriting-personality-test", label: "What is a handwriting personality test?" },
   ],
-  ctaLabel: "Take the 12-shape test",
+  ctaLabel: "Take the 19-shape test",
   ctaHref: "/#test",
   ctaNote: "Pick the shapes closest to your own. Eight answers are enough to produce a fictional label; nothing is uploaded.",
   schemaName: "Handwriting Sample Chart",
   schemaDescription:
-    "A free printable reference chart of the 12 shapes used in the handwriting personality test, with filters, search, and guide links.",
+    "A free printable reference chart of the 19 shapes used in the handwriting personality test, with filters, search, and guide links.",
   applicationCategory: "ReferenceApplication",
   featureList: [
-    "All 12 test shapes in one chart",
+    "All 19 test shapes in one chart",
     "Filters for digits, letters, symbols, spacing, and slant",
     "Search by shape name",
     "Print-friendly layout",

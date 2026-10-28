@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { DirectionSpread } from "@/components/DirectionSpread";
 import { Glyph, GlyphLine } from "@/components/Glyph";
-import { DIRECTIONS } from "@/content";
 import { choiceNote, countNote, retakeLabel, shareHint, shareLabel } from "@/content/choice-notes.mjs";
 import { MIN_ZH, profiles, questions } from "@/content/zh.mjs";
-import { decodeAnswers, encodeAnswers, scoreAnswers } from "@/lib/score.mjs";
+import { decodeAnswers, encodeAnswers, pickSamples, scoreAnswers } from "@/lib/score.mjs";
 import { chosenLine, downloadShareCard, shareResult } from "@/lib/share-card.mjs";
 import { trackTool } from "@/lib/analytics.mjs";
 
@@ -97,10 +97,15 @@ export function ZhResult({ code }: { code: string }) {
           <h2 className="mt-10 page-h2">练一行</h2>
           <p className="mt-3 max-w-xl leading-relaxed">{profile.practice}</p>
           <h2 className="mt-12 page-h2">四个方向</h2>
-          <p className="mt-4 max-w-xl leading-relaxed">
-            {DIRECTIONS.map((id) => `${LABELS[id]} ${scored.totals[id]}`).join("。")}。
-          </p>
-          <p className="mt-2 text-sm text-muted">{countNote.zh}</p>
+          <DirectionSpread
+            lang="zh"
+            ranked={scored.ranked}
+            lead={scored.lead}
+            ceiling={scored.ceiling}
+            labels={LABELS}
+            samples={pickSamples(questions, picks, scored.ranked[0].id, 3)}
+            note={countNote.zh}
+          />
         </>
       ) : (
         <>

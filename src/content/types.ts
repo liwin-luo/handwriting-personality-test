@@ -12,7 +12,7 @@ export type GlyphOption = {
 
 export type QuizQuestion = {
   id: string;
-  group: "digit" | "letter" | "symbol" | "spacing" | "slant" | "han";
+  group: "digit" | "letter" | "symbol" | "spacing" | "slant" | "size" | "link" | "han";
   title: string;
   prompt: string;
   options: GlyphOption[];
@@ -30,15 +30,24 @@ export type Profile = {
   practice: string;
 };
 
+export type DirectionScore = {
+  id: Direction;
+  score: number;
+};
+
 export type ScoreResult = {
   ok: boolean;
   answered: number;
   totals: Weights;
   profile: string | null;
+  ranked: DirectionScore[];
+  lead: number;
+  ceiling: number;
 };
 
 export type SamplePick = {
   questionId: string;
+  optionId: string;
   file: string;
   alt: string;
   label: string;

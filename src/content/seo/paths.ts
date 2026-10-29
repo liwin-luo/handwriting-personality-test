@@ -5,6 +5,7 @@ export const BLOG_SLUGS = [
   "best-free-handwriting-analysis-tools",
   "how-to-measure-handwriting-slant",
   "cute-text-is-not-a-font",
+  "ai-handwriting-analysis",
 ] as const;
 
 export type BlogSlug = (typeof BLOG_SLUGS)[number];

@@ -18,6 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: post.seoTitle ?? post.title,
     description: post.meta,
     path: `/blog/${post.slug}`,
+    image: "/og/blog.png",
     langs: blogLangs(post.slug),
     openGraphType: "article",
     publishedTime: post.published,

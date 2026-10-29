@@ -165,7 +165,7 @@ export const homeTool: ToolSeoContent = {
     },
     {
       q: "Who made the test?",
-      a: "It is maintained by the site's editorial team. The methodology page explains the scoring rule, the shape selection, and the limits. The content was last updated on 28 October 2026.",
+      a: "It is maintained by the site's editorial team. The methodology page explains the scoring rule, the shape selection, and the limits. The content was last updated on 29 October 2026.",
     },
   ],
   relatedTitle: "Related tools and guides",

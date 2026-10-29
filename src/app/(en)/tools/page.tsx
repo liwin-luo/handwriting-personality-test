@@ -7,6 +7,7 @@ export const metadata = pageMeta({
   title: toolsHub.title,
   description: toolsHub.meta,
   path: "/tools",
+  image: "/og/tools.png",
   langs: toolLangs("/tools"),
 });
 

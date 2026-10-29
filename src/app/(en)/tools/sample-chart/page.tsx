@@ -1,4 +1,5 @@
 import { Chart } from "@/components/Chart";
+import { ChartClaims } from "@/components/ChartClaims";
 import { ToolPageView } from "@/components/seo/PageParts";
 import { questions } from "@/content";
 import { guides } from "@/content/guides";
@@ -14,6 +15,7 @@ export const metadata = pageMeta({
   title: sampleChartTool.title,
   description: sampleChartTool.meta,
   path: "/tools/sample-chart",
+  image: "/og/chart.png",
   langs: toolLangs("/tools/sample-chart"),
 });
 
@@ -26,7 +28,14 @@ export default function SampleChartPage() {
         { href: "/tools", label: "Tools" },
         { label: "Sample chart" },
       ]}
+      extra={<ChartClaims />}
     >
+      <p className="no-print flex flex-wrap gap-x-5 gap-y-2 text-sm">
+        <a className="text-link" href="/handwriting-analysis-chart.pdf" download>
+          Download the PDF
+        </a>
+        <span className="text-muted">Print-ready. Every shape, and the trait claims checked against them.</span>
+      </p>
       <Chart
         items={chartItems({ questions, guides, testBase: "/", guideBase: "/guides" })}
         copy={copy}

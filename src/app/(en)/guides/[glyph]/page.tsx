@@ -25,6 +25,7 @@ export async function generateMetadata({
     title: guide.seoTitle ?? guide.title,
     description: guide.description,
     path: `/guides/${guide.slug}`,
+    image: "/og/guides.png",
     langs: guideLangs(guide.slug),
   });
 }

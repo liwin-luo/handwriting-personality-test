@@ -11,6 +11,7 @@ export const metadata = pageMeta({
   title: slantTool.title,
   description: slantTool.meta,
   path: "/tools/slant",
+  image: "/og/tools.png",
   langs: toolLangs("/tools/slant"),
 });
 

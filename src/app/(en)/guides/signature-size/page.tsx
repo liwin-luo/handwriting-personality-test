@@ -7,6 +7,7 @@ export const metadata = pageMeta({
   title: signatureSizeGuide.title,
   description: signatureSizeGuide.meta,
   path: "/guides/signature-size",
+  image: "/og/guides.png",
   langs: guideLangs("signature-size"),
   openGraphType: "article",
   publishedTime: signatureSizeGuide.published,

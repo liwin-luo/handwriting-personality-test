@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ code: str
       : "A handwriting personality test result link.",
     path: `/r/${code}`,
     index: false,
+    image: profile ? `/og/labels/label-${profile.slug}.png` : undefined,
   });
 }
 

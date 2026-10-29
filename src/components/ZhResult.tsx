@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DirectionSpread } from "@/components/DirectionSpread";
-import { Glyph, GlyphLine } from "@/components/Glyph";
+import { Glyph } from "@/components/Glyph";
 import { choiceNote, countNote, retakeLabel, shareHint, shareLabel } from "@/content/choice-notes.mjs";
 import { MIN_ZH, profiles, questions } from "@/content/zh.mjs";
 import { decodeAnswers, encodeAnswers, pickSamples, scoreAnswers } from "@/lib/score.mjs";
@@ -47,13 +47,35 @@ export function ZhResult({ code }: { code: string }) {
           <p className="mt-4 text-xl leading-snug">{profile.sentence}</p>
           <p className="mt-6 max-w-xl text-lg leading-snug">{profile.aside}</p>
           <p className="mt-3 max-w-xl text-sm text-muted">这是写法的名称，不是性格、健康、诚实或能力。</p>
-          <div className="notebook mt-8 max-w-sm p-6">
-            <p className="text-xs text-muted">笔迹测验</p>
+          <div className="notebook mt-8 max-w-sm p-5">
+            <span className="inline-block rounded-full border-[3px] border-ink bg-seal px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow-[3px_3px_0_var(--ink)]">
+              笔迹测验
+            </span>
             <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
-            <div className="mt-4 h-0.5 w-8 bg-seal" />
-            <p className="mt-4 text-lg leading-snug">{profile.sentence}</p>
-            <GlyphLine samples={samples} />
-            <p className="mt-4 text-[11px] text-muted">handwritingpersonalitytest.online</p>
+            <div className="mt-3 h-2 w-16 rounded-full bg-seal" />
+            <p className="mt-3 text-base leading-snug">{profile.sentence}</p>
+            <p className="mt-4 text-[9px] font-extrabold uppercase tracking-[0.16em] text-muted">四个方向</p>
+            <div className="mt-1.5 grid grid-cols-4 gap-2">
+              {scored.ranked.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex flex-col justify-between rounded-xl border-2 border-ink bg-white px-1 py-1.5 text-center"
+                >
+                  <span className="block min-h-[2.1em] text-[8px] font-extrabold leading-[1.05] text-muted">
+                    {LABELS[item.id]}
+                  </span>
+                  <span className="mt-1 block font-display text-lg leading-none">{item.score}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 grid grid-cols-6 gap-1.5">
+              {samples.map((sample) => (
+                <div key={sample.id} className="rounded-lg border-2 border-ink bg-white p-1">
+                  <Glyph file={sample.file} alt={sample.alt} />
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-[10px] font-extrabold text-muted">handwritingpersonalitytest.online</p>
           </div>
           <div className="no-print mt-4 flex flex-wrap gap-3">
             <button
@@ -81,7 +103,11 @@ export function ZhResult({ code }: { code: string }) {
                     name: profile.name,
                     sentence: profile.sentence,
                     files: samples.map((sample) => sample.file),
+                    labels: LABELS,
+                    ranked: scored.ranked,
+                    tallyLabel: "四个方向",
                     filename: `${profile.slug}.png`,
+                    lang: "zh",
                   });
                 } catch {
                   setCardError("卡片没存下来。改用复制链接。");

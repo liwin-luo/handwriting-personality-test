@@ -7,6 +7,7 @@ export const metadata = pageMeta({
   title: signatureWritingGuide.title,
   description: signatureWritingGuide.meta,
   path: "/guides/signature-writing",
+  image: "/og/guides.png",
   langs: guideLangs("signature-writing"),
   openGraphType: "article",
   publishedTime: signatureWritingGuide.published,

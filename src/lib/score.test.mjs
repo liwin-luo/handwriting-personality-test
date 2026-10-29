@@ -377,11 +377,14 @@ test("language banner speaks the page language and names the one on offer", () =
 test("browser language suggests a page we have, and stays quiet when it already matches", () => {
   assert.equal(preferredLanguage(["zh-CN", "en-US"], "en"), "zh");
   assert.equal(preferredLanguage(["zh-CN", "en-US"], "zh"), null);
-  assert.equal(preferredLanguage(["pt-BR"], "en"), null);
-  assert.equal(preferredLanguage(["ja", "fr-FR"], "en"), null);
+  assert.equal(preferredLanguage(["pt-BR"], "en"), "pt");
+  assert.equal(preferredLanguage(["pt-BR"], "pt"), null);
+  assert.equal(preferredLanguage(["ja", "fr-FR"], "en"), "fr");
   assert.equal(preferredLanguage(["ja"], "en"), null);
   assert.equal(preferredLanguage(["en-US", "zh-CN"], "zh"), "en");
-  assert.equal(preferredLanguage(["fr-FR", "zh-CN"], "en"), "zh");
+  assert.equal(preferredLanguage(["fr-FR", "zh-CN"], "en"), "fr");
+  assert.equal(preferredLanguage(["in-ID"], "en"), "id");
+  assert.equal(preferredLanguage(["tr-TR"], "de"), "tr");
 });
 
 test("chart, slant, and signature exist in every language", () => {

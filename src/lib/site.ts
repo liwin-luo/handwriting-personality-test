@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { fitDescription } from "@/lib/description.mjs";
-import { CONTENT_UPDATED, EDITORIAL, RETIRED_LOCALES } from "@/content/editorial";
+import { CONTENT_UPDATED, EDITORIAL, LOCALE_CODES } from "@/content/editorial";
 
 export const SITE = {
   name: "Handwriting Personality Test",
@@ -8,19 +8,25 @@ export const SITE = {
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@handwritingpersonalitytest.online",
 };
 
-const retired = new Set<string>(RETIRED_LOCALES);
+const locales = new Set<string>(LOCALE_CODES);
 
-export function localeOfPath(path: string): "en" | "zh" | string {
+const OG_LOCALE: Record<string, string> = {
+  en: "en_US",
+  zh: "zh_CN",
+  es: "es_ES",
+  pt: "pt_PT",
+  fr: "fr_FR",
+  de: "de_DE",
+  id: "id_ID",
+  vi: "vi_VN",
+  it: "it_IT",
+  tr: "tr_TR",
+};
+
+export function localeOfPath(path: string): string {
   const first = path.split("/").filter(Boolean)[0];
   if (!first) return "en";
-  if (first === "zh") return "zh";
-  if (retired.has(first)) return first;
-  return "en";
-}
-
-export function isRetiredPath(path: string): boolean {
-  const first = path.split("/").filter(Boolean)[0];
-  return Boolean(first && retired.has(first));
+  return locales.has(first) ? first : "en";
 }
 
 function languageOf(path: string): "en" | "zh" {
@@ -49,6 +55,7 @@ export function pageMeta({
   pair,
   langs,
   selfLang,
+  image,
   openGraphType = "website",
   publishedTime,
   modifiedTime,
@@ -61,6 +68,7 @@ export function pageMeta({
   pair?: { en: string; zh: string };
   langs?: Record<string, string>;
   selfLang?: string;
+  image?: string;
   openGraphType?: "website" | "article";
   publishedTime?: string;
   modifiedTime?: string;
@@ -69,12 +77,10 @@ export function pageMeta({
   const text = fitDescription(description, path);
   const language = languageOf(path);
   const editorial = EDITORIAL[language];
-  const indexable = index && !isRetiredPath(path);
+  const indexable = index;
 
   const rawLanguages = langs ?? (pair ? { en: pair.en, zh: pair.zh } : selfLang ? { [selfLang]: url } : {});
-  const languages = Object.fromEntries(
-    Object.entries(rawLanguages).filter(([code]) => code === "en" || code === "zh"),
-  );
+  const languages = Object.fromEntries(Object.entries(rawLanguages).filter(([code]) => locales.has(code)));
   const alternates = indexable
     ? {
         canonical: url,
@@ -90,11 +96,15 @@ export function pageMeta({
     url,
     type: openGraphType,
     siteName: SITE.name,
-    locale: language === "zh" ? "zh_CN" : "en_US",
+    locale: OG_LOCALE[localeOfPath(path)] ?? "en_US",
     ...(Object.keys(languages).length > 1
-      ? { alternateLocale: language === "zh" ? ["en_US"] : ["zh_CN"] }
+      ? { alternateLocale: Object.keys(languages).filter((code) => code !== localeOfPath(path)).map((code) => OG_LOCALE[code]) }
       : {}),
-    images: [{ url: "/og.jpg", width: 1280, height: 720, alt: SITE.name }],
+    images: [
+      image
+        ? { url: image, width: 1200, height: 630, alt: SITE.name }
+        : { url: "/og.jpg", width: 1280, height: 720, alt: SITE.name },
+    ],
     ...(openGraphType === "article"
       ? {
           publishedTime,
@@ -118,7 +128,7 @@ export function pageMeta({
       card: "summary_large_image",
       title,
       description: text,
-      images: ["/og.jpg"],
+      images: [image ?? "/og.jpg"],
     },
   };
 }

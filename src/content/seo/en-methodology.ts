@@ -120,7 +120,7 @@ export const methodology: ArticleContent = {
     },
     {
       q: "When was the content last updated?",
-      a: "28 October 2026. The date appears in the footer of each page and in the article metadata.",
+      a: "29 October 2026. The date appears with the author line under each article, tool, and reference page, and in the page metadata.",
     },
     {
       q: "Does the test use AI?",

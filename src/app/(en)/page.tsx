@@ -12,6 +12,7 @@ export const metadata = pageMeta({
   title: homeTool.title,
   description: homeTool.meta,
   path: "/",
+  image: "/og/quiz.png",
   absolute: true,
   langs: homeLangs(),
 });

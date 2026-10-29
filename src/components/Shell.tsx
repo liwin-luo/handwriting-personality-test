@@ -16,9 +16,10 @@ const navLinkWide = "hidden py-1.5 font-extrabold hover:text-seal md:inline-bloc
 
 const footLink = "inline-block py-1.5 font-extrabold text-white/90 hover:text-pop";
 
-const indexedLanguages = [
+const menuLanguages = [
   { code: "en", label: "English" },
   { code: "zh", label: "中文" },
+  ...localeList.map(({ code, label }: { code: string; label: string }) => ({ code, label })),
 ];
 
 export function Shell({ children }: { children: React.ReactNode }) {
@@ -35,9 +36,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const toolsLabel = zh ? "工具" : "Tools";
   const toolsHref = zh ? "/zh/tools" : "/tools";
   const chartHref = zh ? "/zh/tools/sample-chart" : locale ? `${prefix}/chart` : "/tools/sample-chart";
-  const menuLanguages = locale
-    ? [...indexedLanguages, { code: locale.code, label: locale.label }]
-    : indexedLanguages;
   const [suggest, setSuggest] = useState<string | null>(null);
   const banner = suggest ? bannerFor(lang, suggest) : null;
 
@@ -65,7 +63,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-paper"
       >
-        {zh ? "跳到正文" : "Skip to content"}
+        {zh ? "跳到正文" : locale ? locale.skip : "Skip to content"}
       </a>
       <header className="sticky top-0 z-40 border-b-4 border-ink bg-paper">
         <div className="mx-auto flex max-w-3xl flex-col gap-2 px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
@@ -120,7 +118,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </div>
       </header>
       {suggest && banner ? (
-        <div className="border-b border-rule bg-card" lang={lang}>
+        <div className="no-print border-b border-rule bg-card" lang={lang}>
           <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-x-4 gap-y-2 px-5 py-3 text-sm">
             <p className="mr-auto">{banner.note}</p>
             <a className="btn" href={languageHref(suggest, path)}>

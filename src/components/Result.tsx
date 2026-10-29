@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DirectionSpread } from "@/components/DirectionSpread";
-import { Glyph, GlyphLine } from "@/components/Glyph";
+import { Glyph } from "@/components/Glyph";
 import { choiceNote, countNote, retakeLabel, shareHint, shareLabel } from "@/content/choice-notes.mjs";
 import {
   DIRECTIONS,
@@ -71,6 +71,9 @@ export function ResultView({ code }: { code: string }) {
         name: profile.name,
         sentence: profile.sentence,
         files: samples.map((sample) => sample.file),
+        labels: LABELS,
+        ranked: scored.ranked,
+        tallyLabel: "Four directions",
         filename: `${profile.slug}.png`,
       });
     } catch {
@@ -94,20 +97,46 @@ export function ResultView({ code }: { code: string }) {
           <p className="mt-3 max-w-xl text-sm text-muted">
             A label for the shapes in this link. Not a reading of personality, health, honesty, or ability.
           </p>
-          <div className="notebook mt-8 max-w-sm p-6">
-            <p className="text-[11px] tracking-[0.16em] text-muted">HANDWRITING PERSONALITY TEST</p>
+          <div className="notebook mt-8 max-w-sm p-5">
+            <span className="inline-block rounded-full border-[3px] border-ink bg-seal px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow-[3px_3px_0_var(--ink)]">
+              Handwriting personality test
+            </span>
             <p className="mt-4 font-display text-4xl leading-[0.95]">{profile.name}</p>
-            <div className="mt-4 h-0.5 w-8 bg-seal" />
-            <p className="mt-4 text-lg leading-snug">{profile.sentence}</p>
-            <GlyphLine samples={samples} />
-            <p className="mt-4 text-[11px] text-muted">handwritingpersonalitytest.online</p>
+            <div className="mt-3 h-2 w-16 rounded-full bg-seal" />
+            <p className="mt-3 text-base leading-snug">{profile.sentence}</p>
+            <p className="mt-4 text-[9px] font-extrabold uppercase tracking-[0.16em] text-muted">Four directions</p>
+            <div className="mt-1.5 grid grid-cols-4 gap-2">
+              {scored.ranked.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex flex-col justify-between rounded-xl border-2 border-ink bg-white px-1 py-1.5 text-center"
+                >
+                  <span className="block min-h-[2.1em] text-[8px] font-extrabold uppercase leading-[1.05] tracking-wide text-muted">
+                    {LABELS[item.id]}
+                  </span>
+                  <span className="mt-1 block font-display text-lg leading-none">{item.score}</span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 grid grid-cols-6 gap-1.5">
+              {samples.map((sample) => (
+                <div key={sample.id} className="rounded-lg border-2 border-ink bg-white p-1">
+                  <Glyph file={sample.file} alt={sample.alt} />
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 text-[10px] font-extrabold text-muted">handwritingpersonalitytest.online</p>
           </div>
           <div className="no-print mt-4 flex flex-wrap gap-3">
             <button type="button" onClick={share} className="btn">
               {copied ? "Copied" : shareLabel.en}
             </button>
-            <button type="button" onClick={downloadCard} className="border border-ink px-4 py-2 text-sm">
-              Download card
+            <button
+              type="button"
+              onClick={downloadCard}
+              className="border-2 border-ink bg-card px-4 py-2 text-sm font-extrabold shadow-[4px_4px_0_var(--ink)]"
+            >
+              Save image
             </button>
           </div>
           {cardError ? <p className="mt-2 text-sm text-seal">{cardError}</p> : null}

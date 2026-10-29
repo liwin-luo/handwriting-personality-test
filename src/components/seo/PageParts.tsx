@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Crumbs, JsonLd } from "@/components/Meta";
 import { CONTENT_UPDATED, EDITORIAL } from "@/content/editorial";
 import type { ArticleContent, BlogPost, HubContent, LinkItem, Section, ToolSeoContent } from "@/content/seo/types";
@@ -43,6 +44,27 @@ function RichText({ text }: { text: string }) {
       </a>
     ),
   );
+}
+
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+function readableDate(value: string, lang: "en" | "zh") {
+  const [year, month, day] = value.split("-").map(Number);
+  if (!year || !month || !day) return value;
+  return lang === "zh" ? `${year} 年 ${month} 月 ${day} 日` : `${day} ${MONTHS[month - 1]} ${year}`;
 }
 
 export function AuthorLine({ lang, updated }: { lang: "en" | "zh"; updated?: string }) {
@@ -400,6 +422,33 @@ export function HubPageView({
   );
 }
 
+function TestCallout({ lang }: { lang: "en" | "zh" }) {
+  const copy =
+    lang === "zh"
+      ? {
+          kicker: "测验",
+          title: "八个回答就能命名这组写法。",
+          body: "19 个写法，选最接近你的那个。不出示样本，不注册，计分规则是公开的。",
+          cta: "做 19 题测验",
+        }
+      : {
+          kicker: "The test",
+          title: "Eight answers name the shapes you picked.",
+          body: "19 questions about digits, letters, spacing, and slant. No sample, no account, and the result shows its own arithmetic.",
+          cta: "Take the 19-shape test",
+        };
+  return (
+    <aside className="mt-12 max-w-xl rounded-2xl border-4 border-ink bg-card p-5 shadow-[6px_6px_0_var(--ink)]">
+      <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-seal">{copy.kicker}</p>
+      <p className="mt-2 font-display text-2xl leading-tight">{copy.title}</p>
+      <p className="mt-2 text-sm leading-relaxed text-muted">{copy.body}</p>
+      <a className="btn mt-4 inline-block" href={withUtm(lang === "zh" ? "/zh#test" : "/#test", "mid-article")}>
+        {copy.cta}
+      </a>
+    </aside>
+  );
+}
+
 export function ArticlePageView({
   content,
   lang = "en",
@@ -426,12 +475,16 @@ export function ArticlePageView({
         <span>{author.name}</span>
         <span aria-hidden="true"> · </span>
         <span>
-          {ui.published} {content.published}
+          {ui.published} {readableDate(content.published, lang)}
         </span>
-        <span aria-hidden="true"> · </span>
-        <span>
-          {ui.updated} {content.updated}
-        </span>
+        {content.updated !== content.published ? (
+          <>
+            <span aria-hidden="true"> · </span>
+            <span>
+              {ui.updated} {readableDate(content.updated, lang)}
+            </span>
+          </>
+        ) : null}
         {"readingTime" in content ? (
           <>
             <span aria-hidden="true"> · </span>
@@ -445,8 +498,11 @@ export function ArticlePageView({
         ))}
       </div>
 
-      {content.sections.map((section) => (
-        <Prose key={section.h2} section={section} />
+      {content.sections.map((section, index) => (
+        <Fragment key={section.h2}>
+          <Prose section={section} />
+          {index === Math.max(0, Math.ceil(content.sections.length / 2) - 1) ? <TestCallout lang={lang} /> : null}
+        </Fragment>
       ))}
 
       <section className="mt-12">

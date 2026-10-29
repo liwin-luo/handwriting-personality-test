@@ -1,3 +1,4 @@
+import { EDITORIAL } from "@/content/editorial";
 import type { HubContent } from "@/content/seo/types";
 
 export const toolsHub: HubContent = {
@@ -172,7 +173,7 @@ export const toolsHub: HubContent = {
     { label: "Method", value: "The scoring rule, the 8-degree upright band, and the signature readout are explained on the page and on the methodology page." },
     { label: "Checkable output", value: "A result prints the four totals behind it, the slant tool shows the reference line, and the canvas lists every number it counted." },
     { label: "Open source of the rules", value: "The questions, the weights, and the scoring rule are written out in plain language, so a result can be checked by hand." },
-    { label: "Last updated", value: "28 October 2026" },
+    { label: "Last updated", value: "29 October 2026" },
     { label: "Author", value: "Handwriting Personality Test editorial team" },
   ],
   faqsTitle: "Questions",
@@ -221,5 +222,5 @@ export const toolsHub: HubContent = {
   ctaLabel: "Take the 19-shape test",
   ctaHref: "/#test",
   ctaNote: "Eight answers are enough for a result. The test is free, needs no account, and never asks for a handwriting sample.",
-  updatedLabel: "Last updated 28 October 2026",
+  updatedLabel: EDITORIAL.en.updatedLabel,
 };

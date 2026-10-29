@@ -7,7 +7,7 @@ import { withUtm } from "@/lib/utm.mjs";
 const faqs = [
   {
     q: "What do these articles cover?",
-    a: "Six articles, each written for a different question. What a handwriting personality test actually does, how to describe a page without personality claims, what the research on graphology shows, how to choose among free tools, how to measure slant without fooling yourself, and why bubble letters are not handwriting.",
+    a: "Seven articles, each written for a different question. What a handwriting personality test actually does, how to describe a page without personality claims, what the research on graphology shows, how to choose among free tools, how to measure slant without fooling yourself, why bubble letters are not handwriting, and what an AI handwriting tool can and cannot tell you.",
   },
   {
     q: "Do the articles list their sources?",
@@ -59,10 +59,12 @@ export const metadata = pageMeta({
   description:
     "Plain-language articles on handwriting personality tests, graphology, measurement, and how to describe a page without making unsupported claims.",
   path: "/blog",
+  image: "/og/blog.png",
   langs: { en: `${SITE.url}/blog` },
 });
 
 export default function BlogIndex() {
+  const posts = [...blogPosts].sort((a, b) => b.published.localeCompare(a.published));
   return (
     <div lang="en">
       <Crumbs items={[{ href: "/", label: "Home" }, { label: "Blog" }]} />
@@ -74,16 +76,30 @@ export default function BlogIndex() {
         What the tests do, what the research supports, and how to measure a page without turning an angle into a
         character reference.
       </p>
-      <p className="mt-6 max-w-xl leading-relaxed">
+
+      <aside className="mt-8 max-w-xl rounded-2xl border-4 border-ink bg-card p-5 shadow-[6px_6px_0_var(--ink)]">
+        <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-seal">The test itself</p>
+        <p className="mt-2 font-display text-2xl leading-tight">Eight answers name the shapes you picked.</p>
+        <p className="mt-2 leading-relaxed">
+          19 questions about digits, letters, spacing, and slant. No sample, no account, and the result shows its own
+          arithmetic.
+        </p>
+        <a className="btn mt-4 inline-block" href={withUtm("/#test", "blog-hero")}>
+          Take the 19-shape test
+        </a>
+      </aside>
+
+      <p className="mt-8 max-w-xl leading-relaxed">
         These articles are written for people who want to understand handwriting rather than be flattered by it. Each
         one cites its sources and states the limits of the claim.
       </p>
       <p className="mt-4 max-w-xl leading-relaxed">
-        The set covers six different questions. One explains what a handwriting personality test actually does and
+        The set covers seven different questions. One explains what a handwriting personality test actually does and
         where the idea came from. One gives a method for describing a page without turning an angle into a character
         reference. One reviews the evidence on graphology. One compares free tools and says what to check before you
         trust one. One shows how to measure slant without fooling yourself. One explains why cute bubble letters are
-        characters you paste, not a sample of handwriting.
+        characters you paste, not a sample of handwriting. One works through what an AI handwriting tool computes and
+        where the inference breaks.
       </p>
       <p className="mt-4 max-w-xl leading-relaxed">
         Every article names its evidence. The measurement articles list the geometry they use, the tolerance they
@@ -98,7 +114,7 @@ export default function BlogIndex() {
       </p>
 
       <ul className="mt-10 divide-y divide-rule border-y border-rule">
-        {blogPosts.map((post) => (
+        {posts.map((post) => (
           <li key={post.slug}>
             <a className="block py-5" href={withUtm(`/blog/${post.slug}`, "post")}>
               <span className="text-sm text-muted">
@@ -166,7 +182,7 @@ export default function BlogIndex() {
           Open the handwriting tools
         </a>
       </p>
-      <AuthorLine lang="en" updated="Last updated 26 October 2026" />
+      <AuthorLine lang="en" />
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -176,7 +192,7 @@ export default function BlogIndex() {
           inLanguage: "en",
           mainEntity: {
             "@type": "ItemList",
-            itemListElement: blogPosts.map((post, index) => ({
+            itemListElement: posts.map((post, index) => ({
               "@type": "ListItem",
               position: index + 1,
               name: post.title,

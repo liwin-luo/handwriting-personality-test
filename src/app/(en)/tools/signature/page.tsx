@@ -11,6 +11,7 @@ export const metadata = pageMeta({
   title: signatureTool.title,
   description: signatureTool.meta,
   path: "/tools/signature",
+  image: "/og/tools.png",
   langs: toolLangs("/tools/signature"),
 });
 

@@ -45,6 +45,7 @@ export const metadata = pageMeta({
   title: "The six labels",
   description: "Six fictional names for the shapes in the handwriting personality test, plus the case where no shape wins.",
   path: "/results",
+  image: "/og/results.png",
 });
 
 export default function ResultsPage() {
@@ -155,7 +156,7 @@ export default function ResultsPage() {
         </ul>
       </section>
 
-      <AuthorLine lang="en" updated="Last updated 28 October 2026" />
+      <AuthorLine lang="en" />
       <JsonLd
         data={{
           "@context": "https://schema.org",

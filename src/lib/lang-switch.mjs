@@ -1,7 +1,21 @@
-const SUPPORTED = ["en", "zh"];
-const RETIRED = ["es", "pt", "fr", "de", "id", "vi", "it", "tr"];
+const LATIN = ["es", "pt", "fr", "de", "id", "vi", "it", "tr"];
+const SUPPORTED = ["en", "zh", ...LATIN];
 
-const LANGUAGE_LABEL = { en: "English", zh: "中文" };
+const LANGUAGE_LABEL = {
+  en: "English",
+  zh: "中文",
+  es: "Español",
+  pt: "Português",
+  fr: "Français",
+  de: "Deutsch",
+  id: "Indonesia",
+  vi: "Tiếng Việt",
+  it: "Italiano",
+  tr: "Türkçe",
+};
+
+// Browsers still send the pre-1989 Indonesian code.
+const TAG_ALIAS = { in: "id" };
 
 // The banner speaks the language of the page you are on, and names the language on offer.
 const bannerCopy = {
@@ -29,7 +43,8 @@ export function matchLanguage(tag) {
   const lower = tag.toLowerCase();
   if (lower === "zh" || lower.startsWith("zh-")) return "zh";
   const base = lower.split("-")[0];
-  return SUPPORTED.includes(base) ? base : null;
+  const code = TAG_ALIAS[base] ?? base;
+  return SUPPORTED.includes(code) ? code : null;
 }
 
 /** First browser language we have an indexed page for. Quiet when it is already showing. */
@@ -50,7 +65,7 @@ const PAIRED_GUIDES = ["signature-size", "signature-writing"];
 
 /** Drop any language prefix. English paths stay as they are. */
 export function pageRest(path) {
-  const match = path.match(new RegExp(`^/(${["zh", ...RETIRED].join("|")})(?=/|$)`));
+  const match = path.match(new RegExp(`^/(${["zh", ...LATIN].join("|")})(?=/|$)`));
   if (!match) return path || "/";
   return path.slice(match[0].length) || "/";
 }
@@ -69,7 +84,12 @@ function guideHref(target, slug) {
     if (PAIRED_GUIDES.includes(slug)) return `/guides/${slug}`;
     return "/";
   }
-  if (EN_GUIDES.includes(slug)) return `${prefix}/guides/${slug}`;
+  if (slug === "signature-size" || slug === "signature-writing") {
+    const tail = slug === "signature-size" ? "size" : "body";
+    return `${prefix}/tools/signature/${tail}`;
+  }
+  const latinSlug = slug === "gap" ? "spacing" : slug;
+  if (EN_GUIDES.includes(latinSlug)) return `${prefix}/guides/${latinSlug}`;
   return prefix || "/";
 }
 

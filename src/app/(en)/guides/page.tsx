@@ -43,6 +43,7 @@ export const metadata = pageMeta({
   title: copy.title,
   description: copy.description,
   path: "/guides",
+  image: "/og/guides.png",
   langs: traitsLangs(),
 });
 

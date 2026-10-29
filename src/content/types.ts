@@ -23,9 +23,10 @@ export type Profile = {
   name: string;
   sentence: string;
   direction: Direction | null;
-  guides: [string, string];
+  guides: string[];
   examples: string[];
   paragraphs: string[];
+  sections: { id: string; h2: string; paragraphs: string[] }[];
   aside: string;
   practice: string;
 };

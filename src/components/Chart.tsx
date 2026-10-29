@@ -75,7 +75,7 @@ export function Chart({ items, copy }: { items: ChartItem[]; copy: ChartCopy }) 
           />
         </label>
       </div>
-      <ul className="mt-8 grid gap-6 sm:grid-cols-2">
+      <ul className="chart-grid mt-8 grid gap-6 sm:grid-cols-2">
         {items.map((item) => {
           const haystack = `${item.label} ${item.alt} ${item.title}`.toLowerCase();
           const hidden = (filter !== "all" && filter !== item.group) || (needle !== "" && !haystack.includes(needle));

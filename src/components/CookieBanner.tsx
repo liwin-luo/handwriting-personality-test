@@ -20,8 +20,8 @@ export function CookieBanner({ lang }: { lang: string }) {
 
   return (
     <>
-      <div className="h-36 sm:h-28" aria-hidden="true" />
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t-4 border-ink bg-card" lang={lang}>
+      <div className="no-print h-36 sm:h-28" aria-hidden="true" />
+      <div className="no-print fixed inset-x-0 bottom-0 z-40 border-t-4 border-ink bg-card" lang={lang}>
         <div className="mx-auto flex max-w-3xl flex-col gap-1.5 px-5 py-2.5 sm:flex-row sm:items-center sm:gap-6 sm:py-4">
           <div className="mr-auto text-sm leading-tight">
             <p>

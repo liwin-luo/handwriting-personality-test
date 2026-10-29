@@ -1,3 +1,4 @@
+import { EDITORIAL } from "@/content/editorial";
 import type { HubContent, ToolSeoContent } from "@/content/seo/types";
 
 export const zhHome: ToolSeoContent = {
@@ -161,7 +162,7 @@ export const zhHome: ToolSeoContent = {
     },
     {
       q: "谁在维护这个网站？",
-      a: "笔迹测验编辑组。方法页说明计分规则、选题理由和边界。内容最后更新于 2026 年 10 月 28 日。",
+      a: "笔迹测验编辑组。方法页说明计分规则、选题理由和边界。内容最后更新于 2026 年 10 月 29 日。",
     },
   ],
   relatedTitle: "相关工具和指南",
@@ -691,7 +692,7 @@ export const zhToolsHub: HubContent = {
     { label: "账号", value: "任何工具都不需要账号、邮箱或登录。" },
     { label: "性格主张", value: "测验给虚构名称，测量工具给几何读数，都不给性格判断。" },
     { label: "方法", value: "计分规则、8 度垂直带和签名读数都写在页面上，方法页有完整说明。" },
-    { label: "最后更新", value: "2026 年 10 月 28 日" },
+    { label: "最后更新", value: "2026 年 10 月 29 日" },
     { label: "作者", value: "笔迹测验编辑组" },
   ],
   faqsTitle: "问题",
@@ -708,5 +709,5 @@ export const zhToolsHub: HubContent = {
   ctaLabel: "去做中文五题测验",
   ctaHref: "/zh#test",
   ctaNote: "答满四题出结果。免费，不注册，不要字迹照片。",
-  updatedLabel: "最后更新：2026 年 10 月 28 日",
+  updatedLabel: EDITORIAL.zh.updatedLabel,
 };

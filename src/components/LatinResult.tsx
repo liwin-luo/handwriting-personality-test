@@ -110,6 +110,9 @@ export function LatinResult({
                     sentence: profile.sentence,
                     files: samples.map((sample) => sample.file),
                     filename: `${scored.profile}.png`,
+                    labels: copy.labels,
+                    ranked: scored.ranked,
+                    lang: locale,
                   });
                 } catch {
                   setCardError(copy.cardError);

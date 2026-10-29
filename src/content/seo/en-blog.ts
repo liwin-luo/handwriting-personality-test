@@ -423,6 +423,7 @@ export const blogPosts: BlogPost[] = [
     relatedPosts: [
       { href: "/blog/what-is-handwriting-personality-test", label: "What is a handwriting personality test?" },
       { href: "/blog/how-to-analyze-handwriting", label: "How to analyze handwriting" },
+      { href: "/blog/ai-handwriting-analysis", label: "AI handwriting analysis, and what it misses" },
       { href: "/science", label: "The science page" },
       { href: "/methodology", label: "How this test is built" },
     ],
@@ -550,7 +551,7 @@ export const blogPosts: BlogPost[] = [
     relatedPosts: [
       { href: "/blog/what-is-handwriting-personality-test", label: "What is a handwriting personality test?" },
       { href: "/blog/graphology", label: "Graphology: what the evidence says" },
-      { href: "/blog/how-to-analyze-handwriting", label: "How to analyze handwriting" },
+      { href: "/blog/ai-handwriting-analysis", label: "AI handwriting analysis, and what it misses" },
       { href: "/methodology", label: "How this test is built" },
     ],
     ctaLabel: "Open the tools hub",
@@ -832,6 +833,149 @@ export const blogPosts: BlogPost[] = [
     ctaLabel: "Try the shape test",
     ctaHref: "/#test",
     ctaNote: "The test asks about shapes you write. It does not read a display name, and the label is not a personality score.",
+  },
+  {
+    slug: "ai-handwriting-analysis",
+    title: "AI Handwriting Analysis: What It Can and Cannot Tell You",
+    seoTitle: "AI Handwriting Analysis",
+    h1: "AI handwriting analysis: what it can and cannot tell you",
+    meta: "AI handwriting tools read pixels or your own description, not your hand. What the models actually compute, where they help, and where the inference breaks.",
+    kicker: "Explainer",
+    published: "2026-10-29",
+    updated: "2026-10-29",
+    readingTime: "9 min read",
+    intro: [
+      "Search for AI handwriting analysis and you will find tools that accept a photo and return a personality report in seconds. The interface is new. The claim inside it is not: that a visible feature of writing stands for an invisible feature of the person. What changed is who makes the inference, a model instead of a graphologist, and the change is often presented as if it settled the evidence question.",
+      "It did not. This article separates what an AI system can genuinely measure from what it is asked to guess, explains the three designs that share the label, and gives a short test you can run on any tool that offers the service.",
+    ],
+    sections: [
+      {
+        id: "what-the-model-receives",
+        h2: "What an AI handwriting tool actually receives",
+        paragraphs: [
+          "A phone photo is pixels. Before any inference, the system has to find the writing: threshold the image, correct the skew, separate lines and words, and locate characters. Errors at this stage propagate into every number that follows. A flat scan and a photo taken at an angle are different inputs, and a model trained on one may fail on the other without saying so.",
+          "If the tool asks you to describe your handwriting instead of uploading it, the model receives text, not writing. A language model told that your g has a looped tail and your t is crossed high is not measuring anything. It is retrieving what has been written about those features, which is a literature summary delivered in a confident tone.",
+          "A third design takes a short sample, computes features such as slant, baseline drift, letter height, and word spacing, and maps them to a label with a classifier. This is the most inspectable design, and the mapping step is still the weak point, because the labels the classifier predicts were usually collected from self-report questionnaires.",
+        ],
+      },
+      {
+        id: "three-ai-designs",
+        h2: "Three AI designs, three different claims",
+        paragraphs: [
+          "Writer identification is the strongest claim. Given enough text, systems can decide whether two documents share an author. The textural and allographic features described by Bulacu and Schomaker in 2007 set a benchmark, and later work raised accuracy on large datasets. This is a claim about identity, and it holds under conditions: plenty of text, a consistent pen, and a closed set of candidates.",
+          "Form analysis is the most honest one. Systems can describe geometry, including line spacing, margin width, letter proportions, and baseline slope. The measurements are real and repeatable. Whether they mean anything about the person is a separate question, and the measurement does not answer it.",
+          "Trait prediction is the claim most consumer tools actually make, and the one with the weakest support. It usually means training a classifier on self-reported personality scores and reporting held-out accuracy. Even a modest correlation in a sample does not license a statement about one person, and it does not survive the step from these features correlate to this person is conscientious.",
+        ],
+      },
+      {
+        id: "confidence-is-not-evidence",
+        h2: "Why a fluent answer is not evidence",
+        paragraphs: [
+          "Language models are good at producing the kind of text that appears in handwriting manuals. Give one a description of a looped g and it will produce the standard association, because that association appears in its training data thousands of times. The fluency reflects the corpus, not the sample in front of it.",
+          "Confidence scores do not fix this. A probability of 0.87 means the model is confident given its training distribution. It says nothing about whether the label is valid, and it is usually shown without the base rate or the validation study that would make it interpretable.",
+          "The defensible version of the claim is narrow: this model reproduces the associations in the texts it was trained on. That is a claim about a corpus. A personality claim is about a person, and it needs a study of people, with a construct that can be measured independently of the handwriting.",
+        ],
+      },
+      {
+        id: "where-ai-helps",
+        h2: "Where AI genuinely helps",
+        paragraphs: [
+          "Document examination is a real use. Comparing stroke construction across many samples, spotting retouching, and ranking candidate authors are tasks where computation supports a trained examiner. The output is evidence for a human decision, not a verdict.",
+          "Health research is another. Handwriting kinematics and pen pressure have been studied as markers in Parkinson's disease and other neurological conditions. Drotar's 2016 review and Impedovo and Pirlo's 2019 review describe measurable group differences. A group difference is not a diagnosis for one person, and this research uses digitising tablets rather than phone photos.",
+          "Scale and consistency are the third. A model applies the same rule to the thousandth page as to the first, which a tired human scorer does not. That is a genuine advantage for measuring form. It is not an advantage for inferring character, because the inference is the part without a validated rule.",
+        ],
+      },
+      {
+        id: "how-to-test-one",
+        h2: "How to test an AI handwriting tool yourself",
+        paragraphs: [
+          "Give it the same sample twice. A measurement should stay stable. A generated report may change its wording while keeping the same story, which is a signature of template text rather than analysis.",
+          "Give it two very different samples, your own and a friend's, and compare the reports. If the two are nearly interchangeable, the tool is not reading the samples. It is generating broad statements that fit almost anyone.",
+          "Then ask three questions. What happens to the image? Is the output a measurement or a personality claim? Is there a validation study, and does it involve people rather than text? A tool that answers those questions is usable within its limits. A tool that answers with adjectives is entertainment with a camera attached.",
+        ],
+      },
+      {
+        id: "this-site",
+        h2: "What this site does instead",
+        paragraphs: [
+          "The test here is not AI. It asks 19 questions about shapes, weights the answers across four visual directions, and applies fixed arithmetic. There is no model, no upload, and no training data. The result is one of six fictional labels chosen to describe the shapes you picked.",
+          "The tools measure geometry. The slant tool reads one downstroke from a photo that stays in your browser, and the signature tool reports width, height, path length, turns, and an approximate slant from a canvas you draw on. The chart is a reference, not an analysis. None of them claims to read a personality.",
+          "The reason is not that AI is useless. It is that the step from a measurement to a trait about a person is the step the evidence does not support, whether a model or a graphologist takes it. The methodology page sets out the scoring rule and the limits in full.",
+        ],
+      },
+    ],
+    faqsTitle: "Questions",
+    faqs: [
+      {
+        q: "Can AI read personality from handwriting?",
+        a: "No validated method does this. A model trained on graphology texts learns the traditional associations, which reproduces the claim rather than testing it. Accuracy figures from a dataset do not establish a trait for one person.",
+      },
+      {
+        q: "Is AI handwriting analysis more accurate than a graphologist?",
+        a: "It is faster and more consistent, and accuracy depends entirely on the claim being made. For writer identity, under constrained conditions, systems perform well. For personality, neither a model nor a graphologist has validated accuracy.",
+      },
+      {
+        q: "What does an AI handwriting tool actually measure?",
+        a: "Usually geometry: slant, size, spacing, baseline slope, and stroke features. If the tool asks you to describe your writing instead of uploading it, it measures nothing and is summarising text it was trained on.",
+      },
+      {
+        q: "Do I have to upload my handwriting?",
+        a: "Most AI tools require an image. Check whether it is stored or used for training before you upload. The tools on this site never ask for a sample: the quiz is multiple choice and the measurements run in the browser.",
+      },
+      {
+        q: "Can AI detect a forged signature?",
+        a: "Offline signature verification is an active research field, and laboratory accuracy does not transfer to a single questioned signature. Forensic examiners may use computational tools as one input among several.",
+      },
+      {
+        q: "Can AI tell my age or gender from handwriting?",
+        a: "Studies report weak, dataset-specific correlations, mostly driven by school models and cultural writing conventions. They are not usable for a decision about an individual.",
+      },
+      {
+        q: "Is AI handwriting analysis free?",
+        a: "The upload is usually free and the report is the product. If a site shows a short teaser and asks for payment or an account to see the analysis, the analysis is the paid part.",
+      },
+      {
+        q: "Does this site use AI?",
+        a: "No. The result is fixed arithmetic over your shape choices, and the label text is written in advance. Nothing is generated per visitor.",
+      },
+    ],
+    sourcesTitle: "Sources and further reading",
+    sources: [
+      {
+        label: "Bulacu, M., & Schomaker, L. (2007). Text-independent writer identification and verification using textural and allographic features. IEEE Transactions on Pattern Analysis and Machine Intelligence, 29(4), 701-717.",
+        href: scholar("Bulacu Schomaker 2007 text-independent writer identification allographic features"),
+      },
+      {
+        label: "Drotar, P., Mekyska, J., Rektorova, I., Masarova, L., Smekal, Z., & Faundez-Zanuy, M. (2016). Evaluation of handwriting kinematics and pressure for differential diagnosis of Parkinson's disease. Artificial Intelligence in Medicine, 67, 39-46.",
+        href: scholar("Drotar Mekyska handwriting kinematics pressure Parkinson differential diagnosis"),
+      },
+      {
+        label: "Impedovo, D., & Pirlo, G. (2019). Dynamic handwriting analysis for the assessment of neurodegenerative diseases: a pattern recognition perspective. IEEE Reviews in Biomedical Engineering, 12, 209-220.",
+        href: scholar("Impedovo Pirlo dynamic handwriting analysis neurodegenerative diseases"),
+      },
+      {
+        label: "Neter, E., & Ben-Shakhar, G. (1989). The predictive validity of graphological inferences: A meta-analytic approach. Personality and Individual Differences, 10(7), 737-745.",
+        href: scholar("Neter Ben-Shakhar 1989 predictive validity graphological inferences"),
+      },
+      {
+        label: "Beyerstein, B. L., & Beyerstein, D. F. (Eds.). (1992). The Write Stuff: Evaluations of Graphology. Prometheus Books.",
+        href: scholar("Beyerstein Beyerstein The Write Stuff Evaluations of Graphology"),
+      },
+    ],
+    relatedTools: [
+      { href: "/tools/sample-chart", label: "See the shapes, not a model", note: "The 19 forms the test asks about, with what each claim rests on." },
+      { href: "/tools/slant", label: "Measure a slant angle", note: "A local measurement, no upload and no inference." },
+      { href: "/", label: "Take the 19-shape test", note: "Fixed arithmetic, six fictional labels." },
+    ],
+    relatedPosts: [
+      { href: "/blog/graphology", label: "Graphology: what the evidence says" },
+      { href: "/blog/best-free-handwriting-analysis-tools", label: "How to choose a free handwriting tool" },
+      { href: "/blog/what-is-handwriting-personality-test", label: "What is a handwriting personality test?" },
+      { href: "/methodology", label: "How this test is scored" },
+    ],
+    ctaLabel: "Take the shape test",
+    ctaHref: "/#test",
+    ctaNote: "No upload, no model, no account. Eight answers produce one of six fictional labels.",
   },
 ];
 

@@ -83,6 +83,9 @@ export function EsResult({ code }: { code: string }) {
                     sentence: profile.sentence,
                     files: samples.map((sample) => sample.file),
                     filename: `${scored.profile}.png`,
+                    labels: LABELS,
+                    ranked: scored.ranked,
+                    lang: "es",
                   });
                 } catch {
                   setCardError("No se pudo guardar la tarjeta. Copia el enlace.");

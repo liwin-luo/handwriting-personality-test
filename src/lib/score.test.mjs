@@ -330,37 +330,34 @@ test("each latin pack reuses the same shapes", () => {
 });
 
 test("language switch stays on the translated page", () => {
-  assert.equal(languageHref("fr", "/guides/seven"), "/fr/guides/seven");
-  assert.equal(languageHref("es", "/guides/t"), "/es/guides/t");
-  assert.equal(languageHref("en", "/pt/guides/y"), "/guides/y");
-  assert.equal(languageHref("zh", "/guides/one"), "/zh");
-  assert.equal(languageHref("de", "/guides/i"), "/de/guides/i");
-  assert.equal(languageHref("en", "/fr/guides/seven"), "/guides/seven");
-  assert.equal(languageHref("de", "/fr/science"), "/de/science");
   assert.equal(languageHref("zh", "/guides/seven"), "/zh");
-  assert.equal(languageHref("fr", "/zh/guides/size"), "/fr");
+  assert.equal(languageHref("en", "/guides/seven"), "/guides/seven");
+  assert.equal(languageHref("zh", "/guides/one"), "/zh");
+  assert.equal(languageHref("zh", "/guides/spacing"), "/zh/guides/gap");
+  assert.equal(languageHref("en", "/zh/guides/gap"), "/guides/spacing");
+  assert.equal(languageHref("en", "/zh/guides/lines"), "/");
   assert.equal(languageHref("zh", "/zh/guides/size"), "/zh/guides/size");
-  assert.equal(languageHref("es", "/r/1000000000000"), "/es/r/1000000000000");
-  assert.equal(languageHref("zh", "/fr/r/1000000000000"), "/zh");
-  assert.equal(languageHref("fr", "/tools/slant"), "/fr/tools/slant");
+  assert.equal(languageHref("en", "/r/1000000000000"), "/r/1000000000000");
+  assert.equal(languageHref("zh", "/r/1000000000000"), "/zh");
+  assert.equal(languageHref("zh", "/r/ab12cd"), "/zh/r/ab12cd");
+  assert.equal(languageHref("en", "/zh/r/ab12cd"), "/");
   assert.equal(languageHref("en", "/tools/slant"), "/tools/slant");
+  assert.equal(languageHref("zh", "/tools/slant"), "/zh/tools/slant");
   assert.equal(languageHref("zh", "/chart"), "/zh/tools/sample-chart");
+  assert.equal(languageHref("en", "/zh/chart"), "/tools/sample-chart");
   assert.equal(languageHref("en", "/zh/tools/signature"), "/tools/signature");
-  assert.equal(languageHref("pt", "/zh/chart"), "/pt/chart");
-  assert.equal(languageHref("zh", "/es/tools/slant"), "/zh/tools/slant");
   assert.equal(languageHref("zh", "/guides"), "/zh/guides");
-  assert.equal(languageHref("fr", "/guides"), "/fr/guides");
   assert.equal(languageHref("en", "/zh/guides"), "/guides");
-  assert.equal(languageHref("es", "/pt/guides"), "/es/guides");
-  assert.equal(languageHref("es", "/faq"), "/es/faq");
+  assert.equal(languageHref("zh", "/faq"), "/zh/faq");
   assert.equal(languageHref("zh", "/about"), "/zh/about");
-  assert.equal(languageHref("en", "/de/tools/signature/size"), "/guides/signature-size");
+  assert.equal(languageHref("en", "/zh/faq"), "/faq");
+  assert.equal(languageHref("en", "/tools/signature/size"), "/guides/signature-size");
   assert.equal(languageHref("zh", "/tools/signature/size"), "/zh/guides/signature-size");
   assert.equal(languageHref("zh", "/tools/signature/body"), "/zh/guides/signature-writing");
   assert.equal(languageHref("zh", "/tools/sample-chart"), "/zh/tools/sample-chart");
-  assert.equal(languageHref("fr", "/tools/sample-chart"), "/fr/chart");
-  assert.equal(languageHref("pt", "/tools/signature/body"), "/pt/tools/signature/body");
-  assert.equal(languageHref("zh", "/fr/faq"), "/zh/faq");
+  assert.equal(languageHref("en", "/zh/tools/signature/body"), "/guides/signature-writing");
+  assert.equal(languageHref("zh", "/blog/graphology"), "/zh");
+  assert.equal(languageHref("en", "/zh/blog/graphology"), "/blog/graphology");
 });
 
 test("language banner speaks the page language and names the one on offer", () => {
@@ -377,14 +374,14 @@ test("language banner speaks the page language and names the one on offer", () =
 test("browser language suggests a page we have, and stays quiet when it already matches", () => {
   assert.equal(preferredLanguage(["zh-CN", "en-US"], "en"), "zh");
   assert.equal(preferredLanguage(["zh-CN", "en-US"], "zh"), null);
-  assert.equal(preferredLanguage(["pt-BR"], "en"), "pt");
-  assert.equal(preferredLanguage(["pt-BR"], "pt"), null);
-  assert.equal(preferredLanguage(["ja", "fr-FR"], "en"), "fr");
-  assert.equal(preferredLanguage(["ja"], "en"), null);
   assert.equal(preferredLanguage(["en-US", "zh-CN"], "zh"), "en");
-  assert.equal(preferredLanguage(["fr-FR", "zh-CN"], "en"), "fr");
-  assert.equal(preferredLanguage(["in-ID"], "en"), "id");
-  assert.equal(preferredLanguage(["tr-TR"], "de"), "tr");
+  assert.equal(preferredLanguage(["en-US"], "en"), null);
+  assert.equal(preferredLanguage(["fr-FR", "zh-CN"], "en"), "zh");
+  assert.equal(preferredLanguage(["ja"], "en"), null);
+  assert.equal(preferredLanguage(["pt-BR"], "en"), null);
+  assert.equal(preferredLanguage(["fr-FR"], "en"), null);
+  assert.equal(preferredLanguage(["in-ID"], "en"), null);
+  assert.equal(preferredLanguage(["tr-TR"], "en"), null);
 });
 
 test("chart, slant, and signature exist in every language", () => {

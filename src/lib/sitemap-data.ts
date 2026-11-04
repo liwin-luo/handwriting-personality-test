@@ -65,29 +65,12 @@ export function chineseEntries(): SitemapEntry[] {
   ];
 }
 
-export function latinEntries(code: string): SitemapEntry[] {
-  return [
-    entry(`/${code}`, homeLangs()),
-    entry(`/${code}/tools/slant`, toolLangs("/tools/slant")),
-    entry(`/${code}/tools/signature`, toolLangs("/tools/signature")),
-    entry(`/${code}/chart`, toolLangs("/chart")),
-    entry(`/${code}/guides`, traitsLangs()),
-    ...guides.map((guide) => entry(`/${code}/guides/${guide.slug}`, guideLangs(guide.slug))),
-    entry(`/${code}/science`, scienceLangs()),
-    entry(`/${code}/faq`, seriesLangs("/faq")),
-    entry(`/${code}/about`, seriesLangs("/about")),
-    entry(`/${code}/tools/signature/size`, guideLangs("signature-size")),
-    entry(`/${code}/tools/signature/body`, guideLangs("signature-writing")),
-  ];
-}
-
 export const SITEMAP_LOCALES = LOCALE_CODES;
 export type SitemapLocale = (typeof SITEMAP_LOCALES)[number];
 
 export function entriesFor(locale: SitemapLocale): SitemapEntry[] {
   if (locale === "en") return englishEntries();
-  if (locale === "zh") return chineseEntries();
-  return latinEntries(locale);
+  return chineseEntries();
 }
 
 export function isSitemapLocale(value: string): value is SitemapLocale {

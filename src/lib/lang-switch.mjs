@@ -1,34 +1,14 @@
-const LATIN = ["es", "pt", "fr", "de", "id", "vi", "it", "tr"];
-const SUPPORTED = ["en", "zh", ...LATIN];
+const SUPPORTED = ["en", "zh"];
 
 const LANGUAGE_LABEL = {
   en: "English",
   zh: "中文",
-  es: "Español",
-  pt: "Português",
-  fr: "Français",
-  de: "Deutsch",
-  id: "Indonesia",
-  vi: "Tiếng Việt",
-  it: "Italiano",
-  tr: "Türkçe",
 };
-
-// Browsers still send the pre-1989 Indonesian code.
-const TAG_ALIAS = { in: "id" };
 
 // The banner speaks the language of the page you are on, and names the language on offer.
 const bannerCopy = {
   en: { note: "This page is in English. Your browser prefers {target}.", yes: "Switch to {target}", no: "Stay on this page" },
   zh: { note: "本页是中文。你的浏览器偏好 {target}。", yes: "切换到 {target}", no: "留在此页" },
-  es: { note: "Esta página está en español. Tu navegador prefiere {target}.", yes: "Cambiar a {target}", no: "Seguir en esta página" },
-  pt: { note: "Esta página está em português. O seu navegador prefere {target}.", yes: "Mudar para {target}", no: "Ficar nesta página" },
-  fr: { note: "Cette page est en français. Votre navigateur préfère {target}.", yes: "Passer en {target}", no: "Rester sur cette page" },
-  de: { note: "Diese Seite ist auf Deutsch. Ihr Browser bevorzugt {target}.", yes: "Zu {target} wechseln", no: "Auf dieser Seite bleiben" },
-  id: { note: "Halaman ini dalam bahasa Indonesia. Browser Anda lebih memilih {target}.", yes: "Ganti ke {target}", no: "Tetap di halaman ini" },
-  vi: { note: "Trang này bằng tiếng Việt. Trình duyệt của bạn thích {target} hơn.", yes: "Chuyển sang {target}", no: "Ở lại trang này" },
-  it: { note: "Questa pagina è in italiano. Il tuo browser preferisce {target}.", yes: "Passa a {target}", no: "Resta su questa pagina" },
-  tr: { note: "Bu sayfa Türkçe. Tarayıcınız {target} dilini tercih ediyor.", yes: "{target} diline geç", no: "Bu sayfada kal" },
 };
 
 export function bannerFor(current, target) {
@@ -43,8 +23,7 @@ export function matchLanguage(tag) {
   const lower = tag.toLowerCase();
   if (lower === "zh" || lower.startsWith("zh-")) return "zh";
   const base = lower.split("-")[0];
-  const code = TAG_ALIAS[base] ?? base;
-  return SUPPORTED.includes(code) ? code : null;
+  return SUPPORTED.includes(base) ? base : null;
 }
 
 /** First browser language we have an indexed page for. Quiet when it is already showing. */
@@ -63,68 +42,40 @@ const ZH_GUIDE_OF_EN = { spacing: "gap" };
 const EN_GUIDE_OF_ZH = { gap: "spacing" };
 const PAIRED_GUIDES = ["signature-size", "signature-writing"];
 
-/** Drop any language prefix. English paths stay as they are. */
+/** Drop the Chinese prefix. English paths stay as they are. */
 export function pageRest(path) {
-  const match = path.match(new RegExp(`^/(${["zh", ...LATIN].join("|")})(?=/|$)`));
+  const match = path.match(/^\/zh(?=\/|$)/);
   if (!match) return path || "/";
   return path.slice(match[0].length) || "/";
 }
 
 function guideHref(target, slug) {
-  const prefix = target === "en" ? "" : `/${target}`;
   if (target === "zh") {
     if (ZH_GUIDES.includes(slug)) return `/zh/guides/${slug}`;
     if (ZH_GUIDE_OF_EN[slug]) return `/zh/guides/${ZH_GUIDE_OF_EN[slug]}`;
     if (PAIRED_GUIDES.includes(slug)) return `/zh/guides/${slug}`;
     return "/zh";
   }
-  if (target === "en") {
-    if (EN_GUIDES.includes(slug)) return `/guides/${slug}`;
-    if (EN_GUIDE_OF_ZH[slug]) return `/guides/${EN_GUIDE_OF_ZH[slug]}`;
-    if (PAIRED_GUIDES.includes(slug)) return `/guides/${slug}`;
-    return "/";
-  }
-  if (slug === "signature-size" || slug === "signature-writing") {
-    const tail = slug === "signature-size" ? "size" : "body";
-    return `${prefix}/tools/signature/${tail}`;
-  }
-  const latinSlug = slug === "gap" ? "spacing" : slug;
-  if (EN_GUIDES.includes(latinSlug)) return `${prefix}/guides/${latinSlug}`;
-  return prefix || "/";
+  if (EN_GUIDES.includes(slug)) return `/guides/${slug}`;
+  if (EN_GUIDE_OF_ZH[slug]) return `/guides/${EN_GUIDE_OF_ZH[slug]}`;
+  if (PAIRED_GUIDES.includes(slug)) return `/guides/${slug}`;
+  return "/";
 }
 
-/** Same page in another language, or that language's home when the page has no twin. */
+/** Same page in the other language, or that language's home when the page has no twin. */
 export function languageHref(target, path) {
   const rest = pageRest(path);
-  const prefix = target === "en" ? "" : `/${target}`;
+  const prefix = target === "en" ? "" : "/zh";
   const home = prefix || "/";
   if (rest === "/") return home;
 
   if (rest === "/science" || rest === "/faq" || rest === "/about") return `${prefix}${rest}`;
-  if (rest === "/tools") return target === "en" ? "/tools" : target === "zh" ? "/zh/tools" : home;
+  if (rest === "/tools") return `${prefix}/tools`;
   if (rest === "/tools/slant" || rest === "/tools/signature") return `${prefix}${rest}`;
-  if (rest === "/tools/sample-chart") {
-    if (target === "en" || target === "zh") return `${prefix}${rest}`;
-    return `${prefix}/chart`;
-  }
-  if (rest === "/chart") {
-    if (target === "en") return "/tools/sample-chart";
-    if (target === "zh") return "/zh/tools/sample-chart";
-    return `${prefix}/chart`;
-  }
-  if (rest === "/tools/signature/size") {
-    if (target === "en") return "/guides/signature-size";
-    if (target === "zh") return "/zh/guides/signature-size";
-    return `${prefix}${rest}`;
-  }
-  if (rest === "/tools/signature/body") {
-    if (target === "en") return "/guides/signature-writing";
-    if (target === "zh") return "/zh/guides/signature-writing";
-    return `${prefix}${rest}`;
-  }
-  if (rest === "/guides" || rest === "/guides/") {
-    return target === "en" || target === "zh" ? `${prefix}/guides` : `${prefix}/guides`;
-  }
+  if (rest === "/tools/sample-chart" || rest === "/chart") return `${prefix}/tools/sample-chart`;
+  if (rest === "/tools/signature/size") return `${prefix}/guides/signature-size`;
+  if (rest === "/tools/signature/body") return `${prefix}/guides/signature-writing`;
+  if (rest === "/guides" || rest === "/guides/") return `${prefix}/guides`;
   if (rest.startsWith("/guides/")) {
     const slug = rest.slice("/guides/".length).split("/")[0];
     return guideHref(target, slug);
@@ -134,7 +85,7 @@ export function languageHref(target, path) {
   }
   if (rest.startsWith("/r/")) {
     const code = rest.slice("/r/".length).split("/")[0];
-    if (code.length === 13 && target !== "zh") return `${prefix}/r/${code}`;
+    if (code.length === 13 && target !== "zh") return `/r/${code}`;
     if (code.length === 6 && target === "zh") return `/zh/r/${code}`;
     return home;
   }

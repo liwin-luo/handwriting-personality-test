@@ -1,7 +1,7 @@
 export const CONTENT_UPDATED = "2026-10-29";
 
-/** Every locale with a full translation. All of them are indexable. */
-export const LOCALE_CODES = ["en", "zh", "es", "pt", "fr", "de", "id", "vi", "it", "tr"] as const;
+/** The two indexed locales. The eight Latin locales were retired and 301 to English. */
+export const LOCALE_CODES = ["en", "zh"] as const;
 
 export type LocaleCode = (typeof LOCALE_CODES)[number];
 

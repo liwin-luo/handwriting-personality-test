@@ -62,7 +62,7 @@ test("every tool reports a start and a completion", () => {
 });
 
 test("every result page reports a result view", () => {
-  for (const path of ["../components/Result.tsx", "../components/ZhResult.tsx", "../components/LatinResult.tsx"]) {
+  for (const path of ["../components/Result.tsx", "../components/ZhResult.tsx"]) {
     assert.match(source(path), /trackTool\("result_view"/, path);
   }
 });

@@ -2,6 +2,9 @@ const base = process.env.BASE || "http://127.0.0.1:4399";
 const seen = new Map();
 const problems = [];
 
+// Retired Latin locales: any remaining URL must 301 out to an English path.
+const RETIRED = /^\/(es|pt|fr|de|id|vi|it|tr)(\/|$)/;
+
 async function get(path) {
   if (seen.has(path)) return seen.get(path);
   const promise = (async () => {
@@ -40,11 +43,23 @@ const seeds = [
 const links = new Set();
 for (const seed of seeds) links.add(seed);
 
+function checkPath(path, page) {
+  if (RETIRED.test(path)) {
+    const target = page.location ? new URL(page.location, base).pathname : null;
+    if (page.status !== 301) problems.push(`retired ${path} -> ${page.status}, expected 301`);
+    else if (!target || RETIRED.test(target)) problems.push(`retired ${path} redirects to ${target}`);
+    return;
+  }
+  if (page.status !== 200) {
+    problems.push(`link ${path} -> ${page.status}${page.location ? " -> " + page.location : ""}`);
+  }
+}
+
 async function main() {
   for (const seed of seeds) {
     const page = await get(seed);
     if (page.status !== 200) {
-      problems.push(`seed ${seed} -> ${page.status}`);
+      checkPath(seed, page);
       continue;
     }
     const hrefs = [...page.text.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
@@ -58,7 +73,7 @@ async function main() {
   const all = [...links].filter(Boolean).sort();
   for (const path of all) {
     const page = await get(path);
-    if (page.status !== 200) problems.push(`link ${path} -> ${page.status}${page.location ? " -> " + page.location : ""}`);
+    checkPath(path, page);
   }
 
   console.log(`checked ${all.length} internal paths`);

@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { localeList } from "@/content/locale-list.mjs";
 import { seriesFor } from "@/content/series.mjs";
 import { toolCopyFor } from "@/content/tools";
 import { CookieBanner } from "@/components/CookieBanner";
@@ -19,23 +18,21 @@ const footLink = "inline-block py-1.5 font-extrabold text-white/90 hover:text-po
 const menuLanguages = [
   { code: "en", label: "English" },
   { code: "zh", label: "中文" },
-  ...localeList.map(({ code, label }: { code: string; label: string }) => ({ code, label })),
 ];
 
 export function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || "/";
   const zh = path === "/zh" || path.startsWith("/zh/");
-  const locale = localeList.find((item) => path === `/${item.code}` || path.startsWith(`/${item.code}/`));
-  const lang = zh ? "zh" : locale ? locale.code : "en";
-  const prefix = zh ? "/zh" : locale ? `/${locale.code}` : "";
+  const lang = zh ? "zh" : "en";
+  const prefix = zh ? "/zh" : "";
   const tools = toolCopyFor(lang)!;
   const series = seriesFor(lang);
   const scienceHref = `${prefix}/science`;
-  const scienceLabel = zh ? "科学" : locale ? locale.science : "Science";
-  const marksLabel = zh ? "写法" : locale ? locale.marks : "Guides";
+  const scienceLabel = zh ? "科学" : "Science";
+  const marksLabel = zh ? "写法" : "Guides";
   const toolsLabel = zh ? "工具" : "Tools";
   const toolsHref = zh ? "/zh/tools" : "/tools";
-  const chartHref = zh ? "/zh/tools/sample-chart" : locale ? `${prefix}/chart` : "/tools/sample-chart";
+  const chartHref = zh ? "/zh/tools/sample-chart" : "/tools/sample-chart";
   const [suggest, setSuggest] = useState<string | null>(null);
   const banner = suggest ? bannerFor(lang, suggest) : null;
 
@@ -63,28 +60,28 @@ export function Shell({ children }: { children: React.ReactNode }) {
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-paper"
       >
-        {zh ? "跳到正文" : locale ? locale.skip : "Skip to content"}
+        {zh ? "跳到正文" : "Skip to content"}
       </a>
       <header className="sticky top-0 z-40 border-b-4 border-ink bg-paper">
         <div className="mx-auto flex max-w-3xl flex-col gap-2 px-5 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <a
-            href={zh ? "/zh" : locale ? `/${locale.code}` : "/"}
+            href={zh ? "/zh" : "/"}
             className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap py-1 font-display text-lg leading-tight"
           >
             <span className="grid h-9 w-9 -rotate-6 place-items-center rounded-[10px] border-[3px] border-ink bg-pop text-base shadow-[4px_4px_0_#141414]">
               {zh ? "笔" : "H"}
             </span>
-            {zh ? "笔迹测验" : locale ? locale.brand : "Handwriting Personality Test"}
+            {zh ? "笔迹测验" : "Handwriting Personality Test"}
           </a>
           <nav
             aria-label="Primary"
             className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:justify-end"
           >
-            {locale ? null : <a className={navLink} href={toolsHref}>{toolsLabel}</a>}
+            <a className={navLink} href={toolsHref}>{toolsLabel}</a>
             <a className={navLink} href={`${prefix}/guides`}>{marksLabel}</a>
             <a className={navLink} href={scienceHref}>{scienceLabel}</a>
-            {zh || locale ? null : <a className={navLinkWide} href="/blog">Blog</a>}
-            {zh || locale ? null : <a className={navLinkWide} href="/methodology">Method</a>}
+            {zh ? null : <a className={navLinkWide} href="/blog">Blog</a>}
+            {zh ? null : <a className={navLinkWide} href="/methodology">Method</a>}
             <a className={navLinkWide} href={`${prefix}/about`}>{series.navAbout}</a>
             <details className="lang-menu relative ml-auto sm:ml-3">
               <summary className="flex cursor-pointer items-center gap-2 rounded-xl border-[3px] border-ink bg-pop px-3 py-1.5 font-extrabold shadow-[4px_4px_0_#141414]">
@@ -132,15 +129,15 @@ export function Shell({ children }: { children: React.ReactNode }) {
       ) : null}
       <main id="main" tabIndex={-1} className="mx-auto max-w-3xl px-5 py-10 outline-none">{children}</main>
       <footer className="border-t-4 border-ink bg-ink text-white">
-        <nav aria-label="Footer" className="mx-auto max-w-3xl space-y-1 px-5 py-8 text-sm">
+          <nav aria-label="Footer" className="mx-auto max-w-3xl space-y-1 px-5 py-8 text-sm">
           <div className="flex flex-wrap gap-x-5 gap-y-1">
-            {locale ? null : <a className={footLink} href={toolsHref}>{toolsLabel}</a>}
+            <a className={footLink} href={toolsHref}>{toolsLabel}</a>
             <a className={footLink} href={`${prefix}/guides`}>{marksLabel}</a>
             <a className={footLink} href={`${prefix}/faq`}>{series.navFaq}</a>
             <a className={footLink} href={`${prefix}/about`}>{series.navAbout}</a>
             <a className={footLink} href={scienceHref}>{scienceLabel}</a>
-            {zh || locale ? null : <a className={footLink} href="/blog">Blog</a>}
-            {zh || locale ? null : <a className={footLink} href="/methodology">Methodology</a>}
+            {zh ? null : <a className={footLink} href="/blog">Blog</a>}
+            {zh ? null : <a className={footLink} href="/methodology">Methodology</a>}
           </div>
           <div className="flex flex-wrap gap-x-5 gap-y-1">
             <a className={footLink} href={chartHref}>{tools.nav.chart}</a>
@@ -148,7 +145,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <a className={footLink} href={`${prefix}/tools/signature`}>{tools.nav.signature}</a>
           </div>
           <div className="flex flex-wrap gap-x-5 gap-y-1">
-            {zh || locale ? null : (
+            {zh ? null : (
               <>
                 <a className={footLink} href="/results">Six names</a>
                 <a className={footLink} href="/contact">Contact</a>

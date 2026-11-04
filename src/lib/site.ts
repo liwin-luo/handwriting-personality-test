@@ -13,14 +13,6 @@ const locales = new Set<string>(LOCALE_CODES);
 const OG_LOCALE: Record<string, string> = {
   en: "en_US",
   zh: "zh_CN",
-  es: "es_ES",
-  pt: "pt_PT",
-  fr: "fr_FR",
-  de: "de_DE",
-  id: "id_ID",
-  vi: "vi_VN",
-  it: "it_IT",
-  tr: "tr_TR",
 };
 
 export function localeOfPath(path: string): string {

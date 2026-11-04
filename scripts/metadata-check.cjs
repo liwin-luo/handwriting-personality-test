@@ -20,9 +20,23 @@ const INDEXABLE = [
   "/zh/science", "/zh/faq", "/zh/about",
 ];
 
-const RETIRED = ["/es", "/es/guides", "/es/chart", "/fr", "/fr/guides", "/fr/chart", "/de", "/de/guides",
-  "/de/chart", "/pt", "/pt/guides", "/pt/chart", "/id", "/id/guides", "/id/chart",
-  "/vi", "/vi/guides", "/vi/chart", "/it", "/it/guides", "/it/chart", "/tr", "/tr/guides", "/tr/chart"];
+/** Retired Latin locales: every URL must 301 to its English twin. */
+const RETIRED_LOCALES = ["es", "pt", "fr", "de", "id", "vi", "it", "tr"];
+
+const RETIRED = RETIRED_LOCALES.flatMap((code) => [
+  ["/" + code, "/"],
+  [`/${code}/guides`, "/guides"],
+  [`/${code}/guides/a`, "/guides/a"],
+  [`/${code}/chart`, "/tools/sample-chart"],
+  [`/${code}/science`, "/science"],
+  [`/${code}/faq`, "/faq"],
+  [`/${code}/about`, "/about"],
+  [`/${code}/tools/slant`, "/tools/slant"],
+  [`/${code}/tools/signature`, "/tools/signature"],
+  [`/${code}/tools/signature/size`, "/guides/signature-size"],
+  [`/${code}/tools/signature/body`, "/guides/signature-writing"],
+  [`/${code}/r/1000000000000`, "/r/1000000000000"],
+]);
 
 const attr = (html, name) => {
   const out = [];
@@ -128,17 +142,15 @@ async function check(path) {
 async function main() {
   for (const path of INDEXABLE) await check(path);
 
-  for (const path of RETIRED) {
+  for (const [path, expected] of RETIRED) {
     const res = await fetch(base + path, { redirect: "manual" });
-    if (res.status !== 200) {
-      problems.push(`retired ${path} -> ${res.status}`);
+    if (res.status !== 301) {
+      problems.push(`retired ${path} -> ${res.status}, expected 301`);
       continue;
     }
-    const html = await res.text();
-    const robots = metas(html, "robots").join(",");
-    if (!robots.includes("noindex")) problems.push(`retired ${path} is not noindex (robots=${robots})`);
-    const links = alternates(html);
-    if (links.length) problems.push(`retired ${path} has hreflang ${links.map((l) => l.lang).join(",")}`);
+    const location = res.headers.get("location") || "";
+    const actual = new URL(location, base).pathname;
+    if (actual !== expected) problems.push(`retired ${path} redirects to ${actual}, expected ${expected}`);
   }
 
   for (const file of ["/sitemap.xml", "/sitemaps/en.xml", "/sitemaps/zh.xml"]) {

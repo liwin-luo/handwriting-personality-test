@@ -3,7 +3,7 @@ import type { ToolSeoContent } from "@/content/seo/types";
 export const slantTool: ToolSeoContent = {
   slug: "slant",
   path: "/tools/slant",
-  title: "Measure Handwriting Slant",
+  title: "Handwriting Slant Tool",
   h1: "Measure handwriting slant",
   meta: "Measure the slant of one downstroke from a photo. A free browser tool: no upload, no account, and no personality score attached to the angle.",
   kicker: "Free tool · no upload",
@@ -19,9 +19,7 @@ export const slantTool: ToolSeoContent = {
   ],
   howToTitle: "How to measure slant",
   howToSteps: [
-    "Write three or four ordinary lines on unlined paper and leave the signature out. A signature is often a practiced display form, not everyday writing.",
-    "Put the page flat on a table and hold the camera directly above it. A phone tilted even a little changes every apparent angle.",
-    "Crop or zoom so one full downstroke fills a useful part of the frame. Avoid the edge of the photo, where lens distortion is strongest.",
+    "Take one photo of a few ordinary lines on unlined paper: page flat, camera held directly above it, and keep the stroke away from the frame edge, where lens distortion is strongest. The measurement guide covers the full setup, including the paper-and-ruler method.",
     "Load the photo into the tool. It stays in the browser; nothing is sent to a server.",
     "Drag the red stem until it sits on the straight part of a downstroke. Read the degrees shown beside the slider.",
     "Repeat on three separate downstrokes. If the readings disagree by more than a few degrees, the page or the camera is probably not square.",
